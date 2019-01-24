@@ -1,0 +1,22 @@
+{
+  "jsonrpc": "2.0",
+  "id": "",
+  "result": {
+    "height": 10002,
+    "results": {
+      "DeliverTx": [
+        {
+          "code": 200,
+          "log": "Deliver tx succeed",
+          "gas_limit": 2500,
+          "gas_used": 500,
+          "fee": 1250000,
+          "tx_hash": "CCE7C784CDBD86116E3B85B83167153F2D65D61CD79C0BC4851C99F7BAA5A41D"
+        }
+      ],
+      "EndBlock": {
+        "validator_updates": null
+      }
+    }
+  }
+}

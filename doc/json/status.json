@@ -1,0 +1,40 @@
+{
+  "jsonrpc": "2.0",
+  "id": "",
+  "result": {
+    "node_info": {
+      "id": "bcbEg1qrJ8vobRn8vMG2n8WdrqvH5g1fhmCr",
+      "listen_addr": "earth-p2p.bcbchain.io:46656",
+      "network": "bcb",
+      "channels": "4020212223303800",
+      "version": "1.0.6.6078",
+      "base_version": "0.19.1",
+      "moniker": "tmcore02",
+      "other": [
+        "amino_version=0.9.7",
+        "p2p_version=0.5.0",
+        "consensus_version=v1/0.2.2",
+        "rpc_version=0.7.0/3",
+        "tx_index=on",
+        "rpc_addr=tcp://0.0.0.0:37827"
+      ]
+    },
+    "sync_info": {
+      "latest_block_hash": "54CBE1374807ED5F76C03851548F4BB90FDCC00F",
+      "latest_app_hash": "FC3F02F4219788B7EA67CA9F14CD840E9C8BB2EA5EE6E2E7912D6EBBC80DA002",
+      "latest_block_height": 299305,
+      "latest_block_time": "2018-10-17T23:37:33.038958573-04:00",
+      "syncing": false
+    },
+    "validator_info": {
+      "address": "bcbNVDh8ZPgshTJ7U21ZGFpUxwMvAmXqkHKB",
+      "pub_key": {
+        "type": "AC26791624DE60",
+        "value": "lz67BUTnfSZlsFEN8OsXBmzi1Qm7Kb5PUlZ3Fgi8Etk="
+      },
+      "voting_power": 0,
+      "reward_addr": "",
+      "name": ""
+    }
+  }
+}

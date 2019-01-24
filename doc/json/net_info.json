@@ -1,0 +1,123 @@
+{
+  "jsonrpc": "2.0",
+  "id": "",
+  "result": {
+    "listening": true,
+    "listeners": [
+      "earth-p2p.bcbchain.io:46656"
+    ],
+    "peers": [
+      {
+        "node_info": {
+          "id": "bcb4xjc2PKdCeZLdYpsL5BgeUT9WiKRi2Bzp",
+          "listen_addr": "altair-p2p.bcbchain.io:46656",
+          "network": "bcb",
+          "channels": "4020212223303800",
+          "version": "1.0.6.6078",
+          "base_version": "0.19.1",
+          "moniker": "tmcore02",
+          "other": [
+            "amino_version=0.9.7",
+            "p2p_version=0.5.0",
+            "consensus_version=v1/0.2.2",
+            "rpc_version=0.7.0/3",
+            "tx_index=on",
+            "rpc_addr=tcp://0.0.0.0:37827"
+          ]
+        },
+        "is_outbound": true,
+        "connection_status": {
+          "Duration": 9223372036854775807,
+          "SendMonitor": {
+            "Active": true,
+            "Start": "2018-10-17T13:22:04.8-04:00",
+            "Duration": 35557780000000,
+            "Idle": 260000000,
+            "Bytes": 8114951,
+            "Samples": 23646,
+            "InstRate": 554,
+            "CurRate": 182,
+            "AvgRate": 228,
+            "PeakRate": 51900,
+            "BytesRem": 0,
+            "TimeRem": 0,
+            "Progress": 0
+          },
+          "RecvMonitor": {
+            "Active": true,
+            "Start": "2018-10-17T13:22:04.8-04:00",
+            "Duration": 35557780000000,
+            "Idle": 120000000,
+            "Bytes": 7934624,
+            "Samples": 22358,
+            "InstRate": 0,
+            "CurRate": 64,
+            "AvgRate": 223,
+            "PeakRate": 74550,
+            "BytesRem": 0,
+            "TimeRem": 0,
+            "Progress": 0
+          },
+          "Channels": [
+            {
+              "ID": 48,
+              "SendQueueCapacity": 1,
+              "SendQueueSize": 0,
+              "Priority": 5,
+              "RecentlySent": 0
+            },
+            {
+              "ID": 64,
+              "SendQueueCapacity": 1000,
+              "SendQueueSize": 0,
+              "Priority": 10,
+              "RecentlySent": 0
+            },
+            {
+              "ID": 32,
+              "SendQueueCapacity": 100,
+              "SendQueueSize": 0,
+              "Priority": 5,
+              "RecentlySent": 720
+            },
+            {
+              "ID": 33,
+              "SendQueueCapacity": 100,
+              "SendQueueSize": 0,
+              "Priority": 10,
+              "RecentlySent": 4
+            },
+            {
+              "ID": 34,
+              "SendQueueCapacity": 100,
+              "SendQueueSize": 0,
+              "Priority": 5,
+              "RecentlySent": 11
+            },
+            {
+              "ID": 35,
+              "SendQueueCapacity": 2,
+              "SendQueueSize": 0,
+              "Priority": 1,
+              "RecentlySent": 0
+            },
+            {
+              "ID": 56,
+              "SendQueueCapacity": 1,
+              "SendQueueSize": 0,
+              "Priority": 5,
+              "RecentlySent": 6
+            },
+            {
+              "ID": 0,
+              "SendQueueCapacity": 10,
+              "SendQueueSize": 0,
+              "Priority": 1,
+              "RecentlySent": 0
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

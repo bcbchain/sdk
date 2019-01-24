@@ -1,0 +1,75 @@
+{
+  "jsonrpc": "2.0",
+  "id": "",
+  "result": {
+    "block_height": 20000,
+    "validators": [
+      {
+        "address": "bcbG6WixauSd9RZ6iLCygSYZdZ7bttmhQ2zh",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "AOHXEMLtWLyq7jPNkiZ2hdG9KZwxHUwBF9Tyll8RFoE="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcb5rzgE1tSJbJuegEj4vbAkotmwRkxwiSyV",
+        "name": "venus",
+        "accum": -50
+      },
+      {
+        "address": "bcbGMKrue1tabboHwokE2WDshAhVD98XbJjH",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "0AvM3BXo6sZmxc3Br566T2G/KBKJiTl2kcZqAcICM80="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcb5xjCpYJrKkyM3kgo5Jk8Pge7XDTwuvSUm",
+        "name": "earth",
+        "accum": 10
+      },
+      {
+        "address": "bcbJofNo2NYSv1wZA2dwQa59MCGxaBSEkRgh",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "XJiVuLIlA/K29i6htCIAI/YsrcOepVADr4KqZG8wUK4="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcbKG7Y7hWLhjxiBNZ8UBgja4ocLcSHKW4b4",
+        "name": "mercury",
+        "accum": 10
+      },
+      {
+        "address": "bcbNUjCm1i8RcoW2kVTbDw4vKW6jzfMxewJH",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "hzOstmpgwv4UcA/nc/OFsc7mdv8B5T6XpBiZLlq6OgE="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcb3JivtUWiDG48dbWDvFBUHDL8veB7JvQvS",
+        "name": "jupiter",
+        "accum": 10
+      },
+      {
+        "address": "bcbNt6gNp1C6mSZzkCspqnu99wD7TAbtS7Ug",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "dX5u+aaEBARI6/Jh8MCe0FPNChPjqtT7JViwIbBoVOI="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcbAb65XuCz8bWHB1ittqMQSRyLvDmb74KRB",
+        "name": "mars",
+        "accum": 10
+      },
+      {
+        "address": "bcbP2gPSpJkm4RXevJdAXr2cdoXbiZdRg9t7",
+        "pub_key": {
+          "type": "AC26791624DE60",
+          "value": "N/wpx9qzyDrR/Vsy/saZMW2gXnEsamNn57VMAOZN5UE="
+        },
+        "voting_power": 10,
+        "reward_addr": "bcbCfciTQNLQGwRWadxXg6ms8dBguP5sooX8",
+        "name": "pluto",
+        "accum": 10
+      }
+    ]
+  }
+}
