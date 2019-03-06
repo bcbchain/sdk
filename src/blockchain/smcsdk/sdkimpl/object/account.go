@@ -147,7 +147,7 @@ func (a *Account) transferByToken(tokenAddr types.Address, to types.Address, val
 
 		a.smc.Message().(*Message).AppendOutput(receipts)
 	} else {
-		sdk.Require(value.IsGEI(0),
+		sdk.Require(value.IsGreaterThanI(0),
 			types.ErrInvalidParameter, "Value cannot be negative")
 
 		sdk.Require(from != to,

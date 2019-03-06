@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 
-	"github.com/tendermint/abci/client"
 	"github.com/tendermint/abci/types"
 	"github.com/tendermint/tmlibs/log"
 )
@@ -36,8 +35,8 @@ func commit(client abcicli.Client, hashExp []byte) {
 	if err != nil {
 		panicf("client error: %v", err)
 	}
-	if !bytes.Equal(res.LastAppHash, hashExp) {
-		panicf("Commit hash was unexpected. Got %X expected %X", res.LastAppHash, hashExp)
+	if !bytes.Equal(res.GetLastAppHash(), hashExp) {
+		panicf("Commit hash was unexpected. Got %X expected %X", res.GetLastAppHash(), hashExp)
 	}
 }
 

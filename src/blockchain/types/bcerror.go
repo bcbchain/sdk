@@ -33,6 +33,7 @@ const (
 	ErrCallRPC
 	ErrOutOfRange
 	ErrNeedPositiveNumber
+	ErrAccountLocked
 )
 
 //ErrCheckTx beginning error code of checkTx
@@ -47,6 +48,16 @@ const (
 	ErrDeliverInsufficientBalance
 )
 
+const (
+	ErrCodeNoAuthorization = 1000 + iota
+)
+
+// For lowlevel (stateDB, go libs, 3rd party) errors
+// only set error code and uses original error message
+const (
+	ErrCodeLowLevelError = 5000 + iota
+)
+
 var bcErrors = []BcError{
 	{CodeOK, ""},
 
@@ -54,9 +65,13 @@ var bcErrors = []BcError{
 	{ErrCallRPC, "Call rpc error"},
 	{ErrOutOfRange, "Out of range"},
 	{ErrNeedPositiveNumber, "Must positive number"},
+	{ErrAccountLocked, "Account is locked"},
 
 	{ErrCheckTx, "CheckTx failed"},
 	{ErrCheckInsufficientBalance, "Insufficient balance"},
+
+	//ErrCodeNoAuthorization
+	{ErrCodeNoAuthorization, "No authorization"},
 
 	{ErrDeliverTx, "DeliverTx failed"},
 	{ErrDeliverInsufficientBalance, "Insufficient balance"},

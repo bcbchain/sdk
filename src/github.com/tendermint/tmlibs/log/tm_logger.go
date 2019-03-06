@@ -392,7 +392,7 @@ func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
 		li := &logInfo{
 			level: level,
 			fmt:   false,
-			msg:   msg,
+			msg:   file_line() + msg,
 		}
 		if log.withThreadID {
 			li.goroutineID = GetGID()
@@ -404,9 +404,21 @@ func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogText(rid, level, msg, keyvals)
+		logText := log.genLogText(rid, level, file_line()+msg, keyvals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
+}
+
+func file_line() string {
+	_, fileName, fileLine, ok := runtime.Caller(3)
+	var s string
+	if ok {
+		f := strings.Split(fileName, "/")
+		s = fmt.Sprintf("[%s:%d] ", f[len(f)-1], fileLine)
+	} else {
+		s = ""
+	}
+	return s
 }
 
 // Log a message at specific level.
@@ -415,7 +427,7 @@ func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
 		li := &logInfo{
 			level:  level,
 			fmt:    true,
-			fmtStr: fmtStr,
+			fmtStr: file_line() + fmtStr,
 			vals:   vals,
 		}
 		if log.withThreadID {
@@ -427,7 +439,7 @@ func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogTextEx(rid, level, fmtStr, vals)
+		logText := log.genLogTextEx(rid, level, file_line()+fmtStr, vals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
 }

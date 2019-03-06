@@ -2,7 +2,6 @@ package object
 
 import (
 	"blockchain/smcsdk/sdk"
-	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
 )
 
@@ -12,9 +11,7 @@ func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string,
 
 	var gasPrice int64
 	token := smc.Helper().TokenHelper().TokenOfContract(contract.Address())
-	if token == nil && contract.Address() == std.GenesisContract {
-		gasPrice = 0
-	} else if token != nil {
+	if token != nil {
 		gasPrice = token.GasPrice()
 	} else {
 		gasPrice = smc.Helper().TokenHelper().BaseGasPrice()

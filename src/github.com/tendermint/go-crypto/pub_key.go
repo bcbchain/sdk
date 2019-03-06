@@ -33,6 +33,7 @@ func PubKeyFromBytes(pubKeyBytes []byte) (pubKey PubKey, err error) {
 
 type PubKey interface {
 	Address() Address
+	AddressByChainID(chainID string) Address
 	Bytes() []byte
 	VerifyBytes(msg []byte, sig Signature) bool
 	Equals(PubKey) bool
@@ -89,6 +90,31 @@ func (pubKey PubKeyEd25519) Address() Address {
 	return string(chainId) + base58.Encode(addr)
 }
 
+func (pubKey PubKeyEd25519) AddressByChainID(chainID string) Address {
+	if string(chainID) == "" {
+		panic("chainID cannot be empty")
+	}
+
+	hasherSHA3256 := sha3.New256()
+	hasherSHA3256.Write([]byte(chainID))
+	hasherSHA3256.Write(pubKey[:])
+	sha := hasherSHA3256.Sum(nil)
+
+	hasherRIPEMD160 := ripemd160.New()
+	hasherRIPEMD160.Write(sha) // does not error
+	rpd := hasherRIPEMD160.Sum(nil)
+
+	hasher := ripemd160.New()
+	hasher.Write(rpd)
+	md := hasher.Sum(nil)
+
+	addr := make([]byte, 0, 0)
+	addr = append(addr, rpd...)
+	addr = append(addr, md[:4]...)
+
+	return chainID + base58.Encode(addr)
+}
+
 func (pubKey PubKeyEd25519) Bytes() []byte {
 	bz, err := cdc.MarshalBinaryBare(pubKey)
 	if err != nil {
@@ -142,6 +168,17 @@ type PubKeySecp256k1 [33]byte
 
 // Implements Bitcoin style addresses: RIPEMD160(SHA256(pubkey))
 func (pubKey PubKeySecp256k1) Address() Address {
+	hasherSHA256 := sha256.New()
+	hasherSHA256.Write(pubKey[:]) // does not error
+	sha := hasherSHA256.Sum(nil)
+
+	hasherRIPEMD160 := ripemd160.New()
+	hasherRIPEMD160.Write(sha) // does not error
+	return Address(hasherRIPEMD160.Sum(nil))
+}
+
+// Implements Bitcoin style addresses: RIPEMD160(SHA256(pubkey))
+func (pubKey PubKeySecp256k1) AddressByChainID(chainID string) Address {
 	hasherSHA256 := sha256.New()
 	hasherSHA256.Write(pubKey[:]) // does not error
 	sha := hasherSHA256.Sum(nil)

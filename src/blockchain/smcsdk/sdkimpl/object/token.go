@@ -62,20 +62,20 @@ func (t *Token) StdToken() *std.Token { return &t.tk }
 // SetOwner set owner of Token
 func (t *Token) SetOwner(newOwner types.Address) {
 
+	// update the old owner and new owner's balance
+	oldAcct := t.smc.Helper().AccountHelper().AccountOf(t.Owner())
+	oldOwnerBalance := oldAcct.Balance()
+	oldAcct.(*Account).SetBalanceOfToken(t.Address(), bn.N(0))
+
+	newAcct := t.smc.Helper().AccountHelper().AccountOf(newOwner)
+	newOwnerBalance := newAcct.Balance().Add(oldOwnerBalance)
+	newAcct.(*Account).SetBalanceOfToken(t.Address(), newOwnerBalance)
+
 	// dirty mc and set new token data
 	t.tk.Owner = newOwner
 	keyOfToken := std.KeyOfToken(t.Address())
 	sdkimpl.McInst.Dirty(keyOfToken)
 	t.smc.(*sdkimpl.SmartContract).LlState().McSet(keyOfToken, &t.tk)
-
-	// update the old owner and new owner's balance
-	oldOwnerBalance := t.smc.Helper().AccountHelper().AccountOf(t.Owner()).Balance()
-	newOwnerBalance := t.smc.Helper().AccountHelper().AccountOf(newOwner).Balance().Add(oldOwnerBalance)
-
-	oldAcct := t.smc.Helper().AccountHelper().AccountOf(t.Owner())
-	oldAcct.(*Account).SetBalanceOfToken(t.Address(), bn.N(0))
-	newAcct := t.smc.Helper().AccountHelper().AccountOf(t.Owner()).(*Account)
-	newAcct.SetBalanceOfToken(t.Address(), oldOwnerBalance.Add(newOwnerBalance))
 
 	// fire event of setOwner
 	t.smc.Helper().ReceiptHelper().Emit(
@@ -84,12 +84,11 @@ func (t *Token) SetOwner(newOwner types.Address) {
 			NewOwner:     newOwner,
 		},
 	)
-
 	// fire event of transfer
 	t.smc.Helper().ReceiptHelper().Emit(
 		std.Transfer{
 			Token: t.Address(),
-			From:  t.Owner(),
+			From:  oldAcct.Address(),
 			To:    newOwner,
 			Value: oldOwnerBalance,
 		},
@@ -100,16 +99,6 @@ func (t *Token) SetOwner(newOwner types.Address) {
 func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 	// check the sender
 	sdk.RequireOwner(t.smc)
-
-	// return ok if not change totalSupply
-	if t.TotalSupply().Cmp(totalSupply) == 0 {
-		return
-	}
-
-	// totalSupply must great than or equal one token(1E9 cong)
-	sdk.Require(totalSupply.CmpI(minTotalSupply) >= 0,
-		types.ErrInvalidParameter,
-		fmt.Sprintf("TotalSupply must great than or equal %d cong", minTotalSupply))
 
 	// get update number
 	updateSupply := totalSupply.Sub(t.TotalSupply())
@@ -123,6 +112,16 @@ func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 		sdk.Require(t.BurnEnabled() == true,
 			types.ErrBurnNotEnabled, "")
 	}
+
+	// return ok if not change totalSupply
+	if t.TotalSupply().Cmp(totalSupply) == 0 {
+		return
+	}
+
+	// totalSupply must great than or equal one token(1E9 cong)
+	sdk.Require(totalSupply.CmpI(minTotalSupply) >= 0,
+		types.ErrInvalidParameter,
+		fmt.Sprintf("TotalSupply must great than or equal %d cong", minTotalSupply))
 
 	// create owner's account and compare the owner's balance,
 	// if owner's balance less than burn number, then return error

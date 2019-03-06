@@ -12,9 +12,14 @@ type AccountInfo struct {
 	Balance bn.Number     `json:"balance"`
 }
 
-// KeyOfAccount for create key of account address
+// KeyOfAccount the access key of account address
 // data for this key is []Address
 func KeyOfAccount(address types.Address) string { return "/account/ex/" + address }
+
+// KeyOfAccountNonce the access key for account's nonce
+func KeyOfAccountNonce(exAddress types.Address) string {
+	return "/account/ex/" + exAddress + "/account"
+}
 
 // KeyOfAccountToken the access key for account information in state database
 // data for this key refer AccountInfo

@@ -11,6 +11,9 @@ import (
 	"fmt"
 )
 
+// standardTransferMethodID methodID for standard transfer
+var standardTransferMethodID string
+
 func init() {
 	standardTransferMethodID = algorithm.ConvertMethodID(algorithm.CalcMethodId(std.TransferPrototype))
 }
@@ -44,9 +47,6 @@ const minTokenSymbolSize = 3
 
 // token symbol can be up to 20 characters
 const maxTokenSymbolSize = 20
-
-// standardTransferMethodID methodID for standard transfer
-var standardTransferMethodID string
 
 // RegisterToken register new token to block chain with many property
 func (th *TokenHelper) RegisterToken(

@@ -7,7 +7,6 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
 	"github.com/tendermint/tmlibs/log"
@@ -127,7 +126,7 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 			WorkingDir:   params.WorkDir,
 			ExposedPorts: assemblePortSet(params),
 		}, &container.HostConfig{
-			Mounts:       assembleMounts(params),
+			Binds:        assembleMounts(params),
 			PortBindings: assemblePortMap(params),
 			AutoRemove:   params.AutoRemove,
 		}, nil, containerName)
@@ -206,13 +205,14 @@ func assemblePortMap(params *DockerRunParams) nat.PortMap {
 	return portMap
 }
 
-func assembleMounts(params *DockerRunParams) []mount.Mount {
-	mounts := make([]mount.Mount, 0)
+func assembleMounts(params *DockerRunParams) []string {
+	mounts := make([]string, 0)
 	for _, m := range params.Mounts {
-		mt := mount.Mount{Type: mount.TypeBind,
-			Source:   m.Source,
-			Target:   m.Destination,
-			ReadOnly: m.ReadOnly,
+		mt := m.Source + ":" + m.Destination
+		if m.ReadOnly {
+			mt += ":ro,Z"
+		} else {
+			mt += ":Z"
 		}
 		mounts = append(mounts, mt)
 	}
@@ -228,7 +228,11 @@ func (l *DockerLib) ensureImage(ctx context.Context, cli *client.Client, imageNa
 
 	if notExists(images, imageName) {
 		p, err := cli.ImagePull(ctx, imageName, types.ImagePullOptions{})
-		defer p.Close()
+		defer func() {
+			if e := p.Close(); e != nil {
+				l.logger.Warn(e.Error())
+			}
+		}()
 		if err != nil {
 			l.logger.Warn("DockerLib Run ImagePull Error:", "err", err)
 			return false
@@ -395,7 +399,7 @@ func (l *DockerLib) GetDockerIP(containerName string) string {
 		return ""
 	}
 
-	return resp.NetworkSettings.Networks["bridge"].IPAddress
+	return resp.NetworkSettings.IPAddress
 }
 
 func mapIP(s string) string {

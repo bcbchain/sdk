@@ -39,6 +39,7 @@ const (
 	ErrNoAuthorization = 53000 + iota
 	ErrInvalidParameter
 	ErrInsufficientBalance
+	ErrInvalidMethod
 )
 const (
 	// minimum of user code
@@ -65,5 +66,6 @@ func init() {
 	errStrings[ErrNoAuthorization] = "No authorization to execute contract"
 	errStrings[ErrInvalidParameter] = "Invalid parameter"
 	errStrings[ErrInsufficientBalance] = "Insufficient balance"
+	errStrings[ErrInvalidMethod] = "Invalid method"
 	errStrings[ErrUserDefined] = "Error user defined"
 }

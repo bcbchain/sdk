@@ -7,12 +7,14 @@ import (
 	"blockchain/smcsdk/sdkimpl/object"
 	"blockchain/smcsdk/sdkimpl/sdkhelper"
 	"blockchain/smcsdk/utest"
+	"fmt"
 )
 
 var (
-	contractName    = "mystorage" //contract name
-	contractMethods = []string{"Set(uint64)", "Get()TYPE"}
-	orgID           = "orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer"
+	contractName       = "mystorage" //contract name
+	contractMethods    = []string{"Set(uint64)", "Get()TYPE"}
+	contractInterfaces = []string{}
+	orgID              = "orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer"
 )
 
 //TestObject This is a struct for test
@@ -26,6 +28,7 @@ func FuncRecover(err *types.Error) {
 		if _, ok := rerr.(types.Error); ok {
 			err.ErrorCode = rerr.(types.Error).ErrorCode
 			err.ErrorDesc = rerr.(types.Error).ErrorDesc
+			fmt.Println(err)
 		} else {
 			panic(rerr)
 		}
@@ -39,8 +42,9 @@ func NewTestObject(sender sdk.IAccount) *TestObject {
 
 //transfer This is a method of TestObject
 func (t *TestObject) transfer(balance bn.Number) *TestObject {
-	t.obj.sdk.Message().Sender().TransferByName(t.obj.sdk.Helper().GenesisHelper().Token().Name(), t.obj.sdk.Message().Contract().Account(), balance)
-	t.obj.sdk = sdkhelper.OriginNewMessage(t.obj.sdk, t.obj.sdk.Message().Contract(), t.obj.sdk.Message().MethodID(), t.obj.sdk.Message().(*object.Message).OutputReceipts())
+	contract := t.obj.sdk.Message().Contract()
+	utest.Transfer(t.obj.sdk.Message().Sender(), t.obj.sdk.Helper().GenesisHelper().Token().Name(), contract.Account(), balance)
+	t.obj.sdk = sdkhelper.OriginNewMessage(t.obj.sdk, contract, t.obj.sdk.Message().MethodID(), t.obj.sdk.Message().(*object.Message).OutputReceipts())
 	return t
 }
 

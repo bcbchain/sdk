@@ -5,7 +5,10 @@ import (
 	"fmt"
 )
 
-const GenesisContract = "bcbF4YDFW4wmzswuZ3pv1ktzi9ua3ePKatqu"
+const (
+	GenesisContract   = "bcb6Datuf5ww47ZmdhVbU1X4bjL6suohkmDU"
+	TransferPrototype = "Transfer(types.Address,bn.Number)"
+)
 
 // ContractVersionList contract version information with addresses and effectHeights
 type ContractVersionList struct {
@@ -63,6 +66,15 @@ type BuildResult struct {
 	OrgCodeHash []byte   `json:"orgCodeHash"`
 }
 
+// GenResult - generate code's result
+type GenResult struct {
+	ContractName string   `json:"contractName"`
+	Version      string   `json:"version"`
+	OrgID        string   `json:"orgID"`
+	Methods      []Method `json:"methods"`
+	Interfaces   []Method `json:"interfaces"`
+}
+
 // ContractMeta contract's meta information
 type ContractMeta struct {
 	Name         string        `json:"name"`
@@ -95,5 +107,13 @@ func KeyOfGenesisContract(contractAddr string) string { return "/genesis/sc/" + 
 // data for this key refer []types.Address
 func KeyOfGenesisContractAddrList() string { return "/genesis/contracts" }
 
-// TransferPrototype prototype of transfer function
-const TransferPrototype = "Transfer(types.Address,bn.Number)"
+// GetGenesisContractAddr get genesis contract addr
+func GetGenesisContractAddr(chainID string) string {
+	if chainID != "" {
+		crypto.SetChainId(chainID)
+	}
+	pubKey := [32]byte{}
+	p := crypto.PubKeyEd25519FromBytes(pubKey[:])
+	addr := p.Address()
+	return addr
+}

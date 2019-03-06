@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/tendermint/abci/client"
 	"github.com/tendermint/abci/types"
 	cmn "github.com/tendermint/tmlibs/common"
 )
@@ -43,7 +42,7 @@ func SetOption(client abcicli.Client, key, value string) error {
 
 func Commit(client abcicli.Client, hashExp []byte) error {
 	res, err := client.CommitSync()
-	data := res.LastAppHash
+	data := res.GetLastAppHash()
 	if err != nil {
 		fmt.Println("Failed test: Commit")
 		fmt.Printf("error while committing: %v\n", err)

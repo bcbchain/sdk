@@ -112,12 +112,12 @@ type IAccountHelper interface {
 
 // IBlockChainHelper the interface for block chain helper
 type IBlockChainHelper interface {
-	CalcAccountFromPubKey(pubKey types.PubKey) types.Address                            //根据用户公钥计算账户地址
-	CalcAccountFromName(name string) types.Address                                      //根据合约名称计算合约的账户地址
-	CalcContractAddress(name string, version string, owner types.Address) types.Address //根据合约名称、版本与所有者地址计算合约地址
-	CalcOrgID(name string) string                                                       //根据公钥计算组织ID
-	CheckAddress(addr types.Address) error                                              //根据chainID检查地址是否合法
-	GetBlock(height int64) IBlock                                                       //根据高度读取区块信息
+	CalcAccountFromPubKey(pubKey types.PubKey) types.Address                     //根据用户公钥计算账户地址
+	CalcAccountFromName(name string, orgID string) types.Address                 //根据合约名称和组织ID计算合约的账户地址
+	CalcContractAddress(name string, version string, orgID string) types.Address //根据合约名称、版本与组织ID计算合约地址
+	CalcOrgID(name string) string                                                //根据公钥计算组织ID
+	CheckAddress(addr types.Address) error                                       //根据chainID检查地址是否合法
+	GetBlock(height int64) IBlock                                                //根据高度读取区块信息
 }
 
 // IBuildHelper the interface for build helper

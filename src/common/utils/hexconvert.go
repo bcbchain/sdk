@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"encoding/hex"
 	"errors"
-	"blockchain/keys"
 	"strconv"
 	"strings"
 )
@@ -58,12 +57,6 @@ func ParseHexUint32(hexStr string, fieldName string) (uint32, error) {
 
 func BytesToHex(valBytes []byte) string {
 	return string("0x") + hex.EncodeToString(valBytes)
-}
-
-func ParseRawAddress(addrStr string, fieldName string) (keys.Address, error) {
-	//??????
-	//to do verify address format
-	return addrStr, nil
 }
 
 func Uint64ToHex(val uint64) string {

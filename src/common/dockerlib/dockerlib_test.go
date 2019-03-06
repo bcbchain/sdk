@@ -33,6 +33,7 @@ func TestDockerLib_Run(t *testing.T) {
 				Host: "0.0.0.0",
 			},
 		},
+		Mounts:     []Mounts{{"/tmp", "/a", true}},
 		WorkDir:    "/",
 		AutoRemove: true,
 		Cmd:        []string{"sh", "-c", "python2 -m SimpleHTTPServer"},
@@ -95,7 +96,10 @@ func TestDockerLib_Run2(t *testing.T) {
 			if err == nil && resp.StatusCode == 200 {
 				goto GOTOEND
 			}
-			fmt.Println("err =", err, "; statusCode =", resp.StatusCode)
+			fmt.Println("err =", err)
+			if resp != nil {
+				fmt.Println("statusCode =", resp.StatusCode)
+			}
 			count++
 			continue
 		case <-timer.C:

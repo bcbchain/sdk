@@ -26,7 +26,7 @@ func (bh *BuildHelper) SetSMC(smc sdk.ISmartContract) { bh.smc = smc }
 
 // Build build smartContract code and return result
 func (bh *BuildHelper) Build(metas std.ContractMeta) (buildResult std.BuildResult) {
-	if bh.smc.Message().Contract().Address() != std.GenesisContract {
+	if bh.smc.Message().Contract().Address() != std.GetGenesisContractAddr(bh.smc.Block().ChainID()) {
 		contractName := bh.smc.Message().Contract().Name()
 		if contractName != smartContractName && contractName != genesisName {
 			buildResult.Code = types.ErrNoAuthorization

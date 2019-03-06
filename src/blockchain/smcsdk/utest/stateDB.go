@@ -35,8 +35,14 @@ func setToDB(key string, value []byte) {
 	stateDB[key] = value
 }
 
-func getBlock(height int64) []byte {
-	return stateDB[std.KeyOfAppState()]
+func getBlock(height int64) std.Block {
+	result := new(std.Block)
+	err := jsoniter.Unmarshal(stateDB[std.KeyOfAppState()], result)
+	if err != nil {
+
+	}
+
+	return *result
 }
 
 func build(transID, txID int64, meta std.ContractMeta) (result std.BuildResult) {
@@ -66,7 +72,18 @@ func sdbSet(transID, txID int64, values map[string][]byte) {
 
 // SdbGet 供合约运行服务的测试程序使用
 func SdbGet(transID, txID int64, key string) []byte {
-	return stateDB[key]
+	result := std.GetResult{Msg: "ok"}
+	if data, ok := stateDB[key]; ok == true {
+		result.Code = types.CodeOK
+		result.Data = data
+	} else {
+		result.Code = types.ErrInvalidParameter
+		result.Msg = "invalid key"
+	}
+
+	resBytes, _ := jsoniter.Marshal(result)
+
+	return resBytes
 }
 
 //SdbSet set sdb

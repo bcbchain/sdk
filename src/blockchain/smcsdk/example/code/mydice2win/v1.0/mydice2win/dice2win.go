@@ -293,7 +293,7 @@ func (dw *Dice2Win) SettleBet(reveal []byte) {
 	// Send fee to clt
 	sentToCltFee := feeAmount.MulI(settings.SendToCltRatio).DivI(perMille)
 	if settings.SendToCltRatio > 0 {
-		cltAcct := dw.sdk.Helper().BlockChainHelper().CalcAccountFromName("clt")
+		cltAcct := dw.sdk.Helper().BlockChainHelper().CalcAccountFromName("clt", "")
 		contractAcct.TransferByName(bet.TokenName, cltAcct, sentToCltFee)
 	}
 

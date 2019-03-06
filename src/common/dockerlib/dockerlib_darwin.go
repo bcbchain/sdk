@@ -395,7 +395,7 @@ func (l *DockerLib) GetDockerIP(containerName string) string {
 		return ""
 	}
 
-	return resp.NetworkSettings.Networks["bridge"].IPAddress
+	return resp.NetworkSettings.IPAddress
 }
 
 func mapIP(s string) string {

@@ -15,8 +15,6 @@ import (
 	"blockchain/smcsdk/sdkimpl"
 	"blockchain/smcsdk/sdkimpl/object"
 	"blockchain/smcsdk/sdkimpl/sdkhelper"
-
-	"github.com/tendermint/go-crypto"
 	"github.com/tendermint/tmlibs/log"
 )
 
@@ -32,18 +30,26 @@ func upgradeContract(contractName, orgID string, methods, interfaces []string) s
 	bc = data(std.KeyOfContractsWithName(orgID, contractName), bc)
 
 	caddr := make([]types.Address, 0)
-	err := jsoniter.Unmarshal(bc, &caddr)
+	a := new(std.ContractVersionList)
+	err := jsoniter.Unmarshal(bc, a)
 	if err != nil {
-		panic(err.Error())
+		panic(err)
 	}
+	caddr = append(caddr, a.ContractAddrList...)
 
 	// Get last one
 	bc = sdbGet(0, 0, std.KeyOfContract(caddr[len(caddr)-1]))
 	if bc == nil {
 		return nil
 	}
+
 	contract := std.Contract{}
-	err = jsoniter.Unmarshal(bc, &contract)
+	r := std.GetResult{}
+	err = jsoniter.Unmarshal(bc, &r)
+	if err != nil {
+		panic(err.Error())
+	}
+	err = jsoniter.Unmarshal(r.Data, &contract)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -56,7 +62,7 @@ func upgradeContract(contractName, orgID string, methods, interfaces []string) s
 	cons[std.KeyOfContract(contract.Address)] = byteCon1
 
 	newcontract := std.Contract{
-		Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "2.0", contract.Owner),
+		Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "2.0", orgID),
 		Name:         contractName,
 		Account:      contract.Account,
 		Owner:        contract.Owner,
@@ -114,9 +120,9 @@ func deployContract(contractName, orgID string, methods, interfaces []string, lo
 	owner := NewAccount(UTP.g.AppStateJSON.GnsToken.Name, bn.N(1000000000))
 
 	pc := std.Contract{
-		Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "1.0", owner.Address()),
+		Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "1.0", orgID),
 		Name:         contractName,
-		Account:      UTP.Helper().BlockChainHelper().CalcAccountFromName(contractName),
+		Account:      UTP.Helper().BlockChainHelper().CalcAccountFromName(contractName, orgID),
 		Owner:        owner.Address(),
 		Version:      "1.0",
 		CodeHash:     []byte(contractName + "Hash"),

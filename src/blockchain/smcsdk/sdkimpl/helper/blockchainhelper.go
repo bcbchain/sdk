@@ -2,8 +2,6 @@ package helper
 
 import (
 	"blockchain/smcsdk/sdk"
-	"blockchain/smcsdk/sdk/jsoniter"
-	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
 	"blockchain/smcsdk/sdkimpl"
 	"blockchain/smcsdk/sdkimpl/object"
@@ -12,7 +10,6 @@ import (
 	"strings"
 
 	"github.com/btcsuite/btcutil/base58"
-	"github.com/tendermint/go-crypto"
 	"golang.org/x/crypto/ripemd160"
 	"golang.org/x/crypto/sha3"
 )
@@ -41,18 +38,18 @@ func (bh *BlockChainHelper) CalcAccountFromPubKey(pubKey types.PubKey) types.Add
 }
 
 // CalcAccountFromName calculate account address from name
-func (bh *BlockChainHelper) CalcAccountFromName(name string) types.Address {
-	return bh.CalcContractAddress(name, "", "")
+func (bh *BlockChainHelper) CalcAccountFromName(name string, orgID string) types.Address {
+	return bh.CalcContractAddress(name, "", orgID)
 }
 
 // nolint unhandled
 // CalcContractAddress calculate contract address from name、version and owner
-func (bh *BlockChainHelper) CalcContractAddress(name string, version string, owner types.Address) types.Address {
+func (bh *BlockChainHelper) CalcContractAddress(name string, version string, orgID string) types.Address {
 	hasherSHA3256 := sha3.New256()
 	hasherSHA3256.Write([]byte(bh.smc.Helper().GenesisHelper().ChainID()))
 	hasherSHA3256.Write([]byte(name))
 	hasherSHA3256.Write([]byte(version))
-	hasherSHA3256.Write([]byte(owner))
+	hasherSHA3256.Write([]byte(orgID))
 	sha := hasherSHA3256.Sum(nil)
 
 	hasherRIPEMD160 := ripemd160.New()
@@ -98,13 +95,7 @@ func (bh *BlockChainHelper) GetBlock(height int64) sdk.IBlock {
 		return nil
 	}
 
-	resBytes := sdkimpl.GetBlockFunc(height)
-
-	var v std.Block
-	err := jsoniter.Unmarshal(resBytes, &v)
-	if err != nil {
-		return nil
-	}
+	v := sdkimpl.GetBlockFunc(height)
 
 	block := object.NewBlock(
 		bh.smc,
@@ -155,13 +146,7 @@ func (bh *BlockChainHelper) CheckAddress(addr types.Address) error {
 // GetCurrentBlock get current block data
 func GetCurrentBlock(smc sdk.ISmartContract) sdk.IBlock {
 	// get current block if height is 0
-	resBytes := sdkimpl.GetBlockFunc(0)
-
-	var v std.Block
-	err := jsoniter.Unmarshal(resBytes, &v)
-	if err != nil {
-		return nil
-	}
+	v := sdkimpl.GetBlockFunc(0)
 
 	block := object.NewBlock(
 		smc,

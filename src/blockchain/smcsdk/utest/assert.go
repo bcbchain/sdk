@@ -10,7 +10,6 @@ import (
 	"blockchain/smcsdk/sdk/jsoniter"
 	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
-	"gopkg.in/check.v1"
 )
 
 // Assert assert true
@@ -51,6 +50,7 @@ func AssertBalance(account sdk.IAccount, tokenName string, value bn.Number) {
 	_token := UTP.Helper().TokenHelper().TokenOfName(tokenName)
 	key := std.KeyOfAccountToken(account.Address(), _token.Address())
 	b := sdbGet(0, 0, key)
+	b = data(key, b)
 
 	v := std.AccountInfo{}
 	err := jsoniter.Unmarshal(b, &v)
@@ -71,6 +71,7 @@ func AssertSDB(key string, interf interface{}) {
 	}
 
 	b := sdbGet(0, 0, key)
+	b = data(key, b)
 
 	UTP.c.Assert(b, check.DeepEquals, _v)
 }

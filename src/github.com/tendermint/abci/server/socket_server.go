@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"strings"
 	"sync"
 
 	"github.com/tendermint/abci/types"
@@ -160,18 +161,21 @@ func (s *SocketServer) handleRequests(closeConn chan error, conn net.Conn, respo
 		}
 		s.appMtx.Lock()
 		count++
-		s.handleRequest(req, responses)
+		s.handleRequest(conn, req, responses)
 		s.appMtx.Unlock()
 	}
 }
 
-func (s *SocketServer) handleRequest(req *types.Request, responses chan<- *types.Response) {
+func (s *SocketServer) handleRequest(conn net.Conn, req *types.Request, responses chan<- *types.Response) {
 	switch r := req.Value.(type) {
 	case *types.Request_Echo:
 		responses <- types.ToResponseEcho(r.Echo.Message)
 	case *types.Request_Flush:
 		responses <- types.ToResponseFlush()
 	case *types.Request_Info:
+		addr := conn.RemoteAddr().String()
+		spl := strings.Split(addr, ":")
+		r.Info.Host = spl[0]
 		res := s.app.Info(*r.Info)
 		responses <- types.ToResponseInfo(res)
 	case *types.Request_SetOption:

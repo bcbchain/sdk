@@ -7,22 +7,15 @@ import (
 	"blockchain/smcsdk/sdk/jsoniter"
 	"blockchain/smcsdk/sdk/types"
 	"blockchain/smcsdk/utest"
-	"common/keys"
-	"common/kms"
+	"common/wal"
 	"encoding/hex"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"testing"
-
-	"github.com/tendermint/go-amino"
-	"github.com/tendermint/go-crypto"
-
-	cmn "github.com/tendermint/tmlibs/common"
-	"gopkg.in/check.v1"
 )
 
 const (
+	keystore  = ".keystore"
 	ownerName = "local_owner"
 	password  = "12345678"
 )
@@ -34,8 +27,7 @@ var (
 func init() {
 	crypto.RegisterAmino(cdc)
 	crypto.SetChainId("local")
-	kms.InitKMS("./.keystore", "local_mode", "", "", "0x1003")
-	kms.GenPrivKey(ownerName, []byte(password))
+	wal.NewAccount(keystore, ownerName, password)
 }
 
 // Hook up goCheck into the "go test" runner.
@@ -51,7 +43,9 @@ func (mysuit *MySuite) TestDice2Win_SetSecretSigner(c *check.C) {
 	contractOwner := utest.DeployContract(c, contractName, orgID, contractMethods, contractInterfaces)
 	test := NewTestObject(contractOwner)
 
-	pubKey, _ := kms.GetPubKey(ownerName, []byte(password))
+	acct, _ := wal.LoadAccount(keystore, ownerName, password)
+	pbk := acct.PubKey().(crypto.PubKeyEd25519)
+	pubKey := pbk[:]
 
 	account := utest.NewAccount(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1000000000))
 
@@ -201,7 +195,7 @@ func (mysuit *MySuite) TestDice2Win_SetRecvFeeInfos(c *check.C) {
 	recvFeeInfo = append(recvFeeInfo[:1], recvFeeInfo[2:]...)
 	item3 := RecvFeeInfo{
 		Ratio:   500,
-		Address: test.obj.sdk.Helper().BlockChainHelper().CalcAccountFromName(contractName),
+		Address: test.obj.sdk.Helper().BlockChainHelper().CalcAccountFromName(contractName, orgID),
 	}
 	recvFeeInfo = append(recvFeeInfo, item3)
 	resBytes5, _ := jsoniter.Marshal(recvFeeInfo)
@@ -381,11 +375,11 @@ func (mysuit *MySuite) TestDice2Win_RefundBet(c *check.C) {
 //hempHeight 想对于下注高度和生效高度之间的差值
 //acct 合约的owner
 func PlaceBetHelper(tempHeight int64) (commitLastBlock int64, pubKey [32]byte, reveal, commit []byte, signData [64]byte) {
-	acct := Load("./.keystore/local_owner.wal", []byte(password), nil)
+	acct, _ := wal.LoadAccount(".keystore", "local_owner", password)
 
 	localBlockHeight := utest.UTP.ISmartContract.Block().Height()
 
-	pubKey = acct.PubKey.(crypto.PubKeyEd25519)
+	pubKey = acct.PubKey().(crypto.PubKeyEd25519)
 
 	commitLastBlock = localBlockHeight + tempHeight
 	decode := crypto.CRandBytes(32)
@@ -395,26 +389,7 @@ func PlaceBetHelper(tempHeight int64) (commitLastBlock int64, pubKey [32]byte, r
 	commit = algorithm.SHA3256(reveal)
 
 	signByte := append(bn.N(commitLastBlock).Bytes(), commit...)
-	signData = acct.PrivKey.Sign(signByte).(crypto.SignatureEd25519)
+	signData = acct.PrivateKey.Sign(signByte).(crypto.SignatureEd25519)
 
-	return
-}
-
-func Load(keystorePath string, password, fingerprint []byte) (acct *keys.Account) {
-	if keystorePath == "" {
-		cmn.PanicSanity("Cannot loads account because keystorePath not set")
-	}
-
-	walBytes, mErr := ioutil.ReadFile(keystorePath)
-	sdk.RequireNotError(mErr, types.ErrInvalidParameter)
-
-	jsonBytes, mErr := algorithm.DecryptWithPassword(walBytes, password, fingerprint)
-	sdk.RequireNotError(mErr, types.ErrInvalidParameter)
-
-	acct = new(keys.Account)
-	mErr = cdc.UnmarshalJSON(jsonBytes, acct)
-	sdk.RequireNotError(mErr, types.ErrInvalidParameter)
-
-	acct.KeystorePath = keystorePath
 	return
 }

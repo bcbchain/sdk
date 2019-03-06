@@ -2,10 +2,9 @@ package bn
 
 import (
 	"encoding/json"
+	"github.com/stretchr/testify/assert"
 	"reflect"
 	"testing"
-
-	"gotest.tools/assert"
 )
 
 func TestNB(t *testing.T) {
