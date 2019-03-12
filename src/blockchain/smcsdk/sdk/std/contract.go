@@ -3,6 +3,7 @@ package std
 import (
 	"blockchain/smcsdk/sdk/types"
 	"fmt"
+	"github.com/tendermint/go-crypto"
 )
 
 const (
@@ -88,6 +89,14 @@ type ContractMeta struct {
 	CodeDevSig   []byte        `json:"codeDevSig"`
 	CodeOrgSig   []byte        `json:"codeOrgSig"`
 }
+
+// ContractWithEffectHeight contract address and is upgrade or not for effect height
+type ContractWithEffectHeight struct {
+	ContractAddr types.Address `json:"contractAddr"`
+	IsUpgrade    bool          `json:"isUpgrade"`
+}
+
+func KeyOfContractWithEffectHeight(height string) string { return "/" + height }
 
 // KeyOfContract the access key for contract in state database
 // data for this key refer Contract

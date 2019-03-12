@@ -15,6 +15,7 @@ import (
 	"blockchain/smcsdk/sdkimpl"
 	"blockchain/smcsdk/sdkimpl/object"
 	"blockchain/smcsdk/sdkimpl/sdkhelper"
+	"github.com/tendermint/go-crypto"
 	"github.com/tendermint/tmlibs/log"
 )
 

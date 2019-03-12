@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+
+	"github.com/tendermint/go-crypto"
 )
 
 // 验证签名

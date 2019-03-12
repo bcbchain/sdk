@@ -9,10 +9,13 @@ import (
 	"sync"
 	"time"
 
-	"common/rpc/lib/types"
 	"github.com/gorilla/websocket"
 	"github.com/pkg/errors"
+	"github.com/rcrowley/go-metrics"
 
+	types "common/rpc/lib/types"
+
+	"github.com/tendermint/go-amino"
 	cmn "github.com/tendermint/tmlibs/common"
 )
 

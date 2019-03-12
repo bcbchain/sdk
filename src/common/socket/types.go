@@ -1,8 +1,8 @@
 package socket
 
 import (
-	"bufio"
 	"common/jsoniter"
+	"bufio"
 	"encoding/binary"
 	"io"
 	"net"

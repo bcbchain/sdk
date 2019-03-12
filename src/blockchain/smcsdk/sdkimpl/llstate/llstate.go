@@ -108,20 +108,25 @@ func (ll *LowLevelSDB) Set(key string, value interface{}) {
 	// cache
 	ll.cache[key] = resBytes
 
-	sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s from stateDB, value=%v", ll.transID, ll.txID, key, value)
+	sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Set key=%s to stateDB, value=%v", ll.transID, ll.txID, key, value)
 }
 
 // McGet get the object in db map by key, and then return defaultData if it not exist
 func (ll *LowLevelSDB) McGet(key string, defaultValue interface{}) interface{} {
 	mc := sdkimpl.McInst.NewMc(ll.transID, key)
 	if result := mc.Get(); result != nil {
+		sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s from memory cache, value=%v", ll.transID, ll.txID, key, result)
 		return result
 	}
 
 	if result := ll.Get(key, defaultValue); result != nil {
+		sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s from stateDB, value=%v", ll.transID, ll.txID, key, result)
+
 		mc.Set(ll.txID, result)
 		return result
 	}
+	sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s failed", ll.transID, ll.txID, key)
+
 	return nil
 }
 
@@ -142,6 +147,7 @@ func (ll *LowLevelSDB) McSet(key string, value interface{}) {
 	ll.Set(key, value)
 
 	mc.Set(ll.txID, value)
+	sdkimpl.Logger.Debug("Set Memory Cache", "transID", ll.transID, "txID", ll.txID, "key", key, "value", value)
 }
 
 // Commit commit all set data

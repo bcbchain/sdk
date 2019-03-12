@@ -17,12 +17,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/tendermint/go-amino"
 	cmn "github.com/tendermint/tmlibs/common"
 	"github.com/tendermint/tmlibs/log"
 
-	"common/rpc/lib/client"
-	"common/rpc/lib/server"
-	"common/rpc/lib/types"
+	client "common/rpc/lib/client"
+	server "common/rpc/lib/server"
+	types "common/rpc/lib/types"
 )
 
 // Client and Server should work over tcp or unix sockets

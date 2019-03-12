@@ -14,8 +14,10 @@ import (
 	"strings"
 	"time"
 
-	"common/rpc/lib/types"
 	"github.com/pkg/errors"
+	"github.com/tendermint/go-amino"
+
+	types "common/rpc/lib/types"
 )
 
 // HTTPClient is a common interface for JSONRPCClient and URIClient.
@@ -123,7 +125,7 @@ func NewJSONRPCClientEx(remote, certFile string, disableKeepAlive bool) *JSONRPC
 	return &JSONRPCClient{
 		address: address,
 		client:  client,
-		cdc:     amino.NewCodec(),
+		cdc:     CDC,
 	}
 }
 

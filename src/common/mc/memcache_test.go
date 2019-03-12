@@ -28,7 +28,7 @@ func TestMemCache_Set(t *testing.T) {
 	testMcSet(t, mc, txid, data)
 }
 
-func testNewMc(t *testing.T, mi *McInstance, transid int64, key string) *MemCache {
+func testNewMc(t *testing.T, mi *Instance, transid int64, key string) *MemCache {
 	mc := mi.NewMc(transid, key)
 	t.Log("Starting testNewMc()")
 	t.Log("    transId = ", transid, ", key = ", key)
@@ -54,7 +54,7 @@ func testMcSet(t *testing.T, mc *MemCache, txid int64, data interface{}) {
 	}
 }
 
-func testCommitTrans(t *testing.T, mi *McInstance, transid int64) {
+func testCommitTrans(t *testing.T, mi *Instance, transid int64) {
 	t.Log("Starting testCommitTrans()")
 	mcs := mi.mcCache[transid]
 	keys := make([]string, 0)

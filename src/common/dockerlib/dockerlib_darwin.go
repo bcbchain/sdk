@@ -3,7 +3,6 @@ package dockerlib
 import (
 	"net"
 	"strings"
-	"sync"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -14,32 +13,9 @@ import (
 	"golang.org/x/net/context"
 )
 
-// TODO: 目前達爾文是 linux 的拷貝，水果系統上未見與 linux 不同的地方，記得一起改
-
 // DockerLib 是我們自定義的 Docker API 的 Wrapper
 type DockerLib struct {
 	logger log.Logger
-}
-
-var (
-	myLib        *DockerLib
-	instanceOnce sync.Once
-	initOnce     sync.Once
-)
-
-// GetDockerLib 初始化得到 DockerLib 對象指針
-func GetDockerLib() *DockerLib {
-	instanceOnce.Do(func() {
-		myLib = &DockerLib{}
-	})
-	return myLib
-}
-
-// Init 傳入日志對象，不能不傳
-func (l *DockerLib) Init(log log.Logger) {
-	initOnce.Do(func() {
-		l.logger = log
-	})
 }
 
 // GetMyIntranetIP 獲得本機局網網卡 IP，如有多個，取第一個
@@ -75,33 +51,6 @@ func (l *DockerLib) GetDockerHubIP() string {
 		l.logger.Warn("GetDockerHubIP got strange output:", "stdout", params.FirstOutput)
 	}
 	return listStr[2] // this is the result
-}
-
-// Mounts DockerRun所需目錄映射
-type Mounts struct {
-	Source      string
-	Destination string
-	ReadOnly    bool
-}
-
-// HostPort DockerRun 需要映射到的本機 IP 和 端口
-type HostPort struct {
-	Port string
-	Host string
-}
-
-// DockerRunParams 運行 Docker 容器需要的參數，避免調用者還依賴 Docker API
-type DockerRunParams struct {
-	Env         []string
-	Cmd         []string
-	WorkDir     string
-	Mounts      []Mounts
-	PortMap     map[string]HostPort
-	FirstOutput string // 回寫
-	NeedOut     bool   // 需要拿到控制臺輸出（只拿開始的內容，不能一直等，有些進程會一直輸出）
-	NeedRemove  bool   // 需要手工清理掉屍體
-	AutoRemove  bool   // 給 daemon 設置一下，如果它們掛了，就自己打掃戰場，不留垃圾
-	NeedWait    bool   // 等它執行結束（需要注意 daemon 不會結束）
 }
 
 // Run 運行 Docker 容器，執行某個功能。由於無法直接獲知Docker內Service的啓動狀態，請參考test文件中的處理辦法，或者在Service啓動的時候主動回調
@@ -175,10 +124,13 @@ func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerI
 		if err != nil {
 			l.logger.Warn("DockerLib Run Read From ContainerLogs cause ERROR:", "err", err)
 		}
-		if n <= 0 {
+		if n < 0 {
 			l.logger.Warn("DockerLib Run Read From ContainerLogs cause ERROR: output is zero length")
+		} else if n == 0 {
+			params.FirstOutput = ""
+		} else {
+			params.FirstOutput = string(byt)
 		}
-		params.FirstOutput = string(byt)
 	}
 	return true
 }
@@ -376,26 +328,31 @@ func (l *DockerLib) Reset(prefix string) bool {
 	return true
 }
 
-// GetDockerIP 通過容器的名字獲取容器 IP 地址
-func (l *DockerLib) GetDockerIP(containerName string) string {
-	ctx := context.Background()
-	cli, err := client.NewEnvClient()
-	if err != nil {
-		l.logger.Warn("DockerLib Reset NewEnvClient cause ERROR:", "err", err)
-	}
+// GetDockerContainerIP 通過容器的名字獲取容器 IP 地址
+func (l *DockerLib) GetDockerContainerIP(containerName string) string {
+	return "127.0.0.1"
+	// 以下代码可以拿到容器的IP，但在苹果系统上无法访问到，必须通过本地地址才能通过
+	// 网络访问容器内部
+	/*
+		ctx := context.Background()
+		cli, err := client.NewEnvClient()
+		if err != nil {
+			l.logger.Warn("DockerLib Reset NewEnvClient cause ERROR:", "err", err)
+		}
 
-	containerID := l.getContainerIDByName(ctx, cli, containerName)
-	if containerID == "" {
-		l.logger.Warn("DockerLib GetDockerIP no such container ERROR:", "name", containerName)
-		return ""
-	}
-	resp, err := cli.ContainerInspect(ctx, containerID)
-	if err != nil {
-		l.logger.Warn("DockerLib GetDockerIP ContainerInspect cause ERROR:", "name", containerName, "err", err)
-		return ""
-	}
+		containerID := l.getContainerIDByName(ctx, cli, containerName)
+		if containerID == "" {
+			l.logger.Warn("DockerLib GetDockerContainerIP no such container ERROR:", "name", containerName)
+			return ""
+		}
+		resp, err := cli.ContainerInspect(ctx, containerID)
+		if err != nil {
+			l.logger.Warn("DockerLib GetDockerContainerIP ContainerInspect cause ERROR:", "name", containerName, "err", err)
+			return ""
+		}
 
-	return resp.NetworkSettings.IPAddress
+		return resp.NetworkSettings.IPAddress
+	*/
 }
 
 func mapIP(s string) string {

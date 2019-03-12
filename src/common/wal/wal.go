@@ -11,11 +11,23 @@ import (
 	"io/ioutil"
 	"path/filepath"
 
+	"os"
+	"regexp"
+	"strings"
+	"unicode"
+
+	"github.com/tendermint/go-amino"
+	"github.com/tendermint/go-crypto"
 	cmn "github.com/tendermint/tmlibs/common"
 	"golang.org/x/crypto/sha3"
 )
 
 var cdc = amino.NewCodec()
+
+const (
+	pattern     = "^[a-zA-Z0-9_@.-]{1,40}$"
+	passwordErr = "Password contains by [letters, numbers, \"_\", \"@\", \".\" and \"-\"] and length must be [8-20]"
+)
 
 func init() {
 	crypto.RegisterAmino(cdc)
@@ -31,10 +43,19 @@ type Account struct {
 
 func NewAccount(keyStoreDir, name, password string) (acct *Account, err error) {
 	privateKey := crypto.GenPrivKeyEd25519()
+	err = checkName(name)
+	if err != nil {
+		Error(fmt.Sprintf("Create account \"%v\" failed, %v", name, err.Error()))
+		return
+	}
 	return ImportAccount(keyStoreDir, name, password, privateKey)
 }
 
 func ImportAccount(keyStoreDir, name, password string, privKey crypto.PrivKey) (acct *Account, err error) {
+	err = checkName(name)
+	if err != nil {
+		return
+	}
 	privateKey := privKey.(crypto.PrivKeyEd25519)
 	keyStoreFile := filepath.Join(keyStoreDir, name+".wal")
 
@@ -56,6 +77,11 @@ func ImportAccount(keyStoreDir, name, password string, privKey crypto.PrivKey) (
 }
 
 func LoadAccount(keyStoreDir, name, password string) (acct *Account, err error) {
+	err = checkName(name)
+	if err != nil {
+		Error(fmt.Sprintf("Load account \"%v\" failed, %v", name, err.Error()))
+		return
+	}
 	acct = &Account{}
 	keyStoreFile := filepath.Join(keyStoreDir, name+".wal")
 
@@ -73,6 +99,11 @@ func LoadAccount(keyStoreDir, name, password string) (acct *Account, err error) 
 		}
 	} else {
 		passwordBytes = []byte(password)
+	}
+	flag := checkPassword(string(passwordBytes))
+	if flag != true {
+		Error(fmt.Sprintf(passwordErr))
+		return
 	}
 
 	jsonBytes, err := algorithm.DecryptWithPassword(walBytes, passwordBytes, nil)
@@ -102,7 +133,6 @@ func (acct *Account) Save(password string) (err error) {
 }
 
 func (acct *Account) save(password string, notAllowExist bool) (err error) {
-
 	privkey := acct.PrivateKey.(crypto.PrivKeyEd25519)
 	sha256 := sha3.New256()
 	sha256.Write([]byte(acct.Name))
@@ -137,6 +167,11 @@ func (acct *Account) save(password string, notAllowExist bool) (err error) {
 	} else {
 		passwordBytes = []byte(password)
 	}
+	flag := checkPassword(string(passwordBytes))
+	if flag != true {
+		Error(fmt.Sprintf(passwordErr))
+		return err
+	}
 
 	jsonBytes, err := cdc.MarshalJSON(acct)
 	if err != nil {
@@ -147,6 +182,52 @@ func (acct *Account) save(password string, notAllowExist bool) (err error) {
 	if err != nil {
 		return err
 	}
+	return
+}
+
+// Check name format of wallet
+func checkName(name string) error {
+	valid, err := regexp.Match(pattern, []byte(name))
+	if err != nil {
+		return errors.New("Regular expression error=" + err.Error())
+	}
+	if !valid {
+		return errors.New(`Name contains by [letters, numbers, "_", "@", "." and "-"] and length must be [1-40] `)
+	}
+
+	return nil
+}
+
+// Check password format of wallet
+func checkPassword(s string) (flag bool) {
+	ascOther := ` !"#$%&'()*+,-/:;<=>?[]\^{|}~@_.` + "`"
+	count := 0
+	number := false
+	upper := false
+	lower := false
+	special := false
+	other := true
+	for _, c := range s {
+		switch {
+		case unicode.IsNumber(c):
+			number = true
+			count++
+		case unicode.IsUpper(c):
+			upper = true
+			count++
+		case unicode.IsLower(c):
+			lower = true
+			count++
+		case strings.Contains(ascOther, string(c)):
+			special = true
+			count++
+		default:
+			other = false
+		}
+	}
+
+	flag = number && upper && lower && special && other && 8 <= count && count <= 20
+
 	return
 }
 
@@ -172,4 +253,9 @@ func (acct *Account) SignBinFile(binFile, sigFile string) (err error) {
 
 func (acct *Account) SignTextFile(textFile, sigFile string) (err error) {
 	return sig.SignTextFile(acct.PrivateKey, textFile, sigFile)
+}
+
+func Error(s string) {
+	fmt.Printf("ERROR! -- %v\n", s)
+	os.Exit(1)
 }

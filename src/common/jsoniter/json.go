@@ -1,5 +1,9 @@
 package jsoniter
 
+import (
+	"github.com/json-iterator/go"
+)
+
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // Marshal convert object to JSON

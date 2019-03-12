@@ -6,6 +6,7 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
+	"github.com/json-iterator/go"
 	"github.com/tendermint/tmlibs/log"
 	"math"
 	"net"

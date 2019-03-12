@@ -12,6 +12,10 @@ import (
 	"fmt"
 	"math"
 	"testing"
+
+	"github.com/tendermint/go-amino"
+	"github.com/tendermint/go-crypto"
+	"gopkg.in/check.v1"
 )
 
 const (

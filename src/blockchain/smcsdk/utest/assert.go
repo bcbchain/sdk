@@ -10,6 +10,7 @@ import (
 	"blockchain/smcsdk/sdk/jsoniter"
 	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
+	"gopkg.in/check.v1"
 )
 
 // Assert assert true

@@ -3,6 +3,8 @@ package types
 import (
 	"time"
 
+	"github.com/tendermint/go-crypto"
+
 	"github.com/tendermint/tmlibs/common"
 )
 

@@ -117,9 +117,10 @@ func (th *TokenHelper) RegisterToken(
 	// get contract's list with current contract name
 	th.smc.Helper().ContractHelper().(*ContractHelper).UpdateContractsToken(token.Address())
 
-	// update owner's balance
+	// update owner's balance and account's token key
 	ownerAcct := th.smc.Helper().AccountHelper().AccountOf(token.Owner())
 	ownerAcct.(*object.Account).SetBalanceOfToken(token.Address(), token.TotalSupply())
+	ownerAcct.(*object.Account).AddAccountTokenKey(std.KeyOfAccountToken(ownerAcct.Address(), tokenAddr))
 
 	// fire event of NewToken
 	th.smc.Helper().ReceiptHelper().Emit(

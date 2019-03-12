@@ -4,6 +4,7 @@ import (
 	"blockchain/types"
 	"bufio"
 	"container/list"
+	"github.com/json-iterator/go"
 	"github.com/tendermint/tmlibs/log"
 	"net"
 	"os"

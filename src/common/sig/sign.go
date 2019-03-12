@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"strings"
 
+	"github.com/tendermint/go-crypto"
 	cmd "github.com/tendermint/tmlibs/common"
 )
 
