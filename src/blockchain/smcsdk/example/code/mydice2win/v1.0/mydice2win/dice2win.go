@@ -15,7 +15,7 @@ import (
 //@:contract:mydice2win
 //@:version:1.0
 //@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
-//@:author:2b6cab2f53a83f2d08807010533bc53785edfda0aed55028336914ccebadbc94
+//@:author:75d01c5b088ed5f9c3b008747d99040b785365a473d9a03414033239ec88f719
 type Dice2Win struct {
 	sdk sdk.ISmartContract
 
@@ -62,6 +62,16 @@ func (dw *Dice2Win) InitChain() {
 
 	dw._setSettings(&settings)
 	dw._setLockedAmount(dw.sdk.Helper().GenesisHelper().Token().Name(), bn.N(0))
+}
+
+// UpdateChain - construct function
+//@:constructor
+func (dw *Dice2Win) UpdateChain() {
+	// update data
+	settings := dw._settings()
+	settings.BetExpirationBlocks = 100
+
+	dw._setSettings(settings)
 }
 
 // SetSecretSigner - Set the secret signer

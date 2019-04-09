@@ -1,6 +1,7 @@
 package types
 
 import (
+	"github.com/gogo/protobuf/proto"
 	"time"
 
 	"github.com/tendermint/go-crypto"
@@ -97,3 +98,8 @@ type Response struct {
 	TxHash   common.HexBytes `protobuf:"bytes,9,opt,name=tx_hash,json=txHash,proto3" json:"tx_hash,omitempty"`
 	Height   int64           `protobuf:"varint,10,opt,name=height,proto3" json:"height,omitempty"`
 }
+
+func (m *Response) Reset()                    { *m = Response{} }
+func (*Response) ProtoMessage()               {}
+func (*Response) Descriptor() ([]byte, []int) { return nil, []int{0} }
+func (m *Response) String() string            { return proto.CompactTextString(m) }

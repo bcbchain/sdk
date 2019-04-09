@@ -1,11 +1,15 @@
 package dockerlib
 
 import (
+	"bytes"
+	"errors"
 	"os/exec"
 	"strings"
 	"syscall"
+	"time"
 
 	"github.com/tendermint/tmlibs/log"
+	xsha3 "golang.org/x/crypto/sha3"
 	"golang.org/x/net/context"
 )
 
@@ -19,7 +23,7 @@ type DockerLib struct {
 	containers map[string]container
 }
 
-const dockerHubIP = "172.17.0.1"
+const dockerHubIP = "127.0.0.1"
 
 // GetMyIntranetIP 獲得本機局網網卡 IP，如有多個，取第一個
 func (l *DockerLib) GetMyIntranetIP() string {
@@ -33,7 +37,10 @@ func (l *DockerLib) GetDockerHubIP() string {
 }
 
 // Run 運行 Docker 容器，執行某個功能
-func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRunParams) bool {
+func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRunParams) (bool, error) {
+	if l.containers == nil {
+		l.containers = make(map[string]container)
+	}
 	l.logger.Info("DockerLib Run", "image", dockerImageName, "containerName", containerName, "params", params)
 
 	container, found := l.containers[containerName]
@@ -45,24 +52,65 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 	}
 	container.cancel = nil
 
+	ctx, cancel := context.WithCancel(context.Background())
+	cmd := exec.CommandContext(ctx, cmdName, cmdParams...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+
+	cmd.Dir = params.WorkDir
+	cmd.Env = params.Env
+
+	var out bytes.Buffer
+	cmd.Stdout = &out
+
+	if params.NeedWait {
+		var out bytes.Buffer
+		cmd.Stderr = &out
+		err := cmd.Run()
+		params.FirstOutput = out.String()
+		if err != nil {
+			return false, err
+		}
+		return true, nil
+	}
 	go func() {
-		ctx, cancel := context.WithCancel(context.Background())
-		cmd := exec.CommandContext(ctx, cmdName, cmdParams...)
-		cmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
-		cmd.Start()
+		err := cmd.Start()
+		if err != nil {
+			params.FirstOutput = err.Error()
+		}
+
 		container.cancel = cancel
-		cmd.Wait()
+		err = cmd.Wait()
+		if err != nil {
+			params.FirstOutput = err.Error()
+		}
 	}()
 
 	//等cancel被赋值，说明程序已经启动
+	beginTime := time.Now()
+	timeOut := 10.00 // wait 10s smcrunsvc start
+	for {
+		time.Sleep(time.Duration(time.Millisecond * 200))
+		if container.cancel != nil {
+			break
+		}
+		n := time.Now()
+		sub := n.Sub(beginTime).Seconds()
+		if sub > timeOut {
+			return false, errors.New("can not run file " + containerName)
+		}
+		continue
+	}
 	l.containers[containerName] = container
+	if params.FirstOutput == "" {
+		params.FirstOutput = out.String()
+	}
 
-	return true
+	return true, nil
 }
 
 // Kill 殺死一個 Docker 容器，並且清理現場
 func (l *DockerLib) Kill(containerName string) bool {
-	container,ok := l.containers[containerName]
+	container, ok := l.containers[containerName]
 	if ok {
 		container.cancel()
 	}
@@ -71,7 +119,7 @@ func (l *DockerLib) Kill(containerName string) bool {
 
 // Status 查詢一個容器的狀態
 func (l *DockerLib) Status(containerName string) bool {
-	_,ok := l.containers[containerName]
+	_, ok := l.containers[containerName]
 	if ok {
 		return true
 	}
@@ -80,8 +128,8 @@ func (l *DockerLib) Status(containerName string) bool {
 
 // Reset 殺掉所有自己啓動的容器(以特定字冠命名的)
 func (l *DockerLib) Reset(prefix string) bool {
-	for k,v := range l.containers{
-		if strings.HasPrefix(k,prefix){
+	for k, v := range l.containers {
+		if strings.HasPrefix(k, prefix) {
 			v.cancel()
 		}
 	}
@@ -90,5 +138,14 @@ func (l *DockerLib) Reset(prefix string) bool {
 
 // GetDockerIP 通過容器的名字獲取容器 IP 地址
 func (l *DockerLib) GetDockerContainerIP(containerName string) string {
-	return "127.0.0.1"
+	return dockerHubIP
+}
+
+func Sum256(datas ...[]byte) []byte {
+
+	hasher := xsha3.New256()
+	for _, data := range datas {
+		hasher.Write(data)
+	}
+	return hasher.Sum(nil)
 }

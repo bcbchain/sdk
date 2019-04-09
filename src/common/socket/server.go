@@ -4,6 +4,7 @@ import (
 	"blockchain/types"
 	"bufio"
 	"container/list"
+	"fmt"
 	"github.com/json-iterator/go"
 	"github.com/tendermint/tmlibs/log"
 	"net"
@@ -31,6 +32,8 @@ type Server struct {
 
 // NewServer newServer to create server object about socket and listen client connection
 func NewServer(listenAddr string, methods map[string]CallBackFunc, timeout time.Duration, logger log.Logger) (svr *Server, err error) {
+
+	logger.Info(fmt.Sprintf("New server with listenaddr=%s, methods=%v, timeout=%d", listenAddr, methods, timeout))
 	server := Server{
 		listenAddr: listenAddr,
 		methods:    methods,
@@ -71,9 +74,11 @@ func (svr *Server) Start() (err error) {
 		}
 
 		// save connection
+		svr.mtx.Lock()
 		svr.connList.PushBack(cliConn)
+		svr.mtx.Unlock()
 
-		svr.logger.Info("Accept", "RemoteAddr", cliConn.RemoteAddr())
+		svr.logger.Info("Accept new connection", "RemoteAddr", cliConn.RemoteAddr())
 		go svr.readRequest(cliConn)
 	}
 }
@@ -113,7 +118,6 @@ func (svr *Server) readRequest(conn net.Conn) {
 func (svr *Server) handleRequest(req *Request, conn net.Conn) {
 	defer serverRecover(conn, req)
 
-	svr.logger.Debug(req.Method)
 	method := svr.methods[req.Method]
 	if method == nil {
 		panic("Invalid method")
@@ -124,7 +128,7 @@ func (svr *Server) handleRequest(req *Request, conn net.Conn) {
 		panic(err)
 	}
 
-	svr.logger.Debug("handlerRequest method result", "res", res)
+	svr.logger.Debug(fmt.Sprintf("handlerRequest req=%v result", req), "res", res)
 	var resp Response
 	resp.Code = types.CodeOK
 	resp.Log = "ok"
@@ -152,6 +156,8 @@ func (svr *Server) close(conn net.Conn) {
 		svr.logger.Info("Close connection error: " + err.Error())
 	}
 
+	svr.mtx.Lock()
+	defer svr.mtx.Unlock()
 	next := svr.connList.Front()
 	for next != nil {
 		if next.Value.(net.Conn) == conn {

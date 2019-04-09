@@ -1,7 +1,7 @@
 package types // nolint: goimports
 
 import (
-	context "golang.org/x/net/context"
+	"golang.org/x/net/context"
 )
 
 // Application is an interface that enables any finite, deterministic state machine
@@ -42,7 +42,7 @@ func (BaseApplication) Info(req RequestInfo) ResponseInfo {
 }
 
 func (BaseApplication) SetOption(req RequestSetOption) ResponseSetOption {
-	return ResponseSetOption{}
+	return ResponseSetOption{Code: CodeTypeOK}
 }
 
 func (BaseApplication) DeliverTx(tx []byte) ResponseDeliverTx {
@@ -62,11 +62,11 @@ func (BaseApplication) Query(req RequestQuery) ResponseQuery {
 }
 
 func (BaseApplication) InitChain(req RequestInitChain) ResponseInitChain {
-	return ResponseInitChain{}
+	return ResponseInitChain{Code: CodeTypeOK}
 }
 
 func (BaseApplication) BeginBlock(req RequestBeginBlock) ResponseBeginBlock {
-	return ResponseBeginBlock{}
+	return ResponseBeginBlock{Code: CodeTypeOK}
 }
 
 func (BaseApplication) EndBlock(req RequestEndBlock) ResponseEndBlock {

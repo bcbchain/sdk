@@ -69,7 +69,7 @@ type IContract interface {
 	Version() string              //合约版本
 	CodeHash() types.Hash         //合约代码的哈希
 	EffectHeight() int64          ///合约生效的区块高度
-	LoseEffect() int64            //合约失效的区块高度
+	LoseHeight() int64            //合约失效的区块高度
 	KeyPrefix() string            //合约在状态数据库中KEY值的前缀
 	Methods() []std.Method        //合约对外提供接的方法列表
 	Interfaces() []std.Method     //合约对外提供的跨合约调用方法列表

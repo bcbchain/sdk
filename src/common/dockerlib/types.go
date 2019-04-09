@@ -32,6 +32,7 @@ type DockerRunParams struct {
 	WorkDir     string
 	Mounts      []Mounts
 	PortMap     map[string]HostPort
+	NeedPull    bool   // 因为有些主机没有因特网，你懂的原因，可能会导致一些未知错误，我们就手工load，然后不pull了吧
 	FirstOutput string // 回寫
 	NeedOut     bool   // 需要拿到控制臺輸出（只拿開始的內容，不能一直等，有些進程會一直輸出）
 	NeedRemove  bool   // 需要手工清理掉屍體

@@ -109,11 +109,10 @@ func (s *SocketServer) acceptConnectionsRoutine() {
 			continue
 		}
 
-		s.Logger.Info("Accepted a new connection")
-
 		connID := s.addConn(conn)
+		s.Logger.Info("Accepted a new connection", "connID", connID)
 
-		closeConn := make(chan error, 2)              // Push to signal connection closed
+		closeConn := make(chan error, 5)              // Push to signal connection closed
 		responses := make(chan *types.Response, 1000) // A channel to buffer responses
 
 		// Read requests from conn and deal with them
@@ -129,7 +128,7 @@ func (s *SocketServer) acceptConnectionsRoutine() {
 func (s *SocketServer) waitForClose(closeConn chan error, connID int) {
 	err := <-closeConn
 	if err == io.EOF {
-		s.Logger.Error("Connection was closed by client")
+		s.Logger.Error("Connection was closed by client", "connID", connID)
 	} else if err != nil {
 		s.Logger.Error("Connection error", "error", err)
 	} else {
@@ -145,8 +144,10 @@ func (s *SocketServer) waitForClose(closeConn chan error, connID int) {
 
 // Read requests from conn and deal with them
 func (s *SocketServer) handleRequests(closeConn chan error, conn net.Conn, responses chan<- *types.Response) {
-	var count int
+	//var count int
 	var bufReader = bufio.NewReader(conn)
+	var connMtx sync.Mutex
+
 	for {
 
 		var req = &types.Request{}
@@ -159,10 +160,10 @@ func (s *SocketServer) handleRequests(closeConn chan error, conn net.Conn, respo
 			}
 			return
 		}
-		s.appMtx.Lock()
-		count++
+		connMtx.Lock()
+		//count++
 		s.handleRequest(conn, req, responses)
-		s.appMtx.Unlock()
+		connMtx.Unlock()
 	}
 }
 
@@ -209,7 +210,7 @@ func (s *SocketServer) handleRequest(conn net.Conn, req *types.Request, response
 
 // Pull responses from 'responses' and write them to conn.
 func (s *SocketServer) handleResponses(closeConn chan error, conn net.Conn, responses <-chan *types.Response) {
-	var count int
+	//var count int
 	var bufWriter = bufio.NewWriter(conn)
 	for {
 		var res = <-responses
@@ -225,6 +226,6 @@ func (s *SocketServer) handleResponses(closeConn chan error, conn net.Conn, resp
 				return
 			}
 		}
-		count++
+		//count++
 	}
 }

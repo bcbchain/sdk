@@ -62,6 +62,9 @@ func CalcAddressFromCdcPubKey(pubKey []byte) crypto.Address {
 }
 
 func CheckAddress(chainID string, addr string) error {
+	if addr == "" {
+		return errors.New("Address cannot be empty!")
+	}
 	if !strings.HasPrefix(addr, chainID) {
 		return errors.New("Address chainid is error!")
 	}

@@ -25,3 +25,5 @@ type Block struct {
 // KeyOfAppState the access key for appState in state database
 // data for this key refer AppState
 func KeyOfAppState() string { return "/world/appstate" }
+
+func KeyOfGenesisChainVersion() string { return "/genesis/chainversion" }

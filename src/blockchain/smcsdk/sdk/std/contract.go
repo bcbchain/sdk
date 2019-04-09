@@ -3,6 +3,7 @@ package std
 import (
 	"blockchain/smcsdk/sdk/types"
 	"fmt"
+
 	"github.com/tendermint/go-crypto"
 )
 
@@ -50,12 +51,13 @@ type Contract struct {
 	Version      string        `json:"version"`      //合约版本
 	CodeHash     types.Hash    `json:"codeHash"`     //合约代码的哈希
 	EffectHeight int64         `json:"effectHeight"` //合约生效的区块高度
-	LoseEffect   int64         `json:"loseEffect"`   //合约失效的区块高度
+	LoseHeight   int64         `json:"loseHeight"`   //合约失效的区块高度
 	KeyPrefix    string        `json:"keyPrefix"`    //合约在状态数据库中KEY值的前缀
 	Methods      []Method      `json:"methods"`      //合约对外提供接口的方法列表
 	Interfaces   []Method      `json:"interfaces"`   //合约提供的跨合约调用的方法列表
 	Token        types.Address `json:"token"`        //合约代币地址
 	OrgID        string        `json:"orgID"`        //组织ID
+	ChainVersion int64         `json:"chainVersion"` //链版本
 }
 
 // BuildResult build result information
@@ -96,7 +98,13 @@ type ContractWithEffectHeight struct {
 	IsUpgrade    bool          `json:"isUpgrade"`
 }
 
+// KeyOfContractWithEffectHeight the access key for effective contract with height
+// data for this key refer ContractWithEffectHeight
 func KeyOfContractWithEffectHeight(height string) string { return "/" + height }
+
+// KeyOfAllContracts the access key for all contract
+// data for this key refer []types.Address
+func KeyOfAllContracts() string { return "/contract/all/0" }
 
 // KeyOfContract the access key for contract in state database
 // data for this key refer Contract
@@ -126,3 +134,6 @@ func GetGenesisContractAddr(chainID string) string {
 	addr := p.Address()
 	return addr
 }
+
+// GetOrganizaitionInfo get organization information
+func GetOrganizaitionInfo(OrgID string) string { return "/organization/" + OrgID }

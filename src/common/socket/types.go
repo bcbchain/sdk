@@ -1,8 +1,8 @@
 package socket
 
 import (
-	"common/jsoniter"
 	"bufio"
+	"common/jsoniter"
 	"encoding/binary"
 	"io"
 	"net"
@@ -25,8 +25,9 @@ type Response struct {
 }
 
 type ReqResp struct {
-	Index    uint64
-	RespChan chan *Response
+	Index     uint64
+	RespChan  chan *Response
+	CloseChan chan error
 }
 
 const (

@@ -26,7 +26,7 @@ var cdc = amino.NewCodec()
 
 const (
 	pattern     = "^[a-zA-Z0-9_@.-]{1,40}$"
-	passwordErr = "Password contains by [letters, numbers, \"_\", \"@\", \".\" and \"-\"] and length must be [8-20]"
+	passwordErr = "Password contains by [letters, numbers, ASCII 32 through 127] and length must be [8-20]"
 )
 
 func init() {
@@ -86,6 +86,11 @@ func LoadAccount(keyStoreDir, name, password string) (acct *Account, err error) 
 	keyStoreFile := filepath.Join(keyStoreDir, name+".wal")
 
 	fmt.Println(keyStoreFile)
+
+	_, err = os.Stat(keyStoreFile)
+	if os.IsNotExist(err) {
+		return nil, errors.New("KeyStorePath does not exist")
+	}
 	walBytes, err := ioutil.ReadFile(keyStoreFile)
 	if err != nil {
 		return nil, errors.New("account does not exist")

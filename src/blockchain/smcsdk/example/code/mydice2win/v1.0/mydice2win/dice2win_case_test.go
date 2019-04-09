@@ -21,7 +21,7 @@ import (
 const (
 	keystore  = ".keystore"
 	ownerName = "local_owner"
-	password  = "12345678"
+	password  = "Aa@123456"
 )
 
 var (

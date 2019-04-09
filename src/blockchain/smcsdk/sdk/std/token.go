@@ -18,6 +18,10 @@ type Token struct {
 	GasPrice         int64         `json:"gasPrice"`         //代币燃料价格
 }
 
+// KeyOfAllToken the access key for all tokens
+// data for this key refer []types.Address
+func KeyOfAllToken() string { return "/token/all/0" }
+
 // KeyOfToken for create key for token with address
 // data for this key refer Token
 func KeyOfToken(tokenAddr types.Address) string { return "/token/" + tokenAddr }

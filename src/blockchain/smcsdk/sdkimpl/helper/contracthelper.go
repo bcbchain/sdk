@@ -52,7 +52,7 @@ func (ch *ContractHelper) ContractOfToken(tokenAddr types.Address) sdk.IContract
 	}
 
 	otherContract := other.(*std.Contract)
-	if ch.smc.Block().Height() >= otherContract.EffectHeight && (ch.smc.Block().Height() < otherContract.LoseEffect || otherContract.LoseEffect == 0) {
+	if ch.smc.Block().Height() >= otherContract.EffectHeight && (ch.smc.Block().Height() < otherContract.LoseHeight || otherContract.LoseHeight == 0) {
 		return object.NewContractFromSTD(ch.smc, otherContract)
 	}
 

@@ -1,11 +1,14 @@
 package dockerlib
 
 import (
+	"errors"
+	"io"
 	"net"
 	"strings"
 
-	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+
+	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 	"github.com/docker/go-connections/nat"
@@ -43,7 +46,8 @@ func (l *DockerLib) GetDockerHubIP() string {
 		NeedWait:   true,
 		NeedRemove: true,
 	}
-	if !l.Run("alpine:latest", "", &params) {
+	ok, _ := l.Run("alpine:latest", "", &params)
+	if !ok {
 		return ""
 	}
 	listStr := strings.Split(params.FirstOutput, " ")
@@ -54,19 +58,30 @@ func (l *DockerLib) GetDockerHubIP() string {
 }
 
 // Run 運行 Docker 容器，執行某個功能。由於無法直接獲知Docker內Service的啓動狀態，請參考test文件中的處理辦法，或者在Service啓動的時候主動回調
-func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRunParams) bool {
+func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRunParams) (bool, error) {
 	l.logger.Info("DockerLib Run", "image", dockerImageName, "containerName", containerName, "params", params)
 	ctx := context.Background()
 	cli, err := client.NewEnvClient()
 	if err != nil {
 		l.logger.Warn("DockerLib Run NewEnvClient Error:", "err", err)
-		return false
+		return false, errors.New("DockerLib Run NewEnvClient Error:" + err.Error())
 	}
 
-	if !l.ensureImage(ctx, cli, dockerImageName) {
-		return false
+	if params.NeedPull {
+		// pull image，三次机会，还不成功可以手动获取
+		imageOK := false
+		for i := 0; i < 3; i++ {
+			imageOK, err = l.ensureImage(ctx, cli, dockerImageName)
+			if imageOK {
+				break
+			} else {
+				continue
+			}
+		}
+		if !imageOK {
+			return false, err
+		}
 	}
-
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
 			Image:        dockerImageName,
@@ -82,23 +97,23 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 		}, nil, containerName)
 	if err != nil {
 		l.logger.Warn("DockerLib Run ContainerCreate Error:", "err", err)
-		return false
+		return false, errors.New("DockerLib Run ContainerCreate Error:" + err.Error())
 	}
 
 	if err := cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
 		l.logger.Warn("DockerLib Run ContainerStart Error:", "err", err)
-		return false
+		return false, errors.New("DockerLib Run ContainerStart Error:" + err.Error())
 	}
 
 	if params.NeedWait {
 		if _, err = cli.ContainerWait(ctx, resp.ID); err != nil {
 			l.logger.Warn("DockerLib Run ContainerWait Error:", "err", err)
-			return false
+			return false, errors.New("DockerLib Run ContainerWait Error:" + err.Error())
 		}
 	}
 
 	if !l.feedBack(ctx, cli, resp.ID, params) {
-		return false
+		return false, errors.New("DockerLib Run feedBack Error")
 	}
 
 	if params.NeedRemove {
@@ -108,7 +123,7 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 		}
 	}
 
-	return true
+	return true, nil
 }
 
 func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerID string, params *DockerRunParams) bool {
@@ -121,7 +136,7 @@ func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerI
 
 		byt := make([]byte, 3000)
 		n, err := out.Read(byt)
-		if err != nil {
+		if err != nil && err != io.EOF {
 			l.logger.Warn("DockerLib Run Read From ContainerLogs cause ERROR:", "err", err)
 		}
 		if n < 0 {
@@ -129,7 +144,7 @@ func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerI
 		} else if n == 0 {
 			params.FirstOutput = ""
 		} else {
-			params.FirstOutput = string(byt)
+			params.FirstOutput = string(byt[:n])
 		}
 	}
 	return true
@@ -171,36 +186,42 @@ func assembleMounts(params *DockerRunParams) []mount.Mount {
 	return mounts
 }
 
-func (l *DockerLib) ensureImage(ctx context.Context, cli *client.Client, imageName string) bool {
+func (l *DockerLib) ensureImage(ctx context.Context, cli *client.Client, imageName string) (bool, error) {
 	images, err := cli.ImageList(ctx, types.ImageListOptions{})
 	if err != nil {
 		l.logger.Warn("DockerLib Run ImageList Error:", "err", err)
-		return false
+		return false, errors.New("DockerLib Run ImageList Error:" + err.Error())
 	}
 
 	if notExists(images, imageName) {
 		p, err := cli.ImagePull(ctx, imageName, types.ImagePullOptions{})
-		defer p.Close()
+		defer func() {
+			if p != nil {
+				if e := p.Close(); e != nil {
+					l.logger.Warn(e.Error())
+				}
+			}
+		}()
 		if err != nil {
 			l.logger.Warn("DockerLib Run ImagePull Error:", "err", err)
-			return false
+			return false, errors.New("DockerLib Run ImagePull Error:" + err.Error())
 		}
 
 		byt := make([]byte, 500)
 		for {
-			_, err := p.Read(byt)
-			if err != nil {
+			n, err := p.Read(byt)
+			if err != nil && err != io.EOF {
 				l.logger.Info("DockerLib ImagePull can't Read output", "err", err)
 				break
 			} else {
 				if strings.Contains(string(byt), "Downloaded") || strings.Contains(string(byt), "up to date") {
-					l.logger.Debug("DockerLib ImagePull:", "result", string(byt))
+					l.logger.Debug("DockerLib ImagePull:", "result", string(byt[:n]))
 					break
 				}
 			}
 		}
 	}
-	return true
+	return true, nil
 }
 
 func notExists(images []types.ImageSummary, imageName string) bool {

@@ -54,7 +54,7 @@ func upgradeContract(contractName, orgID string, methods, interfaces []string) s
 	if err != nil {
 		panic(err.Error())
 	}
-	contract.LoseEffect = UTP.Block().Height() + 1
+	contract.LoseHeight = UTP.Block().Height() + 1
 	cons := make(map[string][]byte)
 	byteCon1, err := jsoniter.Marshal(contract)
 	if err != nil {
@@ -70,7 +70,7 @@ func upgradeContract(contractName, orgID string, methods, interfaces []string) s
 		Version:      "2.0",
 		CodeHash:     []byte(contractName + "Hash"),
 		EffectHeight: UTP.Block().Height() + 1,
-		LoseEffect:   0,
+		LoseHeight:   0,
 		KeyPrefix:    contract.KeyPrefix,
 		Methods:      make([]std.Method, 0),
 		Token:        contract.Token,
@@ -128,7 +128,7 @@ func deployContract(contractName, orgID string, methods, interfaces []string, lo
 		Version:      "1.0",
 		CodeHash:     []byte(contractName + "Hash"),
 		EffectHeight: 1,
-		LoseEffect:   0,
+		LoseHeight:   0,
 		KeyPrefix:    "/" + contractName,
 		Methods:      make([]std.Method, 0),
 		Token:        "", // TODO

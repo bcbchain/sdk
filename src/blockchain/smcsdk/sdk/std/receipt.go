@@ -66,3 +66,8 @@ type NewToken struct {
 	BurnEnabled      bool          `json:"burnEnabled"`      // 代币是否支持燃烧
 	GasPrice         int64         `json:"gasPrice"`         // 代币燃料价格（单位：cong）
 }
+
+// AddAddress addAddress receipt information
+type AddressList struct {
+	Blacklist []types.Address `json:"blacklist"` // 黑名单地址
+}
