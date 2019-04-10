@@ -149,7 +149,7 @@ func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerI
 }
 
 func assemblePortSet(params *DockerRunParams) nat.PortSet {
-	portSet := make(map[nat.Port]struct{}, 0)
+	portSet := make(map[nat.Port]struct{})
 	for k := range params.PortMap {
 		p := nat.Port(k)
 		portSet[p] = struct{}{}
@@ -158,7 +158,7 @@ func assemblePortSet(params *DockerRunParams) nat.PortSet {
 }
 
 func assemblePortMap(params *DockerRunParams) nat.PortMap {
-	portMap := make(map[nat.Port][]nat.PortBinding, 0)
+	portMap := make(map[nat.Port][]nat.PortBinding)
 	for k, v := range params.PortMap {
 		p := nat.Port(k)
 		bindings := make([]nat.PortBinding, 1)
@@ -370,11 +370,11 @@ func (l *DockerLib) GetDockerContainerIP(containerName string) string {
 	return resp.NetworkSettings.IPAddress
 }
 
-func mapIP(s string) string {
-	return strings.Map(func(r rune) rune {
-		if r != 46 && (r < 48 || r > 57) { // 只留 [.0-9]
-			return -1
-		}
-		return r
-	}, s)
-}
+//func mapIP(s string) string {
+//	return strings.Map(func(r rune) rune {
+//		if r != 46 && (r < 48 || r > 57) { // 只留 [.0-9]
+//			return -1
+//		}
+//		return r
+//	}, s)
+//}

@@ -11,11 +11,8 @@ import (
 	"io"
 	"math"
 	"net"
-	"os"
-	"os/signal"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
 )
 
@@ -26,6 +23,8 @@ type Client struct {
 
 	addr             string
 	conn             net.Conn
+	w                *bufio.Writer
+	r                *bufio.Reader
 	timeout          time.Duration
 	disableKeepAlive bool
 
@@ -72,50 +71,34 @@ func (cli *Client) Call(method string, data map[string]interface{}) (value inter
 	if cli.disableKeepAlive {
 		defer cli.conn.Close()
 	}
-	cli.logger.Info(fmt.Sprintf("to %s have a new request, method=%s, data=%v, index=%d", cli.addr, method, data, req.Index))
+	cli.logger.Info(fmt.Sprintf("to %s have a new request, method=%s, index=%d", cli.addr, method, req.Index))
 
 	// wait response
 	respChan := make(chan *Response, 1)
 	closeChan := make(chan error, 1)
-	defer close(respChan)
-	defer close(closeChan)
 	cli.sentReq(req.Index, respChan, closeChan)
+	defer cli.removeReq(req.Index)
 
 	// send request
-	w := bufio.NewWriter(cli.conn)
 	cli.mtx.Lock()
-	err = writeMessage(req, w)
+	err = writeMessage(req, cli.w)
 	if err != nil {
 		cli.mtx.Unlock()
-		cli.removeReq(req.Index)
 		cli.logger.Error(fmt.Sprintf("index=%d request error=%s", req.Index, err.Error()))
 		return
 	}
-	err = w.Flush()
+	err = cli.w.Flush()
 	if err != nil {
 		cli.mtx.Unlock()
-		cli.removeReq(req.Index)
 		cli.logger.Error(fmt.Sprintf("index=%d request error=%s", req.Index, err.Error()))
 		return
 	}
 	cli.mtx.Unlock()
 
-	// notify system signal
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGHUP, syscall.SIGTERM)
-	go func() {
-		for sig := range c {
-			fmt.Printf("captured %v, exiting...\n", sig)
-			os.Exit(1)
-		}
-	}()
-
 	cli.logger.Debug(fmt.Sprintf("index=%d request wait response, timeout=%d", req.Index, cli.timeout))
 	select {
-	case sig := <-c:
-		return nil, errors.New(fmt.Sprintf("captured %v", sig))
 	case <-time.After(cli.timeout * time.Second):
-		return nil, errors.New("recv time out")
+		return nil, errors.New(fmt.Sprintf("recv time out, index=%d", req.Index))
 	case resp := <-respChan:
 		//resp := <-respChan
 		if resp.Code == types.CodeOK {
@@ -160,6 +143,8 @@ func (cli *Client) connect() (err error) {
 	if err != nil {
 		return err
 	}
+	cli.w = bufio.NewWriter(cli.conn)
+	cli.r = bufio.NewReader(cli.conn)
 
 	return
 }
@@ -176,7 +161,7 @@ func (cli *Client) recvResponseRoutine() {
 			break
 		}
 
-		value, err := readMessage(cli.conn)
+		value, err := readMessage(cli.r)
 		if err != nil {
 			cli.logger.Fatal("readMessage error", "error", err)
 			cli.sendCloseChan(err)
@@ -211,7 +196,6 @@ func (cli *Client) didRecvResponse(resp Response) {
 
 	if next != nil {
 		next.Value.(ReqResp).RespChan <- &resp
-		cli.removeReq(next.Value.(ReqResp).Index)
 	} else {
 		//cli.logger.Error("didRecvResponse", "response index", resp.Result.Index, "reqSent", cli.reqSent)
 		time.Sleep(time.Second)
@@ -247,6 +231,8 @@ func (cli *Client) removeReq(index uint64) {
 	next = cli.reqSent.Front()
 	for next != nil {
 		if next.Value.(ReqResp).Index == index {
+			close(next.Value.(ReqResp).CloseChan)
+			close(next.Value.(ReqResp).RespChan)
 			cli.reqSent.Remove(next)
 			break
 		}

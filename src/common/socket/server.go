@@ -99,8 +99,10 @@ func (svr *Server) listen() (err error) {
 func (svr *Server) readRequest(conn net.Conn) {
 	defer svr.close(conn)
 
+	r := bufio.NewReader(conn)
+	w := bufio.NewWriter(conn)
 	for {
-		value, err := readMessage(conn)
+		value, err := readMessage(r)
 		if err != nil {
 			return
 		}
@@ -111,12 +113,12 @@ func (svr *Server) readRequest(conn net.Conn) {
 		}
 		//svr.logger.Info("NewRequest", "value", fmt.Sprintf("%v", req))
 
-		go svr.handleRequest(req, conn)
+		go svr.handleRequest(req, w)
 	}
 }
 
-func (svr *Server) handleRequest(req *Request, conn net.Conn) {
-	defer serverRecover(conn, req)
+func (svr *Server) handleRequest(req *Request, w *bufio.Writer) {
+	defer serverRecover(w, req)
 
 	method := svr.methods[req.Method]
 	if method == nil {
@@ -128,7 +130,7 @@ func (svr *Server) handleRequest(req *Request, conn net.Conn) {
 		panic(err)
 	}
 
-	svr.logger.Debug(fmt.Sprintf("handlerRequest req=%v result", req), "res", res)
+	svr.logger.Debug(fmt.Sprintf("handlerRequest index=%d result", req.Index), "res", res)
 	var resp Response
 	resp.Code = types.CodeOK
 	resp.Log = "ok"
@@ -138,7 +140,6 @@ func (svr *Server) handleRequest(req *Request, conn net.Conn) {
 
 	svr.mtx.Lock()
 	defer svr.mtx.Unlock()
-	w := bufio.NewWriter(conn)
 	err = writeMessage(resp, w)
 	if err != nil {
 		panic(err)

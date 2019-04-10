@@ -36,9 +36,9 @@ func TestDockerLib_Run(t *testing.T) {
 		Mounts:     []Mounts{{"/tmp", "/a", true}},
 		WorkDir:    "/",
 		AutoRemove: true,
-		Cmd:        []string{"sh", "-c", "python2 -m SimpleHTTPServer"},
+		Cmd:        []string{"sh", "-c", "python3 -m http.server"},
 	}
-	ret, err := lib.Run("python:2-alpine", "my8080", &params)
+	ret, err := lib.Run("python:3-alpine", "my8080", &params)
 	assert.Equal(t, ret, true)
 	assert.Equal(t, err, nil)
 
@@ -79,9 +79,9 @@ func TestDockerLib_Run2(t *testing.T) {
 	lib.Kill("my8000")
 	params := DockerRunParams{
 		WorkDir: "/",
-		Cmd:     []string{"sh", "-c", "python2 -m SimpleHTTPServer"},
+		Cmd:     []string{"sh", "-c", "python3 -m http.server"},
 	}
-	ret, err := lib.Run("python:2-alpine", "my8000", &params)
+	ret, err := lib.Run("python:3-alpine", "my8000", &params)
 	assert.Equal(t, ret, true)
 	assert.Equal(t, err, nil)
 
