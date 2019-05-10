@@ -4,17 +4,18 @@ import (
 	"blockchain/smcsdk/sdk/types"
 )
 
-//Voter 这里声明了一个新的复合类型用于稍后的变量
-//     它用来表示一个选民
+// Voter this declares a new complex type which will
+//       be used for variables later.
+//       it will represent a single voter.
 type Voter struct {
-	weight   uint          // 计票的权重
-	voted    bool          // 若为真，代表该人已投票
-	delegate types.Address // 被委托人
-	vote     uint          // 投票提案的索引
+	weight   uint // weight is accumulated by delegation
+	voted    bool // if true, that person already voted
+	delegate types.Address // person delegated to
+	vote     uint // index of the voted proposal
 }
 
-//Proposal 提案的类型
+//Proposal this is a type for a single proposal.
 type Proposal struct {
-	name      string // 简称（最长32个字节）
-	voteCount uint   // 得票数
+	name      string // short name (up to 32 bytes)
+	voteCount uint // number of accumulated votes
 }

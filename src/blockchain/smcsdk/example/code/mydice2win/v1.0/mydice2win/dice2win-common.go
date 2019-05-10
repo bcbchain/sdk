@@ -3,6 +3,7 @@ package mydice2win
 import (
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/bn"
+	"blockchain/smcsdk/sdk/forx"
 	"blockchain/smcsdk/sdk/types"
 	"fmt"
 )
@@ -31,9 +32,10 @@ func (dw *Dice2Win) transferToRecvFeeAddr(tokenName types.Address, recvFee bn.Nu
 
 	infos := dw._recvFeeInfos()
 	account := dw.sdk.Helper().AccountHelper().AccountOf(dw.sdk.Message().Contract().Account())
-	for _, info := range infos {
+	forx.Range(infos, func(i int, info RecvFeeInfo) bool {
 		account.TransferByName(tokenName, info.Address, recvFee.MulI(info.Ratio).DivI(perMille))
-	}
+		return true
+	})
 }
 
 func (dw *Dice2Win) checkRecvFeeInfos(infos []RecvFeeInfo) {
@@ -41,15 +43,17 @@ func (dw *Dice2Win) checkRecvFeeInfos(infos []RecvFeeInfo) {
 		types.ErrInvalidParameter, "The length of RecvFeeInfos must be larger than zero")
 
 	allRatio := int64(0)
-	for _, info := range infos {
+	forx.Range(infos, func(i int, info RecvFeeInfo) bool {
 		sdk.Require(info.Ratio > 0,
 			types.ErrInvalidParameter, "ratio must be larger than zero")
-		sdk.RequireAddress(dw.sdk, info.Address)
+		sdk.RequireAddress(info.Address)
 		sdk.Require(info.Address != dw.sdk.Message().Contract().Account(),
 			types.ErrInvalidParameter, "address cannot be contract account address")
 
 		allRatio += info.Ratio
-	}
+
+		return true
+	})
 
 	//设置的分配比例加起来必须等于1000
 	sdk.Require(allRatio <= 1000, types.ErrInvalidParameter,
@@ -61,11 +65,13 @@ func (dw *Dice2Win) checkSettings(newSettings *Settings) {
 	sdk.Require(len(newSettings.TokenNames) > 0,
 		types.ErrInvalidParameter, "tokenNames cannot be empty")
 
-	for _, tokenName := range newSettings.TokenNames {
+	forx.Range(newSettings.TokenNames, func(tokenName string, v struct{}) bool {
 		token := dw.sdk.Helper().TokenHelper().TokenOfName(tokenName)
 		sdk.Require(token != nil,
 			types.ErrInvalidParameter, fmt.Sprintf("tokenName=%s is not exist", tokenName))
-	}
+
+		return true
+	})
 
 	sdk.Require(newSettings.MaxBet > 0,
 		types.ErrInvalidParameter, "MaxBet must be bigger than zero")

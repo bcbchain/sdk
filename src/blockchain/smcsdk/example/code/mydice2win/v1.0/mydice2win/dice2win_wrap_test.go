@@ -41,9 +41,9 @@ func NewTestObject(sender sdk.IAccount) *TestObject {
 }
 
 //transfer This is a method of TestObject
-func (t *TestObject) transfer(balance bn.Number) *TestObject {
+func (t *TestObject) transfer(args ...interface{}) *TestObject {
 	contract := t.obj.sdk.Message().Contract()
-	utest.Transfer(t.obj.sdk.Message().Sender(), t.obj.sdk.Helper().GenesisHelper().Token().Name(), contract.Account(), balance)
+	utest.Transfer(t.obj.sdk.Message().Sender(), contract.Account(), args...)
 	t.obj.sdk = sdkhelper.OriginNewMessage(t.obj.sdk, contract, t.obj.sdk.Message().MethodID(), t.obj.sdk.Message().(*object.Message).OutputReceipts())
 	return t
 }

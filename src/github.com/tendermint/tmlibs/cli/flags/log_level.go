@@ -62,7 +62,7 @@ func ParseLogLevel(logfile, lvl string, logger log.Logger, defaultLogLevelValue 
 			case "info":
 				option = log.AllowInfoWith("module", module)
 			case "warn":
-				option = log.AllowErrorWith("module", module)
+				option = log.AllowWarnWith("module", module)
 			case "error":
 				option = log.AllowErrorWith("module", module)
 			case "none":

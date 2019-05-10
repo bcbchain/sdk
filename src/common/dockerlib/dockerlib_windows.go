@@ -41,7 +41,7 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 	if l.containers == nil {
 		l.containers = make(map[string]container)
 	}
-	l.logger.Info("DockerLib Run", "image", dockerImageName, "containerName", containerName, "params", params)
+	l.logger.Debug("DockerLib Run", "image", dockerImageName, "containerName", containerName, "params", params)
 
 	container, found := l.containers[containerName]
 	cmdName := params.Cmd[0]

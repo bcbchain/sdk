@@ -98,7 +98,7 @@ func (t *Token) SetOwner(newOwner types.Address) {
 // SetTotalSupply set totalSupply of token
 func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 	// check the sender
-	sdk.RequireOwner(t.smc)
+	sdk.RequireOwner()
 
 	// get update number
 	updateSupply := totalSupply.Sub(t.TotalSupply())
@@ -184,7 +184,7 @@ func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 // SetGasPrice set gasPrice of token
 func (t *Token) SetGasPrice(gasPrice int64) {
 	// check the sender
-	sdk.RequireOwner(t.smc)
+	sdk.RequireOwner()
 
 	// return ok if no change
 	if t.GasPrice() == gasPrice {

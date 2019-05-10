@@ -122,7 +122,7 @@ func (bh *BlockChainHelper) GetBlock(height int64) sdk.IBlock {
 // nolint unhandled
 // CheckAddress check address and return result
 func (bh *BlockChainHelper) CheckAddress(addr types.Address) error {
-	chainID := bh.smc.Helper().GenesisHelper().ChainID()
+	chainID := bh.smc.Block().ChainID()
 	if strings.HasPrefix(addr, chainID) == false {
 		return errors.New("Address chainID is error! ")
 	}

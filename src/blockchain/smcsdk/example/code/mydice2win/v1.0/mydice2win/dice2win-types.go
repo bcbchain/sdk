@@ -34,14 +34,14 @@ func (b *Bet) init() {
 
 // Settings - contract settings
 type Settings struct {
-	TokenNames          []string `json:"tokenNames"`          //支持的代币名称列表
-	MinBet              int64    `json:"minBet"`              //最小的投注金额（单位cong）
-	MaxBet              int64    `json:"maxBet"`              //最大的投注金额（单位cong）
-	MaxProfit           int64    `json:"maxProfit"`           //最大收益<MaxAmount（单位cong）
-	FeeRatio            int64    `json:"feeRatio"`            //总的手续费
-	FeeMinimum          int64    `json:"feeMinimum"`          //最小的手续费总额（单位cong）
-	SendToCltRatio      int64    `json:"sendToCltRatio"`      //手续费中转给clt的比例
-	BetExpirationBlocks int64    `json:"betExpirationBlocks"` //开奖的区块间隔数（开奖的区块要小于，下注区块加上区块间隔）
+	TokenNames          map[string]struct{} `json:"tokenNames"`          //支持的代币名称列表
+	MinBet              int64               `json:"minBet"`              //最小的投注金额（单位cong）
+	MaxBet              int64               `json:"maxBet"`              //最大的投注金额（单位cong）
+	MaxProfit           int64               `json:"maxProfit"`           //最大收益<MaxAmount（单位cong）
+	FeeRatio            int64               `json:"feeRatio"`            //总的手续费
+	FeeMinimum          int64               `json:"feeMinimum"`          //最小的手续费总额（单位cong）
+	SendToCltRatio      int64               `json:"sendToCltRatio"`      //手续费中转给clt的比例
+	BetExpirationBlocks int64               `json:"betExpirationBlocks"` //开奖的区块间隔数（开奖的区块要小于，下注区块加上区块间隔）
 }
 
 // RecvFeeInfo - recv fee info

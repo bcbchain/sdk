@@ -10,6 +10,8 @@ import (
 	"blockchain/smcsdk/sdk/jsoniter"
 	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
+	"errors"
+	"fmt"
 	"gopkg.in/check.v1"
 )
 
@@ -66,14 +68,41 @@ func AssertBalance(account sdk.IAccount, tokenName string, value bn.Number) {
 //判断状态数据库中某一Key的值，匹配完整格式，可以为结构体
 func AssertSDB(key string, interf interface{}) {
 
+	if err := checkKey(key); err != nil {
+		panic(err)
+	}
+
 	_v, err := jsoniter.Marshal(interf)
 	if err != nil {
 		panic(err.Error())
 	}
 
-	b := sdbGet(0, 0, key)
-	b = data(key, b)
+	fullKey := prefix + key
 
+	b := sdbGet(0, 0, fullKey)
+	b = data(fullKey, b)
+
+	if interf == nil {
+		UTP.c.Assert(b, check.IsNil)
+	} else {
+		UTP.c.Assert(b, check.NotNil)
+		UTP.c.Assert(b, check.DeepEquals, _v)
+	}
+}
+
+//AssertSDB assert key's value in SDB
+//判断状态数据库中某一Key的值，匹配完整格式，可以为结构体
+func AssertSDBGlobal(fullkey string, interf interface{}) {
+
+	_v, err := jsoniter.Marshal(interf)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	b := sdbGet(0, 0, fullkey)
+	b = data(fullkey, b)
+
+	UTP.c.Assert(b, check.NotNil)
 	UTP.c.Assert(b, check.DeepEquals, _v)
 }
 
@@ -122,4 +151,12 @@ func CheckOK(err types.Error) {
 //CheckErrorMsg check error message is expected or not
 func CheckErrorMsg(err types.Error, msg string) {
 	UTP.c.Check(err.Error(), check.Matches, "*"+msg+"*")
+}
+
+func checkKey(key string) error {
+	if len(key) == 0 || key[0] != '/' {
+		return errors.New(fmt.Sprintf("The key=%s is not prefix \"/\"", key))
+	}
+
+	return nil
 }

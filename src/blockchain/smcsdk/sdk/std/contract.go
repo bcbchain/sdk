@@ -39,7 +39,7 @@ type OrgDeveloper struct {
 type Method struct {
 	MethodID  string `json:"methodId"`  //方法ID
 	Gas       int64  `json:"gas"`       //方法需要消耗的燃料
-	ProtoType string `json:"protoType"` //方法原型
+	ProtoType string `json:"prototype"` //方法原型
 }
 
 // Contract contract detail information
@@ -55,6 +55,7 @@ type Contract struct {
 	KeyPrefix    string        `json:"keyPrefix"`    //合约在状态数据库中KEY值的前缀
 	Methods      []Method      `json:"methods"`      //合约对外提供接口的方法列表
 	Interfaces   []Method      `json:"interfaces"`   //合约提供的跨合约调用的方法列表
+	Mine         []Method      `json:"mine"`         //合约提供的挖矿方法
 	Token        types.Address `json:"token"`        //合约代币地址
 	OrgID        string        `json:"orgID"`        //组织ID
 	ChainVersion int64         `json:"chainVersion"` //链版本

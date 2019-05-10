@@ -21,16 +21,16 @@ func (dw *Dice2Win) emitSetSecretSigner(newSecretSigner types.PubKey) {
 }
 
 //emitSetSettings This is a method of Dice2Win
-func (dw *Dice2Win) emitSetSettings(tokenNames []string, minBet, maxBet, maxProfit, feeRatio, feeMinimum, sendToCltRatio, betExpirationBlocks int64) {
+func (dw *Dice2Win) emitSetSettings(tokenNames map[string]struct{}, minBet, maxBet, maxProfit, feeRatio, feeMinimum, sendToCltRatio, betExpirationBlocks int64) {
 	type setSettings struct {
-		TokenNames          []string `json:"tokenNames"`
-		MinBet              int64    `json:"minBet"`
-		MaxBet              int64    `json:"maxBet"`
-		MaxProfit           int64    `json:"maxProfit"`
-		FeeRatio            int64    `json:"feeRatio"`
-		FeeMinimum          int64    `json:"feeMinimum"`
-		SendToCltRatio      int64    `json:"sendToCltRatio"`
-		BetExpirationBlocks int64    `json:"betExpirationBlocks"`
+		TokenNames          map[string]struct{} `json:"tokenNames"`
+		MinBet              int64               `json:"minBet"`
+		MaxBet              int64               `json:"maxBet"`
+		MaxProfit           int64               `json:"maxProfit"`
+		FeeRatio            int64               `json:"feeRatio"`
+		FeeMinimum          int64               `json:"feeMinimum"`
+		SendToCltRatio      int64               `json:"sendToCltRatio"`
+		BetExpirationBlocks int64               `json:"betExpirationBlocks"`
 	}
 
 	dw.sdk.Helper().ReceiptHelper().Emit(

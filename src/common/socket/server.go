@@ -5,15 +5,13 @@ import (
 	"bufio"
 	"container/list"
 	"fmt"
-	"github.com/json-iterator/go"
-	"github.com/tendermint/tmlibs/log"
 	"net"
-	"os"
-	"os/signal"
 	"strings"
 	"sync"
-	"syscall"
 	"time"
+
+	"github.com/json-iterator/go"
+	"github.com/tendermint/tmlibs/log"
 )
 
 type CallBackFunc func(map[string]interface{}) (interface{}, error)
@@ -33,7 +31,7 @@ type Server struct {
 // NewServer newServer to create server object about socket and listen client connection
 func NewServer(listenAddr string, methods map[string]CallBackFunc, timeout time.Duration, logger log.Logger) (svr *Server, err error) {
 
-	logger.Info(fmt.Sprintf("New server with listenaddr=%s, methods=%v, timeout=%d", listenAddr, methods, timeout))
+	logger.Debug(fmt.Sprintf("New server with listenaddr=%s, methods=%v, timeout=%d", listenAddr, methods, timeout))
 	server := Server{
 		listenAddr: listenAddr,
 		methods:    methods,
@@ -52,21 +50,6 @@ func NewServer(listenAddr string, methods map[string]CallBackFunc, timeout time.
 // Start start a routine to accept new connection and create routine to operate it
 func (svr *Server) Start() (err error) {
 
-	// notify system signal
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, syscall.SIGHUP, syscall.SIGTERM)
-	go func() {
-		for sig := range c {
-			next := svr.connList.Front()
-			for next != nil {
-				next.Value.(net.Conn).Close()
-				next = next.Next()
-			}
-			svr.logger.Info("captured %v, exiting...\n", sig)
-			os.Exit(1)
-		}
-	}()
-
 	for {
 		cliConn, err := svr.listener.Accept()
 		if err != nil {
@@ -78,7 +61,7 @@ func (svr *Server) Start() (err error) {
 		svr.connList.PushBack(cliConn)
 		svr.mtx.Unlock()
 
-		svr.logger.Info("Accept new connection", "RemoteAddr", cliConn.RemoteAddr())
+		svr.logger.Debug("Accept new connection", "RemoteAddr", cliConn.RemoteAddr())
 		go svr.readRequest(cliConn)
 	}
 }
@@ -99,6 +82,7 @@ func (svr *Server) listen() (err error) {
 func (svr *Server) readRequest(conn net.Conn) {
 	defer svr.close(conn)
 
+	var mtx sync.Mutex
 	r := bufio.NewReader(conn)
 	w := bufio.NewWriter(conn)
 	for {
@@ -113,11 +97,11 @@ func (svr *Server) readRequest(conn net.Conn) {
 		}
 		//svr.logger.Info("NewRequest", "value", fmt.Sprintf("%v", req))
 
-		go svr.handleRequest(req, w)
+		go svr.handleRequest(req, w, &mtx)
 	}
 }
 
-func (svr *Server) handleRequest(req *Request, w *bufio.Writer) {
+func (svr *Server) handleRequest(req *Request, w *bufio.Writer, mtx *sync.Mutex) {
 	defer serverRecover(w, req)
 
 	method := svr.methods[req.Method]
@@ -138,8 +122,8 @@ func (svr *Server) handleRequest(req *Request, w *bufio.Writer) {
 	resp.Result.Method = req.Method
 	resp.Result.Data = res
 
-	svr.mtx.Lock()
-	defer svr.mtx.Unlock()
+	mtx.Lock()
+	defer mtx.Unlock()
 	err = writeMessage(resp, w)
 	if err != nil {
 		panic(err)
@@ -154,7 +138,7 @@ func (svr *Server) handleRequest(req *Request, w *bufio.Writer) {
 func (svr *Server) close(conn net.Conn) {
 	err := conn.Close()
 	if err != nil {
-		svr.logger.Info("Close connection error: " + err.Error())
+		svr.logger.Debug("Close connection error: " + err.Error())
 	}
 
 	svr.mtx.Lock()

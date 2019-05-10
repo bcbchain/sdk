@@ -7,7 +7,7 @@ import (
 //Instance an Instance of memory cache
 type Instance struct {
 	llmt    sync.RWMutex
-	llCache map[string]interface{} //一级缓存，用key:value格式存储key对应的结构体数据
+	llCache map[string][]byte //一级缓存，用key:value格式存储key对应的结构体数据
 
 	mcmt    sync.RWMutex
 	mcCache map[int64]map[string]*MemCache //二级缓存，保存transId对应的数据缓存
@@ -23,14 +23,14 @@ type MemCache struct {
 
 type txCache struct {
 	id    int64
-	value interface{}
+	value []byte
 }
 
 //NewMcInstance new a global Instance
 func NewMcInstance() *Instance {
 	mi := Instance{}
-	mi.llCache = make(map[string]interface{})
-	mi.mcCache = make(map[int64](map[string]*MemCache))
+	mi.llCache = make(map[string][]byte)
+	mi.mcCache = make(map[int64]map[string]*MemCache)
 
 	return &mi
 }
@@ -105,12 +105,13 @@ func (mi *Instance) DirtyTransTx(transID, txID int64) {
 }
 
 //Get get cached top value
-func (mc *MemCache) Get() interface{} {
+func (mc *MemCache) Get() []byte {
 	return mc.top()
 }
 
 // Set only push the data into txCache, will be set to llCache when commit
-func (mc *MemCache) Set(txID int64, data interface{}) {
+func (mc *MemCache) Set(txID int64, data []byte) {
+
 	mc.push(txID, data)
 }
 
@@ -138,7 +139,7 @@ func newmc(transid int64, key string, mi *Instance) *MemCache {
 	return &mc
 }
 
-func (mc *MemCache) top() interface{} {
+func (mc *MemCache) top() []byte {
 	mc.RLock()
 	defer mc.RUnlock()
 	if mc.lastTx() >= 0 {
@@ -147,7 +148,7 @@ func (mc *MemCache) top() interface{} {
 	return nil
 }
 
-func (mc *MemCache) push(txid int64, data interface{}) {
+func (mc *MemCache) push(txid int64, data []byte) {
 	mc.Lock()
 	defer mc.Unlock()
 	//if the last txCache is for txID, cover it

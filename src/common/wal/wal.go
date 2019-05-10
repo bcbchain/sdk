@@ -85,8 +85,6 @@ func LoadAccount(keyStoreDir, name, password string) (acct *Account, err error) 
 	acct = &Account{}
 	keyStoreFile := filepath.Join(keyStoreDir, name+".wal")
 
-	fmt.Println(keyStoreFile)
-
 	_, err = os.Stat(keyStoreFile)
 	if os.IsNotExist(err) {
 		return nil, errors.New("KeyStorePath does not exist")
@@ -174,8 +172,7 @@ func (acct *Account) save(password string, notAllowExist bool) (err error) {
 	}
 	flag := checkPassword(string(passwordBytes))
 	if flag != true {
-		Error(fmt.Sprintf(passwordErr))
-		return err
+		return errors.New(passwordErr)
 	}
 
 	jsonBytes, err := cdc.MarshalJSON(acct)

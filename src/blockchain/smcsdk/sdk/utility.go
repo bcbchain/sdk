@@ -1,6 +1,7 @@
 package sdk
 
 import (
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk/types"
 )
 
@@ -20,16 +21,32 @@ func RequireNotError(err error, errCode uint32) {
 	}
 }
 
-// RequireOwner  method for require owner
-func RequireOwner(sdk ISmartContract) {
+// RequireOwner method for require owner
+func RequireOwner() {
+	var sdk ISmartContract
+	if iSDK, ok := gls.Mgr.GetValue(gls.SDKKey); !ok {
+		err := types.Error{ErrorCode: types.ErrStubDefined, ErrorDesc: "gls cannot get sdk"}
+		panic(err)
+	} else {
+		sdk = iSDK.(ISmartContract)
+	}
+
 	if sdk.Message().Sender().Address() != sdk.Message().Contract().Owner() {
 		err := types.Error{ErrorCode: types.ErrNoAuthorization, ErrorDesc: "only contract owner just can do it"}
 		panic(err)
 	}
 }
 
-// RequireAddress  method for require address
-func RequireAddress(sdk ISmartContract, addr types.Address) {
+// RequireAddress method for require address
+func RequireAddress(addr types.Address) {
+	var sdk ISmartContract
+	if iSDK, ok := gls.Mgr.GetValue(gls.SDKKey); !ok {
+		err := types.Error{ErrorCode: types.ErrStubDefined, ErrorDesc: "gls cannot get sdk"}
+		panic(err)
+	} else {
+		sdk = iSDK.(ISmartContract)
+	}
+
 	if err := sdk.Helper().BlockChainHelper().CheckAddress(addr); err != nil {
 		err2 := types.Error{ErrorCode: types.ErrInvalidAddress, ErrorDesc: err.Error()}
 		panic(err2)

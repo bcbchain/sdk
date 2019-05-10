@@ -25,14 +25,14 @@ func (ch *ContractHelper) SetSMC(smc sdk.ISmartContract) { ch.smc = smc }
 
 // ContractOfAddress get contract object with address
 func (ch *ContractHelper) ContractOfAddress(address types.Address) sdk.IContract {
-	sdk.RequireAddress(ch.smc, address)
+	sdk.RequireAddress(address)
 
 	return ch.contractOfAddress(address)
 }
 
 // ContractOfToken get contract object with token address
 func (ch *ContractHelper) ContractOfToken(tokenAddr types.Address) sdk.IContract {
-	sdk.RequireAddress(ch.smc, tokenAddr)
+	sdk.RequireAddress(tokenAddr)
 
 	// the tokenAddr is a token's address
 	if ch.smc.Helper().TokenHelper().TokenOfAddress(tokenAddr) == nil {
@@ -128,7 +128,12 @@ func (ch *ContractHelper) contractOfAddress(address types.Address) sdk.IContract
 		return nil
 	}
 
-	return object.NewContractFromSTD(ch.smc, stdContract.(*std.Contract))
+	contract := object.NewContractFromSTD(ch.smc, stdContract.(*std.Contract))
+	if contract.LoseHeight() != 0 && contract.LoseHeight() <= ch.smc.Block().Height() {
+		return nil
+	}
+
+	return contract
 }
 
 // contractVersionList get address list of contract that map by name

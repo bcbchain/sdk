@@ -3,6 +3,7 @@ package std
 import (
 	"blockchain/smcsdk/sdk/bn"
 	"blockchain/smcsdk/sdk/types"
+	"strconv"
 )
 
 // Receipt receipt information
@@ -32,6 +33,10 @@ type Fee struct {
 	Token types.Address `json:"token"` // 代币地址
 	From  types.Address `json:"from"`  // 支付手续费的账户地址
 	Value int64         `json:"value"` // 手续费（单位：cong）
+}
+
+func (f *Fee) String() string {
+	return "[Token='" + f.Token + "',From='" + f.From + "',Value=" + strconv.FormatInt(f.Value, 10) + "]"
 }
 
 // SetGasPrice setGasPrice receipt information

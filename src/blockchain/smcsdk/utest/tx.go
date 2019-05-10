@@ -27,6 +27,7 @@ func SetSender(_sender types.Address) sdk.ISmartContract {
 		UTP.ISmartContract.Message().MethodID(),
 		UTP.ISmartContract.Message().Items(),
 		senderAcct.Address(),
+		nil,
 		UTP.ISmartContract.Message().Origins(),
 		UTP.ISmartContract.Message().InputReceipts(),
 	)
@@ -43,6 +44,7 @@ func ResetMsg() sdk.ISmartContract {
 		UTP.Message().MethodID(),
 		UTP.Message().Items(),
 		UTP.ISmartContract.Message().Sender().Address(),
+		nil,
 		UTP.Message().Origins(),
 		UTP.Message().InputReceipts())
 	api := UTP.ISmartContract.(*sdkimpl.SmartContract)

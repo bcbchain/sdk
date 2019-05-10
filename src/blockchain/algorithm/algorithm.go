@@ -16,7 +16,6 @@ import (
 	"golang.org/x/crypto/sha3"
 )
 
-//TODO 讨论此处的转换方法和函数命名问题
 func IntToBytes(n int) []byte {
 	tmp := int32(n)
 	bytesBuffer := bytes.NewBuffer([]byte{})
@@ -30,17 +29,24 @@ func BytesToInt(b []byte) int {
 }
 
 func BytesToInt32(b []byte) int32 {
-	bytesBuffer := bytes.NewBuffer(b)
-	var tmp int32
-	binary.Read(bytesBuffer, binary.BigEndian, &tmp)
-	return tmp
+	var bytesBuffer *bytes.Buffer
+	if len(b) < 8 {
+		bytesBuffer = bytes.NewBuffer(make([]byte, 8-len(b)))
+		bytesBuffer.Write(b)
+	} else {
+		bytesBuffer = bytes.NewBuffer(b)
+	}
+
+	var tmp int64
+	err := binary.Read(bytesBuffer, binary.BigEndian, &tmp)
+	if err != nil {
+		panic(err)
+	}
+	return int32(tmp)
 }
 
 func BytesToUint32(b []byte) uint32 {
-	bytesBuffer := bytes.NewBuffer(b)
-	var tmp uint32
-	binary.Read(bytesBuffer, binary.BigEndian, &tmp)
-	return tmp
+	return uint32(BytesToInt32(b))
 }
 
 func BytesToUint64(b []byte) uint64 {
@@ -136,8 +142,6 @@ func ConvertMethodID(b []byte) string {
 }
 
 //定义合约代码哈希的计算方法
-//todo ??? 这里最终还是转为[]byte，为什么要把这个参数换成string，上层调用者转为[]byte更好 ？？
-//todo 关键是别的地方 本来就是[]byte，现在要转成string，到了这里面又转为[]byte
 func CalcCodeHash(code string) []byte {
 	hasherSHA3256 := sha3.New256()
 	hasherSHA3256.Write([]byte(code))
@@ -219,6 +223,6 @@ func DecryptWithPassword(data, password, keyword []byte) ([]byte, error) {
 	if bytes.Compare(mac, []byte{0x2e, 0x77, 0x61, 0x6c}) != 0 {
 		return nil, errors.New("Decrypt data failed!")
 	}
-	size := BytesToInt(dat[4:])
+	size := BytesToInt(dat[4:8])
 	return dat[8 : 8+size], nil
 }

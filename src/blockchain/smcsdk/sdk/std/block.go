@@ -26,4 +26,14 @@ type Block struct {
 // data for this key refer AppState
 func KeyOfAppState() string { return "/world/appstate" }
 
+// KeyOfGenesisChainVersion the access key for genesis chain version in state database
+// data for this key refer string
 func KeyOfGenesisChainVersion() string { return "/genesis/chainversion" }
+
+// KeyOfChainID the access key for chain_id in state database
+// data for this key refer string
+func KeyOfChainID() string { return "/genesis/chainid" }
+
+// KeyOfOrgID the access key for org_id in state database
+// data for this key refer string
+func KeyOfOrgID() string { return "/genesis/orgid" }

@@ -58,6 +58,21 @@ func (sh *StateHelper) Set(key string, value interface{}) {
 	sh.smc.(*sdkimpl.SmartContract).LlState().Set(fullKey, value)
 }
 
+// Flush flush data in cache to bcchain
+func (sh *StateHelper) Flush() {
+	sh.SMC().(*sdkimpl.SmartContract).LlState().Flush()
+}
+
+// Delete data map by key
+func (sh *StateHelper) Delete(key string) {
+	if !sh.checkKey(key) {
+		return
+	}
+
+	fullKey := sh.smc.Message().Contract().KeyPrefix() + key
+	sh.smc.(*sdkimpl.SmartContract).LlState().Delete(fullKey)
+}
+
 // GetInt get value in db map by key, and then return default if it not exist
 func (sh *StateHelper) GetInt(key string) int {
 	return *sh.GetEx(key, new(int)).(*int)
@@ -106,16 +121,6 @@ func (sh *StateHelper) GetUint32(key string) uint32 {
 // GetUint64 get value in db map by key, and then return default if it not exist
 func (sh *StateHelper) GetUint64(key string) uint64 {
 	return *sh.GetEx(key, new(uint64)).(*uint64)
-}
-
-// GetFloat32 get value in db map by key, and then return default if it not exist
-func (sh *StateHelper) GetFloat32(key string) float32 {
-	return *sh.GetEx(key, new(float32)).(*float32)
-}
-
-// GetFloat64 get value in db map by key, and then return default if it not exist
-func (sh *StateHelper) GetFloat64(key string) float64 {
-	return *sh.GetEx(key, new(float64)).(*float64)
 }
 
 // GetByte get value in db map by key, and then return default if it not exist
@@ -183,16 +188,6 @@ func (sh *StateHelper) GetUint64s(key string) []uint64 {
 	return *sh.GetEx(key, new([]uint64)).(*[]uint64)
 }
 
-// GetFloat32s get value in db map by key, and then return default if it not exist
-func (sh *StateHelper) GetFloat32s(key string) []float32 {
-	return *sh.GetEx(key, new([]float32)).(*[]float32)
-}
-
-// GetFloat64s get value in db map by key, and then return default if it not exist
-func (sh *StateHelper) GetFloat64s(key string) []float64 {
-	return *sh.GetEx(key, new([]float64)).(*[]float64)
-}
-
 // GetBytes get value in db map by key, and then return default if it not exist
 func (sh *StateHelper) GetBytes(key string) []byte {
 	return *sh.GetEx(key, new([]byte)).(*[]byte)
@@ -258,16 +253,6 @@ func (sh *StateHelper) SetUint64(key string, v uint64) {
 	sh.Set(key, &v)
 }
 
-// SetFloat32 set value to db that map by key
-func (sh *StateHelper) SetFloat32(key string, v float32) {
-	sh.Set(key, &v)
-}
-
-// SetFloat64 set value to db that map by key
-func (sh *StateHelper) SetFloat64(key string, v float64) {
-	sh.Set(key, &v)
-}
-
 // SetByte set value to db that map by key
 func (sh *StateHelper) SetByte(key string, v byte) {
 	sh.Set(key, &v)
@@ -330,16 +315,6 @@ func (sh *StateHelper) SetUint32s(key string, v []uint32) {
 
 // SetUint64s set value to db that map by key
 func (sh *StateHelper) SetUint64s(key string, v []uint64) {
-	sh.Set(key, &v)
-}
-
-// SetFloat32s set value to db that map by key
-func (sh *StateHelper) SetFloat32s(key string, v []float32) {
-	sh.Set(key, &v)
-}
-
-// SetFloat64s set value to db that map by key
-func (sh *StateHelper) SetFloat64s(key string, v []float64) {
 	sh.Set(key, &v)
 }
 
@@ -448,16 +423,6 @@ func (sh *StateHelper) McGetUint64(key string) uint64 {
 	return *sh.McGetEx(key, new(uint64)).(*uint64)
 }
 
-// McGetFloat32 get value in McCache or db that map by key, and then return defaultData if it not exist
-func (sh *StateHelper) McGetFloat32(key string) float32 {
-	return *sh.McGetEx(key, new(float32)).(*float32)
-}
-
-// McGetFloat64 get value in McCache or db that map by key, and then return defaultData if it not exist
-func (sh *StateHelper) McGetFloat64(key string) float64 {
-	return *sh.McGetEx(key, new(float64)).(*float64)
-}
-
 // McGetByte get value in McCache or db that map by key, and then return defaultData if it not exist
 func (sh *StateHelper) McGetByte(key string) byte {
 	return *sh.McGetEx(key, new(byte)).(*byte)
@@ -523,16 +488,6 @@ func (sh *StateHelper) McGetUint64s(key string) []uint64 {
 	return *sh.McGetEx(key, new([]uint64)).(*[]uint64)
 }
 
-// McGetFloat32s get value in McCache or db that map by key, and then return defaultData if it not exist
-func (sh *StateHelper) McGetFloat32s(key string) []float32 {
-	return *sh.McGetEx(key, new([]float32)).(*[]float32)
-}
-
-// McGetFloat64s get value in McCache or db that map by key, and then return defaultData if it not exist
-func (sh *StateHelper) McGetFloat64s(key string) []float64 {
-	return *sh.McGetEx(key, new([]float64)).(*[]float64)
-}
-
 // McGetBytes get value in McCache or db that map by key, and then return defaultData if it not exist
 func (sh *StateHelper) McGetBytes(key string) []byte {
 	return *sh.McGetEx(key, new([]byte)).(*[]byte)
@@ -595,16 +550,6 @@ func (sh *StateHelper) McSetUint32(key string, v uint32) {
 
 // McSetUint64 set value to McCache and db that map by key
 func (sh *StateHelper) McSetUint64(key string, v uint64) {
-	sh.McSet(key, &v)
-}
-
-// McSetFloat32 set value to McCache and db that map by key
-func (sh *StateHelper) McSetFloat32(key string, v float32) {
-	sh.McSet(key, &v)
-}
-
-// McSetFloat64 set value to McCache and db that map by key
-func (sh *StateHelper) McSetFloat64(key string, v float64) {
 	sh.McSet(key, &v)
 }
 
@@ -673,16 +618,6 @@ func (sh *StateHelper) McSetUint64s(key string, v []uint64) {
 	sh.McSet(key, &v)
 }
 
-// McSetFloat32s set value to McCache and db that map by key
-func (sh *StateHelper) McSetFloat32s(key string, v []float32) {
-	sh.McSet(key, &v)
-}
-
-// McSetFloat64s set value to McCache and db that map by key
-func (sh *StateHelper) McSetFloat64s(key string, v []float64) {
-	sh.McSet(key, &v)
-}
-
 // McSetBytes set value to McCache and db that map by key
 func (sh *StateHelper) McSetBytes(key string, v []byte) {
 	sh.McSet(key, &v)
@@ -708,8 +643,15 @@ func (sh *StateHelper) McClear(key string) {
 	sdkimpl.McInst.Dirty(fullKey)
 }
 
-func (sh *StateHelper) Flush() {
-	sh.SMC().(*sdkimpl.SmartContract).LlState().Flush()
+// McDelete dirty and delete data map by key
+func (sh *StateHelper) McDelete(key string) {
+	if !sh.checkKey(key) {
+		return
+	}
+
+	fullKey := sh.smc.Message().Contract().KeyPrefix() + key
+	sdkimpl.McInst.Dirty(fullKey)
+	sh.smc.(*sdkimpl.SmartContract).LlState().Delete(fullKey)
 }
 
 func (sh *StateHelper) checkKey(key string) bool {

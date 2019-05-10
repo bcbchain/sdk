@@ -94,6 +94,9 @@ func rotateRoutine(file string, level string) {
 
 	for {
 		f, err = os.Stat(file)
+		if err != nil {
+			panic(err)
+		}
 		isRotate = false
 		if size = f.Size(); size > DEFAULT_FILE_SIZE {
 			isRotate = true
@@ -328,22 +331,30 @@ func allowed(allowed level) Option {
 
 // AllowDebugWith allows error, info and debug level log events to pass for a specific key value pair.
 func AllowDebugWith(key interface{}, value interface{}) Option {
-	return func(l *filter) { l.allowedKeyvals[keyval{key, value}] = levelError | levelInfo | levelDebug }
+	return func(l *filter) {
+		l.allowedKeyvals[keyval{key, value}] = levelError | levelWarn | levelInfo | levelDebug
+	}
 }
 
 // AllowInfoWith allows error, warn and info level log events to pass for a specific key value pair.
 func AllowInfoWith(key interface{}, value interface{}) Option {
-	return func(l *filter) { l.allowedKeyvals[keyval{key, value}] = levelError | levelWarn | levelInfo }
+	return func(l *filter) {
+		l.allowedKeyvals[keyval{key, value}] = levelError | levelWarn | levelInfo
+	}
 }
 
 // AllowWarnWith allows error and warn level log events to pass for a specific key value pair.
 func AllowWarnWith(key interface{}, value interface{}) Option {
-	return func(l *filter) { l.allowedKeyvals[keyval{key, value}] = levelError | levelWarn }
+	return func(l *filter) {
+		l.allowedKeyvals[keyval{key, value}] = levelError | levelWarn
+	}
 }
 
 // AllowErrorWith allows only error level log events to pass for a specific key value pair.
 func AllowErrorWith(key interface{}, value interface{}) Option {
-	return func(l *filter) { l.allowedKeyvals[keyval{key, value}] = levelError }
+	return func(l *filter) {
+		l.allowedKeyvals[keyval{key, value}] = levelError
+	}
 }
 
 // AllowNoneWith allows no leveled log events to pass for a specific key value pair.

@@ -43,7 +43,7 @@ func (a *Account) Balance() bn.Number {
 
 // BalanceOfToken get balance of token with address
 func (a *Account) BalanceOfToken(token types.Address) bn.Number {
-	sdk.RequireAddress(a.smc, token)
+	sdk.RequireAddress(token)
 
 	return a.balanceOfToken(token)
 }
@@ -70,7 +70,7 @@ func (a *Account) BalanceOfSymbol(symbol string) bn.Number {
 
 // Transfer transfer current contract's token
 func (a *Account) Transfer(to types.Address, value bn.Number) {
-	sdk.RequireAddress(a.smc, to)
+	sdk.RequireAddress(to)
 
 	tokenAddr := a.smc.Message().Contract().Token()
 	sdk.Require(tokenAddr != "",
@@ -81,8 +81,8 @@ func (a *Account) Transfer(to types.Address, value bn.Number) {
 
 // TransferByToken transfer token with address
 func (a *Account) TransferByToken(token types.Address, to types.Address, value bn.Number) {
-	sdk.RequireAddress(a.smc, to)
-	sdk.RequireAddress(a.smc, token)
+	sdk.RequireAddress(to)
+	sdk.RequireAddress(token)
 
 	sdk.Require(a.smc.Helper().TokenHelper().TokenOfAddress(token) != nil,
 		types.ErrInvalidParameter, "Token not found(address="+token+")")
@@ -92,7 +92,7 @@ func (a *Account) TransferByToken(token types.Address, to types.Address, value b
 
 // TransferByName transfer token with name
 func (a *Account) TransferByName(name string, to types.Address, value bn.Number) {
-	sdk.RequireAddress(a.smc, to)
+	sdk.RequireAddress(to)
 
 	token := a.smc.Helper().TokenHelper().TokenOfName(name)
 	sdk.Require(token != nil,
@@ -103,7 +103,7 @@ func (a *Account) TransferByName(name string, to types.Address, value bn.Number)
 
 // TransferBySymbol transfer token with symbol
 func (a *Account) TransferBySymbol(symbol string, to types.Address, value bn.Number) {
-	sdk.RequireAddress(a.smc, to)
+	sdk.RequireAddress(to)
 
 	token := a.smc.Helper().TokenHelper().TokenOfSymbol(symbol)
 	sdk.Require(token != nil,
@@ -148,7 +148,7 @@ func (a *Account) transferByToken(tokenAddr types.Address, to types.Address, val
 		a.smc.Message().(*Message).AppendOutput(receipts)
 	} else {
 		sdk.Require(value.IsGreaterThanI(0),
-			types.ErrInvalidParameter, "Value cannot be negative")
+			types.ErrInvalidParameter, "Value must greater than zero")
 
 		sdk.Require(from != to,
 			types.ErrInvalidParameter, "Cannot transfer to self")

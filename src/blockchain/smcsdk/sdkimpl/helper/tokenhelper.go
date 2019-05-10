@@ -75,7 +75,7 @@ func (th *TokenHelper) RegisterToken(
 		types.ErrInvalidParameter, "This contract never defined standard transfer method")
 
 	// check sender
-	sdk.RequireOwner(th.smc)
+	sdk.RequireOwner()
 
 	// check contract's token
 	sdk.Require(th.smc.Message().Contract().Token() == "",
@@ -164,7 +164,7 @@ func (th *TokenHelper) Token() sdk.IToken {
 
 // TokenOfAddress get token with address
 func (th *TokenHelper) TokenOfAddress(tokenAddr types.Address) sdk.IToken {
-	sdk.RequireAddress(th.smc, tokenAddr)
+	sdk.RequireAddress(tokenAddr)
 
 	return th.tokenOfAddress(tokenAddr)
 }

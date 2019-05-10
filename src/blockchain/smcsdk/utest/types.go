@@ -9,150 +9,235 @@ import (
 )
 
 const genesisStr = `{
+  "chain_id": "test",
+  "chain_version": "2",
+  "genesis_time": "2019-04-25T21:29:56.2838591+08:00",
   "app_hash": "",
   "app_state": {
     "token": {
-      "address": "localAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1TA",
-      "owner": "localBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
+      "address": "testAiWusnsFsUQWkfHGSK5zh63FozCPV5PiB",
+      "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
       "version": "",
-      "name": "LOC",
-      "symbol": "LOC",
-      "totalSupply": {"v": 2000000000000000000},
+      "name": "TSC",
+      "symbol": "TSC",
+      "totalSupply": 2000000000000000000,
       "addSupplyEnabled": false,
       "burnEnabled": false,
       "gasPrice": 2500
     },
+    "rewardStrategy": [
+      {
+        "name": "validators",
+        "rewardPercent": "20.00",
+        "address": ""
+      },
+      {
+        "name": "r_d_team",
+        "rewardPercent": "20.00",
+        "address": "testYvBLo6Eh8vZKppJnqJGNFWRLzjmxsuWo"
+      },
+      {
+        "name": "bonus",
+        "rewardPercent": "30.00",
+        "address": "testPdV2xqipzeKtx9fkRCkWaZ7rNB6sDLyoG"
+      },
+      {
+        "name": "reserved",
+        "rewardPercent": "30.00",
+        "address": "testDfzucuVwnug5243aHb61vf2s9AqERtzBa"
+      }
+    ],
     "contracts": [
       {
-        "name": "system",
-        "address": "local9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
-        "owner": "localBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
-        "version": "",
-        "codeHash": "BE6DC61A323C4A027337F181CEBB0BE105C5530E974ED7573FA86DAC94FDC347",
+        "name": "governance",
+        "address": "test5ZXho3uL5ZSBWpH2ifnbsBaQcy553gX8F",
+		"account": "test4cdqVp2d2ovcAdwGNknkJuLvV1pdt8RWr",
+        "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "version": "2.0",
+        "codeHash": "e8258ca241bc1cdf58e48c8da0fe29d5ea0cee47b7f697cb660e3a408024370f",
         "effectHeight": 1,
         "loseHeight": 0,
         "token": "",
-        "orgID": "orgAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1T",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
         "methods": [
           {
-            "methodId": "1b0b7ce1",
-            "prototype": "NewValidator(string,smc.PubKey,smc.Address,uint64)smc.Error",
+            "methodId": "5dde7015",
+            "prototype": "NewValidator(string,types.PubKey,types.Address,int64)",
             "gas": 50000
           },
           {
-            "methodId": "bcc890f0",
-            "prototype": "SetPower(smc.PubKey,uint64)smc.Error",
+            "methodId": "ed21b83",
+            "prototype": "SetPower(types.PubKey,int64)",
             "gas": 20000
           },
           {
-            "methodId": "757a5721",
-            "prototype": "SetRewardAddr(smc.PubKey,smc.Address)smc.Error",
+            "methodId": "972d98bb",
+            "prototype": "SetRewardAddr(types.PubKey,types.Address)",
             "gas": 20000
           },
           {
-            "methodId": "52d1c625",
-            "prototype": "ForbidInternalContract(smc.Address,uint64)smc.Error",
+            "methodId": "6246ab67",
+            "prototype": "SetRewardStrategy(string)",
+            "gas": 50000
+          }
+        ]
+      },
+      {
+        "name": "organization",
+        "address": "testARRVfZyZijgkuxzA5VZFhho651bFFgmgs",
+		"account": "testJ7V1532c9T9MLdDBLzXXgBqrMKYuWnwVV",
+        "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "version": "2.0",
+        "codeHash": "EEF61882AC72817B5C0AE24FFED64DA9C7B4552D31099EF38135991A7D8E2FD5",
+        "effectHeight": 1,
+        "loseHeight": 0,
+        "token": "",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
+        "methods": [
+          {
+            "methodId": "9e922f48",
+            "prototype": "RegisterOrganization(string)",
+            "gas": 500000
+          },
+          {
+            "methodId": "62191292",
+            "prototype": "SetSigners(string,[]types.PubKey)",
+            "gas": 500000
+          }
+        ]
+      },
+      {
+        "name": "smartcontract",
+        "address": "test6ryVKSgdZBgcgR3aWgcmdZBBKXJKh1QJz",
+		"account": "testGFMumw2caaLuSkFgTrYfdFM88DocKn13E",
+        "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "version": "2.0",
+        "codeHash": "31C9E848545766E02CD715D32FADB50EB5A026C6221C9117DABA78D3ED86ADD3",
+        "effectHeight": 1,
+        "loseHeight": 0,
+        "token": "",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
+        "methods": [
+          {
+            "methodId": "d7596e75",
+            "prototype": "Authorize(types.Address,string)",
             "gas": 50000
           },
           {
-            "methodId": "48c26f01",
-            "prototype": "DeployInternalContract(string,string,[]string,[]uint64,smc.Hash,uint64)(smc.Address,smc.Error)",
+            "methodId": "e0da7827",
+            "prototype": "DeployContract(string,string,string,types.Hash,[]byte,string,string,int64,types.Address)",
             "gas": 50000
           },
           {
-            "methodId": "92622878",
-            "prototype": "SetRewardStrategy(string,uint64)smc.Error",
+            "methodId": "45385372",
+            "prototype": "ForbidContract(types.Address,int64)",
             "gas": 50000
           }
         ]
       },
       {
         "name": "token-basic",
-        "address": "localAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1TA",
-        "owner": "localBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
-        "version": "",
-        "codeHash": "BF463D47763A9430DFD5AE2FBCF02BEABE44DD2C40BA1FBECEC9CF5A4EFA3FE5",
+        "address": "testAiWusnsFsUQWkfHGSK5zh63FozCPV5PiB",
+		"account": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "version": "2.0",
+        "codeHash": "563FAB3586B75D6831D313A14F45A1C23ABEB39B891D9FD726495EFF3A62E07A",
         "effectHeight": 1,
         "loseHeight": 0,
-        "token": "localAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1TA",
-        "orgID": "orgAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1T",
+        "token": "testAiWusnsFsUQWkfHGSK5zh63FozCPV5PiB",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
         "methods": [
           {
-            "methodId": "af0228bc",
-            "prototype": "Transfer(smc.Address,big.Int)smc.Error",
+            "methodId": "44d8ca60",
+            "prototype": "Transfer(types.Address,bn.Number)",
             "gas": 500
           },
           {
-            "methodId": "cc50053d",
-            "prototype": "SetGasPrice(uint64)smc.Error",
+            "methodId": "9024dc9b",
+            "prototype": "SetGasPrice(int64)",
             "gas": 2000
           },
           {
-            "methodId": "adcf5578",
-            "prototype": "SetGasBasePrice(uint64)smc.Error",
+            "methodId": "8856b980",
+            "prototype": "SetBaseGasPrice(int64)",
             "gas": 2000
           }
-        ]
+        ],
+		"interfaces": [
+		  {
+			"methodId": "44d8ca60",
+            "prototype": "Transfer(types.Address,bn.Number)",
+            "gas": 450
+		  }
+		]
       },
       {
         "name": "token-issue",
-        "address": "local5sAkG9xgzjuuhQn3FVf8K3FCrk5RAtab6",
-        "owner": "localBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
-        "version": "1.0",
-        "codeHash": "22D14A57C3D0F3388E93501E3D4636E38D32FA4EBBA054BA7674CAC9B6EB0ED6",
+        "address": "testK6kjgCkABnSTS1MB86CixEQWM96ZbsP9",
+		"account": "testBCbvLWS5fEkqoanfUDkgGw38mXQx5LXke",
+        "owner": "testNKP3VFEniXL1kq36HuXuGaCGjJMazKhPu",
+        "version": "2.0",
+        "codeHash": "8917B2698F0ABD28F00D1881DE58E075BD0FADB7F332E1A36769C71143ED84B6",
         "effectHeight": 1,
         "loseHeight": 0,
         "token": "",
-        "orgID": "orgAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1T",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
         "methods": [
           {
-            "methodId": "825b55bb",
-            "prototype": "NewToken(string,string,big.Int,bool,bool,uint64)(smc.Address,smc.Error)",
+            "methodId": "ed1d1d9a",
+            "prototype": "NewToken(string,string,bn.Number,bool,bool,int64)",
             "gas": 20000
           },
           {
-            "methodId": "af0228bc",
-            "prototype": "Transfer(smc.Address,big.Int)smc.Error",
+            "methodId": "44d8ca60",
+            "prototype": "Transfer(types.Address,bn.Number)",
             "gas": 600
           },
           {
-            "methodId": "b8f4b0d8",
-            "prototype": "BatchTransfer([]smc.Address,big.Int)smc.Error",
+            "methodId": "1b0731b9",
+            "prototype": "BatchTransfer([]types.Address,bn.Number)",
             "gas": 6000
           },
           {
-            "methodId": "4a439c44",
-            "prototype": "AddSupply(big.Int)smc.Error",
+            "methodId": "6b7e4ed5",
+            "prototype": "AddSupply(bn.Number)",
             "gas": 2400
           },
           {
-            "methodId": "5a0e0fa3",
-            "prototype": "Burn(big.Int)smc.Error",
+            "methodId": "fbbd9dd3",
+            "prototype": "Burn(bn.Number)",
             "gas": 2400
           },
           {
-            "methodId": "a6be2c35",
-            "prototype": "SetOwner(smc.Address)smc.Error",
+            "methodId": "810b995f",
+            "prototype": "SetOwner(types.Address)",
             "gas": 2400
           },
           {
-            "methodId": "cc50053d",
-            "prototype": "SetGasPrice(uint64)smc.Error",
+            "methodId": "9024dc9b",
+            "prototype": "SetGasPrice(int64)",
             "gas": 2400
           }
-        ]
+        ],
+		"interfaces": [
+		  {
+			"methodId": "44d8ca60",
+            "prototype": "Transfer(types.Address,bn.Number)",
+            "gas": 540
+		  }
+		]
       },
       {
         "name": "myplayerbook",
-        "address": "localWkNWzXyqMmumfxfXva2QV1qKa3aroVyu",
-        "account": "local2uGLmMnsHauRUjyjQKGdXchUxpRMM8oeD",
-        "owner": "localBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
+        "address": "testWkNWzXyqMmumfxfXva2QV1qKa3aroVyu",
+        "account": "test2uGLmMnsHauRUjyjQKGdXchUxpRMM8oeD",
+        "owner": "testBsHvWxKkScTSpkF5gPFhrWegN2yosrZV9",
         "version": "2.0",
         "codeHash": "43A15EC506F3864126E78FD3E1A265D9EAF5D436E776C9B0200D77E57B76B7ED",
         "effectHeight": 1,
         "loseHeight": 0,
         "token": "",
-        "orgID": "orgAJrbk6Wdf7TCbunrXXS5kKvbWVszhC1T",
+        "orgID": "orgJgaGConUyK81zibntUBjQ33PKctpk1K1G",
         "methods": [
           {
             "methodId": "e463fdb2",
@@ -163,12 +248,10 @@ const genesisStr = `{
       }
     ]
   },
-  "chain_id": "local",
-  "genesis_time": "2018-07-14T14:43:53.1778867+08:00",
   "validators": [
     {
-      "name": "local",
-      "reward_addr": "local8LtT8AonWgJ8nMCEdAR5UGrbRfUmuoeiz",
+      "name": "node1",
+      "reward_addr": "test8LtT8AonWgJ8nMCEdAR5UGrbRfUmuoeiz",
       "power": 10
     }
   ],

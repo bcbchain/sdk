@@ -7,7 +7,7 @@ import (
 
 // NewAccount factory method for create Account with address
 func NewAccount(smc sdk.ISmartContract, addr types.Address) sdk.IAccount {
-	sdk.RequireAddress(smc, addr)
+	sdk.RequireAddress(addr)
 
 	account := &Account{
 		address: addr,

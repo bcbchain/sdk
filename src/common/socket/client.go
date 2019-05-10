@@ -6,18 +6,20 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
-	"github.com/json-iterator/go"
-	"github.com/tendermint/tmlibs/log"
 	"io"
 	"math"
 	"net"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/json-iterator/go"
+	"github.com/tendermint/tmlibs/log"
 )
 
 // Client client information about socket
 type Client struct {
+	// request send queue
 	reqSent  *list.List
 	queueMtx sync.Mutex
 
@@ -25,26 +27,26 @@ type Client struct {
 	conn             net.Conn
 	w                *bufio.Writer
 	r                *bufio.Reader
-	timeout          time.Duration
 	disableKeepAlive bool
 
 	counter uint64
 	mtx     sync.Mutex
 	logger  log.Logger
+
+	isRunning bool
+
+	// close callback function
+	closeCB func(*Client)
 }
 
 // NewClient newClient to create socket client object and connect to server
-func NewClient(addr string, timeout time.Duration, disableKeepAlive bool, logger log.Logger) (cli *Client, err error) {
+func NewClient(addr string, disableKeepAlive bool, logger log.Logger) (cli *Client, err error) {
 
-	logger.Info(fmt.Sprintf("New connect to %s, timeout=%d, disableKeepAlive=%t", addr, timeout, disableKeepAlive))
-	if timeout == 0 {
-		timeout = 60
-	}
+	logger.Debug(fmt.Sprintf("New connect to %s, disableKeepAlive=%t", addr, disableKeepAlive))
 
 	cli = &Client{
 		reqSent:          list.New(),
 		addr:             addr,
-		timeout:          timeout,
 		disableKeepAlive: disableKeepAlive,
 		counter:          0,
 		logger:           logger}
@@ -54,24 +56,28 @@ func NewClient(addr string, timeout time.Duration, disableKeepAlive bool, logger
 		return
 	}
 
+	cli.isRunning = true
 	go cli.recvResponseRoutine()
 
 	return
 }
 
-// SetTimeOut set timeout argument
-func (cli *Client) SetTimeOut(timeout time.Duration) {
-	cli.timeout = timeout
+// SetCloseCB set close callback function
+func (cli *Client) SetCloseCB(cb func(*Client)) {
+	cli.closeCB = cb
 }
 
 // Call call service with method and data
-func (cli *Client) Call(method string, data map[string]interface{}) (value interface{}, err error) {
+func (cli *Client) Call(method string, data map[string]interface{}, timeout time.Duration) (value interface{}, err error) {
+	if !cli.isRunning {
+		return nil, errors.New("client is invalid")
+	}
 
 	req := Request{Method: method, Data: data, Index: cli.index()}
 	if cli.disableKeepAlive {
 		defer cli.conn.Close()
 	}
-	cli.logger.Info(fmt.Sprintf("to %s have a new request, method=%s, index=%d", cli.addr, method, req.Index))
+	cli.logger.Debug(fmt.Sprintf("to %s have a new request, method=%s, index=%d", cli.addr, method, req.Index))
 
 	// wait response
 	respChan := make(chan *Response, 1)
@@ -95,10 +101,10 @@ func (cli *Client) Call(method string, data map[string]interface{}) (value inter
 	}
 	cli.mtx.Unlock()
 
-	cli.logger.Debug(fmt.Sprintf("index=%d request wait response, timeout=%d", req.Index, cli.timeout))
+	cli.logger.Debug(fmt.Sprintf("index=%d request wait response, timeout=%d", req.Index, timeout))
 	select {
-	case <-time.After(cli.timeout * time.Second):
-		return nil, errors.New(fmt.Sprintf("recv time out, index=%d", req.Index))
+	case <-time.After(timeout * time.Second):
+		return nil, fmt.Errorf("recv time out, index=%d", req.Index)
 	case resp := <-respChan:
 		//resp := <-respChan
 		if resp.Code == types.CodeOK {
@@ -110,7 +116,7 @@ func (cli *Client) Call(method string, data map[string]interface{}) (value inter
 		if err == io.EOF {
 			return nil, errors.New("connection closed")
 		} else {
-			return nil, errors.New(fmt.Sprintf("connection error=%v", err))
+			return nil, fmt.Errorf("connection error=%v", err)
 		}
 	}
 }
@@ -134,11 +140,11 @@ func (cli *Client) connect() (err error) {
 	}
 
 	var keepAlive time.Duration
-	if cli.disableKeepAlive == false {
+	if !cli.disableKeepAlive {
 		keepAlive = 5 * time.Second
 	}
 
-	dialer := net.Dialer{Timeout: cli.timeout * time.Second, KeepAlive: keepAlive}
+	dialer := net.Dialer{Timeout: 60 * time.Second, KeepAlive: keepAlive}
 	cli.conn, err = dialer.Dial(proto, address)
 	if err != nil {
 		return err
@@ -153,7 +159,7 @@ func (cli *Client) recvResponseRoutine() {
 
 	// if disableKeepAlive is true,then loop one time
 	recvCount := 1
-	if cli.disableKeepAlive != true {
+	if !cli.disableKeepAlive {
 		recvCount = -1
 	}
 	for {
@@ -163,6 +169,7 @@ func (cli *Client) recvResponseRoutine() {
 
 		value, err := readMessage(cli.r)
 		if err != nil {
+			cli.isRunning = false
 			cli.logger.Fatal("readMessage error", "error", err)
 			cli.sendCloseChan(err)
 			return
@@ -171,6 +178,7 @@ func (cli *Client) recvResponseRoutine() {
 		var resp Response
 		err = jsoniter.Unmarshal(value, &resp)
 		if err != nil {
+			cli.isRunning = false
 			cli.logger.Fatal(fmt.Sprintf("value=%v cannot unmarshal to response", value), "error", err)
 			cli.sendCloseChan(err)
 			return
@@ -184,8 +192,7 @@ func (cli *Client) recvResponseRoutine() {
 }
 
 func (cli *Client) didRecvResponse(resp Response) {
-	var next *list.Element
-	next = cli.reqSent.Front()
+	next := cli.reqSent.Front()
 	for next != nil {
 		if next.Value.(ReqResp).Index == resp.Result.Index {
 			break
@@ -202,38 +209,42 @@ func (cli *Client) didRecvResponse(resp Response) {
 	}
 }
 
-func (cli *Client) sendCloseChan(err error) error {
-	cli.queueMtx.Lock()
-	defer cli.queueMtx.Unlock()
+func (cli *Client) sendCloseChan(err error) {
+	//cli.queueMtx.Lock()
+	//defer cli.queueMtx.Unlock()
 
-	var next *list.Element
-	next = cli.reqSent.Front()
+	next := cli.reqSent.Front()
 	for next != nil {
 		next.Value.(ReqResp).CloseChan <- err
 
 		next = next.Next()
 	}
 
-	return err
+	// invoke close callback function
+	if cli.closeCB != nil {
+		cli.closeCB(cli)
+	}
 }
 
 func (cli *Client) sentReq(index uint64, respChan chan *Response, closeChan chan error) {
 	cli.queueMtx.Lock()
 	defer cli.queueMtx.Unlock()
+
 	cli.reqSent.PushBack(ReqResp{Index: index, RespChan: respChan, CloseChan: closeChan})
 }
 
 func (cli *Client) removeReq(index uint64) {
-	cli.queueMtx.Lock()
-	defer cli.queueMtx.Unlock()
+	//cli.queueMtx.Lock()
+	//defer cli.queueMtx.Unlock()
 
-	var next *list.Element
-	next = cli.reqSent.Front()
+	next := cli.reqSent.Front()
 	for next != nil {
 		if next.Value.(ReqResp).Index == index {
 			close(next.Value.(ReqResp).CloseChan)
 			close(next.Value.(ReqResp).RespChan)
+			cli.queueMtx.Lock()
 			cli.reqSent.Remove(next)
+			cli.queueMtx.Unlock()
 			break
 		}
 

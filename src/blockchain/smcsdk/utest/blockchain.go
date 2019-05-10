@@ -134,6 +134,7 @@ func deployContract(contractName, orgID string, methods, interfaces []string, lo
 		Token:        "", // TODO
 		OrgID:        orgID,
 	}
+	prefix = pc.KeyPrefix
 
 	for _, m := range methods {
 		md := std.Method{

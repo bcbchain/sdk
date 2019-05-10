@@ -6,7 +6,7 @@ import (
 )
 
 // NewMessage factory method for create message with all receipt property
-func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string, items []types.HexBytes, _sender types.Address, origins []types.Address, receipts []types.KVPair) sdk.IMessage {
+func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string, items []types.HexBytes, _sender types.Address, payer sdk.IAccount, origins []types.Address, receipts []types.KVPair) sdk.IMessage {
 	senderAcct := NewAccount(smc, _sender)
 
 	var gasPrice int64
@@ -23,11 +23,25 @@ func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string,
 		items:          items,
 		gasPrice:       gasPrice,
 		sender:         senderAcct,
+		payer:          payer,
 		origins:        origins,
 		inputReceipts:  receipts,
 		outputReceipts: make([]types.KVPair, 0),
 	}
 	o.SetSMC(smc)
+
+	if o.payer == nil {
+		for _, method := range contract.Methods() {
+			if method.MethodID == methodID {
+				if method.Gas < 0 {
+					o.payer = smc.Helper().AccountHelper().AccountOf(contract.Account())
+				} else {
+					o.payer = senderAcct
+				}
+				break
+			}
+		}
+	}
 
 	return o
 }

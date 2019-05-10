@@ -81,7 +81,8 @@ func (mysuit *MySuite) TestDice2Win_SetSettings(c *check.C) {
 	}
 
 	settings := Settings{}
-	settings.TokenNames = []string{test.obj.sdk.Helper().GenesisHelper().Token().Name()}
+	settings.TokenNames = make(map[string]struct{})
+	settings.TokenNames[test.obj.sdk.Helper().GenesisHelper().Token().Name()] = struct{}{}
 	settings.MaxBet = 2E10
 	settings.MinBet = 1E8
 	settings.MaxProfit = 2E12
@@ -97,10 +98,11 @@ func (mysuit *MySuite) TestDice2Win_SetSettings(c *check.C) {
 
 	settings.MaxBet = 2E10
 	settings.MinBet = 2E8
-	settings.TokenNames = []string{}
+	settings.TokenNames = make(map[string]struct{})
 	resBytes3, _ := jsoniter.Marshal(settings)
 
-	settings.TokenNames = []string{test.obj.sdk.Helper().GenesisHelper().Token().Name()}
+	settings.TokenNames = make(map[string]struct{})
+	settings.TokenNames[test.obj.sdk.Helper().GenesisHelper().Token().Name()] = struct{}{}
 	settings.MaxBet = 0
 	resBytes4, _ := jsoniter.Marshal(settings)
 
@@ -176,14 +178,14 @@ func (mysuit *MySuite) TestDice2Win_SetRecvFeeInfos(c *check.C) {
 	resBytes2, _ := jsoniter.Marshal(recvFeeInfo)
 	item := RecvFeeInfo{
 		Ratio:   500,
-		Address: "local9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
+		Address: "test9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
 	}
 	recvFeeInfo = append(recvFeeInfo, item)
 	resBytes1, _ := jsoniter.Marshal(recvFeeInfo)
 
 	item1 := RecvFeeInfo{
 		Ratio:   501,
-		Address: "local9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
+		Address: "test9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
 	}
 	recvFeeInfo = append(recvFeeInfo, item1)
 	resBytes3, _ := jsoniter.Marshal(recvFeeInfo)
@@ -207,7 +209,7 @@ func (mysuit *MySuite) TestDice2Win_SetRecvFeeInfos(c *check.C) {
 	recvFeeInfo = append(recvFeeInfo[:1], recvFeeInfo[2:]...)
 	item4 := RecvFeeInfo{
 		Ratio:   -1,
-		Address: "local9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
+		Address: "test9ge366rtqV9BHqNwn7fFgA8XbDQmJGZqE",
 	}
 	recvFeeInfo = append(recvFeeInfo, item4)
 	resBytes6, _ := jsoniter.Marshal(recvFeeInfo)
@@ -218,7 +220,7 @@ func (mysuit *MySuite) TestDice2Win_SetRecvFeeInfos(c *check.C) {
 		desc    string
 		code    uint32
 	}{
-		{contractOwner, resBytes1, "--正常流程--", types.CodeOK},
+		{contractOwner, resBytes1, "-- --", types.CodeOK},
 		{contractOwner, resBytes2, "--异常流程--", types.ErrInvalidParameter},
 		{contractOwner, resBytes3, "--异常流程--", types.ErrInvalidParameter},
 		{contractOwner, resBytes4, "--异常流程--", types.ErrInvalidAddress},
@@ -243,7 +245,7 @@ func (mysuit *MySuite) TestDice2Win_WithdrawFunds(c *check.C) {
 	contractAccount := utest.UTP.Helper().ContractHelper().ContractOfName(contractName).Account()
 
 	utest.Assert(test.run().setSender(utest.UTP.Helper().AccountHelper().AccountOf(genesisOwner)) != nil)
-	utest.Transfer(nil, test.obj.sdk.Helper().GenesisHelper().Token().Name(), contractAccount, bn.N(1E11))
+	utest.Transfer(nil, contractAccount, bn.N(1E11))
 
 	accounts := utest.NewAccounts(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1E13), 1)
 	if accounts == nil {
@@ -284,7 +286,7 @@ func (mysuit *MySuite) TestDice2Win_PlaceBet(c *check.C) {
 	genesisOwner := utest.UTP.Helper().GenesisHelper().Token().Owner()
 	utest.Assert(test.run().setSender(utest.UTP.Helper().AccountHelper().AccountOf(genesisOwner)) != nil)
 
-	utest.Transfer(nil, test.obj.sdk.Helper().GenesisHelper().Token().Name(), contract.Account(), bn.N(1E11))
+	utest.Transfer(nil, contract.Account(), bn.N(1E11))
 
 	accounts := utest.NewAccounts(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1E13), 1)
 	if accounts == nil {
@@ -326,7 +328,7 @@ func (mysuit *MySuite) TestDice2Win_SettleBet(c *check.C) {
 	genesisOwner := utest.UTP.Helper().GenesisHelper().Token().Owner()
 	utest.Assert(test.run().setSender(utest.UTP.Helper().AccountHelper().AccountOf(genesisOwner)) != nil)
 
-	utest.Transfer(nil, test.obj.sdk.Helper().GenesisHelper().Token().Name(), test.obj.sdk.Message().Contract().Account(), bn.N(1E11))
+	utest.Transfer(nil, test.obj.sdk.Message().Contract().Account(), bn.N(1E11))
 
 	accounts := utest.NewAccounts(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1E13), 1)
 	if accounts == nil {
@@ -351,7 +353,7 @@ func (mysuit *MySuite) TestDice2Win_RefundBet(c *check.C) {
 	genesisOwner := utest.UTP.Helper().GenesisHelper().Token().Owner()
 	utest.Assert(test.run().setSender(utest.UTP.Helper().AccountHelper().AccountOf(genesisOwner)) != nil)
 
-	utest.Transfer(nil, test.obj.sdk.Helper().GenesisHelper().Token().Name(), test.obj.sdk.Message().Contract().Account(), bn.N(1E11))
+	utest.Transfer(nil, test.obj.sdk.Message().Contract().Account(), bn.N(1E11))
 
 	accounts := utest.NewAccounts(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1E13), 1)
 	if accounts == nil {

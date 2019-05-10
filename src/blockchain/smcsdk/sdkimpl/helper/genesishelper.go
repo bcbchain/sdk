@@ -28,12 +28,12 @@ func (gh *GenesisHelper) SetSMC(smc sdk.ISmartContract) { gh.smc = smc }
 
 // ChainID get chainID with current block chain
 func (gh *GenesisHelper) ChainID() string {
-	return gh.smc.Block().ChainID()
+	return *gh.smc.(*sdkimpl.SmartContract).LlState().McGetEx(std.KeyOfChainID(), new(string)).(*string)
 }
 
 // OrgID get organization identifier
 func (gh *GenesisHelper) OrgID() string {
-	return gh.Contracts()[0].OrgID()
+	return *gh.smc.(*sdkimpl.SmartContract).LlState().McGetEx(std.KeyOfOrgID(), new(string)).(*string)
 }
 
 // Contracts get genesis contract list

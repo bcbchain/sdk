@@ -40,10 +40,11 @@ type IMessage interface {
 	Items() []types.HexBytes       //消息的参数数据字段的原始信息
 	GasPrice() int64               //消息的燃料价格
 	Sender() IAccount              //消息发送者的账户信息
+	Payer() IAccount               //手续费支付者的账户信息
 	Origins() []types.Address      //消息完整的调用链（用于记录跨合约调用的合约链）
 	InputReceipts() []types.KVPair //级联消息中前一个消息输出的收据作为本次消息的输入
 
-	GetTransferToMe(tokenName string) *std.Transfer //获取级联消息中前一个消息中第一个转给现在这个合约的转账收据
+	GetTransferToMe() []*std.Transfer //获取级联消息中前一个消息中第一个转给现在这个合约的转账收据
 }
 
 // IAccount the interface for Account
@@ -73,6 +74,7 @@ type IContract interface {
 	KeyPrefix() string            //合约在状态数据库中KEY值的前缀
 	Methods() []std.Method        //合约对外提供接的方法列表
 	Interfaces() []std.Method     //合约对外提供的跨合约调用方法列表
+	Mine() []std.Method           //合约提供的挖矿方法
 	Token() types.Address         //合约代币地址
 	OrgID() string                //组织ID
 	SetOwner(owner types.Address) //修改合约拥有者
@@ -176,8 +178,6 @@ type IStateHelper interface {
 	GetUint16(key string) uint16
 	GetUint32(key string) uint32
 	GetUint64(key string) uint64
-	GetFloat32(key string) float32
-	GetFloat64(key string) float64
 	GetByte(key string) byte
 	GetBool(key string) bool
 	GetString(key string) string
@@ -193,8 +193,6 @@ type IStateHelper interface {
 	GetUint16s(key string) []uint16
 	GetUint32s(key string) []uint32
 	GetUint64s(key string) []uint64
-	GetFloat32s(key string) []float32
-	GetFloat64s(key string) []float64
 	GetBytes(key string) []byte
 	GetBools(key string) []bool
 	GetStrings(key string) []string
@@ -213,8 +211,6 @@ type IStateHelper interface {
 	SetUint16(key string, v uint16)
 	SetUint32(key string, v uint32)
 	SetUint64(key string, v uint64)
-	SetFloat32(key string, v float32)
-	SetFloat64(key string, v float64)
 	SetByte(key string, v byte)
 	SetBool(key string, v bool)
 	SetString(key string, v string)
@@ -230,11 +226,15 @@ type IStateHelper interface {
 	SetUint16s(key string, v []uint16)
 	SetUint32s(key string, v []uint32)
 	SetUint64s(key string, v []uint64)
-	SetFloat32s(key string, v []float32)
-	SetFloat64s(key string, v []float64)
 	SetBytes(key string, v []byte)
 	SetBools(key string, v []bool)
 	SetStrings(key string, v []string)
+
+	// Flush cache data to bcchain
+	Flush()
+
+	// Delete data map by key
+	Delete(key string)
 
 	//Memory cache McGet
 	McGet(key string, defaultValue interface{}) interface{}   //从状态数据库或内存缓存中读取指定KEY对应的数据，不存在返回空
@@ -251,8 +251,6 @@ type IStateHelper interface {
 	McGetUint16(key string) uint16
 	McGetUint32(key string) uint32
 	McGetUint64(key string) uint64
-	McGetFloat32(key string) float32
-	McGetFloat64(key string) float64
 	McGetByte(key string) byte
 	McGetBool(key string) bool
 	McGetString(key string) string
@@ -268,8 +266,6 @@ type IStateHelper interface {
 	McGetUint16s(key string) []uint16
 	McGetUint32s(key string) []uint32
 	McGetUint64s(key string) []uint64
-	McGetFloat32s(key string) []float32
-	McGetFloat64s(key string) []float64
 	McGetBytes(key string) []byte
 	McGetBools(key string) []bool
 	McGetStrings(key string) []string
@@ -288,8 +284,6 @@ type IStateHelper interface {
 	McSetUint16(key string, v uint16)
 	McSetUint32(key string, v uint32)
 	McSetUint64(key string, v uint64)
-	McSetFloat32(key string, v float32)
-	McSetFloat64(key string, v float64)
 	McSetByte(key string, v byte)
 	McSetBool(key string, v bool)
 	McSetString(key string, v string)
@@ -305,14 +299,15 @@ type IStateHelper interface {
 	McSetUint16s(key string, v []uint16)
 	McSetUint32s(key string, v []uint32)
 	McSetUint64s(key string, v []uint64)
-	McSetFloat32s(key string, v []float32)
-	McSetFloat64s(key string, v []float64)
 	McSetBytes(key string, v []byte)
 	McSetBools(key string, v []bool)
 	McSetStrings(key string, v []string)
 
+	// McClear dirty Memory cache data map by key
 	McClear(key string)
-	Flush()
+
+	// McDelete dirty and delete data map by key
+	McDelete(key string)
 }
 
 // ISmartContract the interface for SmartContract

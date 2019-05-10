@@ -2,10 +2,11 @@ package myballot
 
 import (
 	"blockchain/smcsdk/sdk"
+	"blockchain/smcsdk/sdk/forx"
 	"blockchain/smcsdk/sdk/types"
 )
 
-//Ballot a demo contract
+//Ballot a demo smart contract for voting with delegation.
 //@:contract:myballot
 //@:version:1.0
 //@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
@@ -13,15 +14,17 @@ import (
 type Ballot struct {
 	sdk sdk.ISmartContract
 
-	//chairperson 这声明了一个状态变量，为这个合约存储一个主席地址
+	//chairperson this declares a state variable that stores a chairperson's
+	//            address for the contract
 	//@:public:store:cache
 	chairperson string
 
-	//voters 这声明了一个状态变量，为每个可能的地址存储一个 `Voter`
+	//voters this declares a state variable that stores a 'Voter' struct for
+	//       each possible address
 	//@:public:store
 	voters map[types.Address]Voter
 
-	//proposals 一个 `Proposal` 结构类型的动态数组
+	//proposals a dynamically-sized array of 'Proposal' structs
 	//@:public:store:cache
 	proposals []Proposal
 }
@@ -31,13 +34,13 @@ type Ballot struct {
 func (ballot *Ballot) InitChain() {
 }
 
-//Init 为 `proposalNames` 中的每个提案，创建一个新的（投票）表决
+//Init create a new (voting) vote for each proposal in 'proposal Names'
 //@:public:method:gas[500]
-func (ballot *Ballot) Init(proposalNames []string) (error types.Error) {
+func (ballot *Ballot) Init(proposalNames []string) {
 	sender := ballot.sdk.Message().Sender().Address()
 
 	// Only cntract's owner can perform init
-	sdk.RequireOwner(ballot.sdk)
+	sdk.RequireOwner()
 
 	proposals := ballot._proposals()
 	sdk.Require(len(proposals) <= 0,
@@ -50,68 +53,63 @@ func (ballot *Ballot) Init(proposalNames []string) (error types.Error) {
 	voter.weight = 1
 	ballot._setVoters(chairperson, voter)
 
-	//对于提供的每个提案名称，
-	//创建一个新的 Proposal 对象并把它添加到数组的末尾。
-	for i := 0; i < len(proposalNames); i++ {
+	// For each of the provided proposal names,
+	// create a new 'Proposal' object and add it to the end of the array
+	forx.Range(proposalNames, func(i int, pName string) bool {
 		proposals = append(proposals,
 			Proposal{
-				name:      proposalNames[i],
+				name:      pName,
 				voteCount: 0,
 			})
-	}
-	ballot._setProposals(proposals)
 
-	error.ErrorCode = types.CodeOK
-	return
+		return true
+	})
+	ballot._setProposals(proposals)
 }
 
-//GiveRightToVote 授权 `voterAddr` 对这个（投票）表决进行投票
-//               只有 `chairperson` 可以调用该函数。
+//GiveRightToVote give `voter` the right to vote on this ballot.
+//                may only be called by 'chairperson'.
 //@:public:method:gas[500]
-func (ballot *Ballot) GiveRightToVote(voterAddr types.Address) (error types.Error) {
-	// 若 `sdk.Require` 的第一个参数的计算结果为 `false`，
-	// 则终止执行，撤销所有对状态的改动。
-	// 你也可以在 require 的第三个参数中提供一个对错误情况的详细解释。
+func (ballot *Ballot) GiveRightToVote(voterAddr types.Address) {
 	sender := ballot.sdk.Message().Sender().Address()
 	chairperson := ballot._chairperson()
-	sdk.Require(sender != chairperson,
+	sdk.Require(sender == chairperson,
 		types.ErrNoAuthorization, "Only chairperson can give right to vote.")
 
 	voter := ballot._voters(voterAddr)
-	sdk.Require(voter.voted,
+	sdk.Require(voter.voted == false,
 		types.ErrUserDefined, "The voter already voted.")
-
-	sdk.Require(voter.weight != 0,
+	sdk.Require(voter.weight == 0,
 		types.ErrUserDefined, "The voter's weight must be zero.")
 
 	voter.weight = 1
 	ballot._setVoters(voterAddr, voter)
-	return
 }
 
-//Delegate 把你的投票委托到投票者 `to`。
+//Delegate Delegate your vote to the voter 'to'
 //@:public:method:gas[1500]
-func (ballot *Ballot) Delegate(to types.Address) (error types.Error) {
+func (ballot *Ballot) Delegate(to types.Address) {
 	sender := ballot.sdk.Message().Sender().Address()
 	sendVoter := ballot._voters(sender)
-	sdk.Require(sendVoter.voted,
-		types.ErrUserDefined, "You already voted.")
 
-	sdk.Require(to == sender,
+	sdk.Require(sendVoter.voted == false,
+		types.ErrUserDefined, "You already voted.")
+	sdk.Require(to != sender,
 		types.ErrUserDefined, "Self-delegation is disallowed.")
 
-	// 委托是可以传递的，只要被委托者 `to` 也设置了委托。
-	// 一般来说，这种循环委托是危险的。因为，如果传递的链条太长，
-	// 则可能需消耗的gas要多于区块中剩余的（大于区块设置的gasLimit），
-	// 这种情况下，委托不会被执行。
-	// 而在另一些情况下，如果形成闭环，则会让合约完全卡住。
+	// Forward the delegation as long as 'to' also delegated.
+	// In general, such loops are very dangerous, because if they run too
+	// long, they might need more gas than is available in a block.
+	// In this case, the delegation will not be executed, but in other
+	// situations, such loops might cause a contract to get "stuck" completely.
 	toVoter := ballot._voters(to)
+	// ???? forx.Range(Func)
 	for toVoter.delegate != "" {
 		to = toVoter.delegate
 		toVoter = ballot._voters(to)
 
-		// 不允许闭环委托
-		sdk.Require(to == sender,
+		// We found a loop in the delegation, not allowed.
+		sdk.Require(to != sender,
 			types.ErrUserDefined, "Found loop in delegation.")
 	}
 
@@ -119,54 +117,61 @@ func (ballot *Ballot) Delegate(to types.Address) (error types.Error) {
 	sendVoter.delegate = to
 	delegate := toVoter
 	if delegate.voted {
-		// 若被委托者已经投过票了，直接增加得票数
+		// If the delegate already voted,
+		// directly add to the number of votes
 		proposals := ballot._proposals()
 		proposals[int(delegate.vote)].voteCount += sendVoter.weight
 		ballot._setProposals(proposals)
 	} else {
-		// 若被委托者还没投票，增加委托者的权重
+		// If the delegate did not vote yet,
+		// add to her weight.
 		delegate.weight += sendVoter.weight
 		ballot._setVoters(to, delegate)
 	}
 	return
 }
 
-//Vote 把你的票(包括委托给你的票)，
-//     投给提案 `proposals[proposal].name`.
+//Vote give your vote (including votes delegated to you)
+//     to proposal `proposals[proposal].name`.
 //@:public:method:gas[500]
-func (ballot *Ballot) Vote(proposal uint) (error types.Error) {
+func (ballot *Ballot) Vote(proposal uint) {
 	sender := ballot.sdk.Message().Sender().Address()
 	sendVoter := ballot._voters(sender)
-	sdk.Require(sendVoter.voted,
+
+	sdk.Require(sendVoter.voted == false,
 		types.ErrUserDefined, "You already voted.")
 
 	proposals := ballot._proposals()
-	sdk.Require(proposal >= uint(len(proposals)),
+	sdk.Require(proposal < uint(len(proposals)),
 		types.ErrUserDefined, "Proposal is out of index.")
 
 	sendVoter.voted = true
 	sendVoter.vote = proposal
 	proposals[int(proposal)].voteCount += sendVoter.weight
 	ballot._setProposals(proposals)
-	return
 }
 
-//WinningProposal 结合之前所有的投票，计算出最终胜出的提案
+//WinningProposal computes the winning proposal taking all
+//                previous votes into account.
 //@:public:method:gas[500]
 func (ballot *Ballot) WinningProposal() (winningProposal uint) {
 	var winningVoteCount uint
+
 	proposals := ballot._proposals()
-	for p := 0; p < len(proposals); p++ {
-		if proposals[p].voteCount > winningVoteCount {
-			winningVoteCount = proposals[p].voteCount
-			winningProposal = uint(p)
+	forx.Range(proposals, func(i int, proposal Proposal) bool {
+		if proposal.voteCount > winningVoteCount {
+			winningVoteCount = proposal.voteCount
+			winningProposal = uint(i)
 		}
-	}
+
+		return true
+	})
 	return
 }
 
-//WinnerName 调用 WinningProposal() 函数以获取提案数组中获胜者
-//           的索引，并以此返回获胜者的名称
+//WinnerName calls winningProposal() function to get the index
+//           of the winner contained in the proposals array and then
+//           returns the name of the winner
 //@:public:method:gas[500]
 func (ballot *Ballot) WinnerName() (winnerName string) {
 	proposals := ballot._proposals()

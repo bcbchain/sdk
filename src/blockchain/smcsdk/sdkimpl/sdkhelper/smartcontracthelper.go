@@ -1,6 +1,7 @@
 package sdkhelper
 
 import (
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
@@ -41,28 +42,30 @@ func New(
 
 	smc := new(sdkimpl.SmartContract)
 
-	llState := llstate.NewLowLevelSDB(smc, transID, txID)
-	smc.SetLlState(llState)
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: smc}, func() {
+		llState := llstate.NewLowLevelSDB(smc, transID, txID)
+		smc.SetLlState(llState)
 
-	helperObj := helper.NewHelper(smc)
-	smc.SetHelper(helperObj)
+		helperObj := helper.NewHelper(smc)
+		smc.SetHelper(helperObj)
 
-	block := helper.GetCurrentBlock(smc)
-	smc.SetBlock(block)
+		block := helper.GetCurrentBlock(smc)
+		smc.SetBlock(block)
 
-	contract := object.NewContractFromAddress(smc, smcAddr)
-	origin := make([]types.Address, 0)
-	origin = append(origin, sender)
+		contract := object.NewContractFromAddress(smc, smcAddr)
+		origin := make([]types.Address, 0)
+		origin = append(origin, sender)
 
-	cloneItems := make([]types.HexBytes, 0)
-	for _, item := range items {
-		cloneItems = append(cloneItems, item)
-	}
-	message := object.NewMessage(smc, contract, methodID, cloneItems, sender, origin, receipts)
-	smc.SetMessage(message)
+		cloneItems := make([]types.HexBytes, 0)
+		for _, item := range items {
+			cloneItems = append(cloneItems, item)
+		}
+		message := object.NewMessage(smc, contract, methodID, cloneItems, sender, nil, origin, receipts)
+		smc.SetMessage(message)
 
-	tx := object.NewTx(smc, note, gasLimit, gasLeft, sender)
-	smc.SetTx(tx)
+		tx := object.NewTx(smc, note, gasLimit, gasLeft, sender)
+		smc.SetTx(tx)
+	})
 
 	return smc
 }
@@ -81,6 +84,7 @@ func OriginNewMessage(
 		methodID,
 		nil,
 		origin.Message().Sender().Address(),
+		origin.Message().Payer(),
 		originList,
 		receipts)
 

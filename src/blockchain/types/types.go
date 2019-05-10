@@ -1,8 +1,14 @@
 package types
 
 import (
-	"github.com/gogo/protobuf/proto"
+	"blockchain/smcsdk/sdk/bn"
+	"blockchain/smcsdk/sdk/rlp"
+	"bytes"
+	"encoding/hex"
+	"strconv"
 	"time"
+
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/tendermint/go-crypto"
 
@@ -24,13 +30,13 @@ const MaxSizeNote = 256
 // PubKey uses for public key and others, PubKeyEd25519
 type PubKey = common.HexBytes
 
-// ModuleHealth 啥意思我也不知道，請加注釋 TODO
+// ModuleHealth
 type ModuleHealth struct {
 	Tm     time.Time
 	Status int
 }
 
-// Health 健康情況？TODO
+// Health
 type Health struct {
 	Tm        time.Time
 	SubHealth map[string]ModuleHealth
@@ -49,11 +55,60 @@ type Transaction struct {
 	Messages []Message `json:"messages"` // 交易消息，RLP编码格式。
 }
 
+func (t *Transaction) String() string {
+	var buf bytes.Buffer
+	buf.WriteString("{Nonce:")
+	buf.WriteString(strconv.FormatUint(t.Nonce, 10))
+	buf.WriteString(",GasLimit:")
+	buf.WriteString(strconv.FormatInt(t.GasLimit, 10))
+	buf.WriteString(",Note:")
+	buf.WriteString(t.Note)
+	buf.WriteString(",Messages:[")
+	l := len(t.Messages) - 1
+	for idx, msg := range t.Messages {
+		buf.WriteString(msg.String())
+		if idx < l {
+			buf.WriteString(",")
+		}
+	}
+	buf.WriteString("]}")
+	return buf.String()
+}
+
 // Message - a contract method with its params
 type Message struct {
 	Contract Address           `json:"contract"` //调用合约地址
 	MethodID uint32            `json:"methodID"` //方法id
 	Items    []common.HexBytes `json:"items"`    //调用参数
+}
+
+func (m *Message) String() string {
+	var buf bytes.Buffer
+	buf.WriteString("{Contract:'")
+	buf.WriteString(m.Contract)
+	buf.WriteString("',MethodID:")
+	buf.WriteString(strconv.FormatUint(uint64(m.MethodID), 10))
+	buf.WriteString(",Items:[")
+	// items 类型很多，这里只处理转帐业务，其他业务显示HexString :)
+	if m.Contract == "devtestN8UYtjrLKS3S2oKTMjNvxJ3iUpUr6PnS9" && m.MethodID == 1155058272 {
+		var to string
+		_ = rlp.DecodeBytes(m.Items[0], &to)
+		buf.WriteString(to)
+		buf.WriteString(",")
+		var num bn.Number
+		_ = rlp.DecodeBytes(m.Items[1], &num)
+		buf.WriteString(num.String())
+	} else {
+		l := len(m.Items) - 1
+		for idx, item := range m.Items {
+			buf.WriteString(hex.EncodeToString(item))
+			if idx < l {
+				buf.WriteString(",")
+			}
+		}
+	}
+	buf.WriteString("]}")
+	return buf.String()
 }
 
 //Ed25519Sig 定义加密算法结构
@@ -72,7 +127,6 @@ type Receipt struct {
 }
 
 // RPCInvokeCallParam 合约调用参数
-// todo 设计转账接收人的账户余额， 注：考虑多个message中分别有不同的接收者
 type RPCInvokeCallParam struct {
 	Sender          Address         `json:"sender"`          // 交易发送者
 	Balances        []byte          `json:"balances"`        // 交易发送者账户余额

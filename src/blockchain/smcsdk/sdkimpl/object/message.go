@@ -21,6 +21,7 @@ type Message struct {
 	items          []types.HexBytes //消息的数据字段的原始信息（包括方法ID及参数）
 	gasPrice       int64            //消息的燃料价格
 	sender         sdk.IAccount     //消息发送者的账户信息
+	payer          sdk.IAccount     //支付手续费的账户信息
 	origins        []types.Address  //消息完整的调用链（用于记录跨合约调用的合约链）
 	inputReceipts  []types.KVPair   //级联消息中前一个消息输出的收据作为本次消息的输入
 	outputReceipts []types.KVPair   //级联消息中的输出收据
@@ -49,6 +50,9 @@ func (m *Message) GasPrice() int64 { return m.gasPrice }
 
 // Sender get message's sender
 func (m *Message) Sender() sdk.IAccount { return m.sender }
+
+// Payer get account for pay fee
+func (m *Message) Payer() sdk.IAccount { return m.payer }
 
 // Origin get message's origin
 func (m *Message) Origins() []types.Address { return m.origins }
@@ -81,35 +85,19 @@ func (m *Message) AppendOutput(receipts []types.KVPair) {
 }
 
 // GetTransferToMe parse receipt that it's transfer receipt
-func (m *Message) GetTransferToMe(tokenName string) (transferReceipt *std.Transfer) {
-	var it sdk.IToken
-	if tokenName == "" {
-		it = m.smc.Helper().TokenHelper().Token()
-	} else {
-		it = m.smc.Helper().TokenHelper().TokenOfName(tokenName)
-	}
+func (m *Message) GetTransferToMe() (transferReceipts []*std.Transfer) {
 
-	sdk.Require(it != nil,
-		types.ErrInvalidParameter, fmt.Sprintf("Invalid tokenName=%s", tokenName))
-
+	transferReceipts = make([]*std.Transfer, 0)
 	for _, v := range m.inputReceipts {
-		transferReceipt = m.parseToTransfer(v.Value)
+		transferReceipt := m.parseToTransfer(v.Value)
 		if transferReceipt != nil &&
-			transferReceipt.To == m.smc.Message().Contract().Account() &&
-			transferReceipt.Token == it.Address() {
+			transferReceipt.To == m.smc.Message().Contract().Account() {
+			transferReceipts = append(transferReceipts, transferReceipt)
 			break
 		}
 	}
-	assertOfTransfer(transferReceipt)
-	return transferReceipt
-}
 
-func assertOfTransfer(receipt *std.Transfer) {
-	sdk.Require(receipt != nil,
-		types.ErrInvalidParameter, "must execute transfer tx first")
-
-	sdk.Require(!receipt.Value.IsNegative(),
-		types.ErrInvalidParameter, "incoming token value must not be negative")
+	return
 }
 
 // parseToTransfer get transfer receipt and parse it

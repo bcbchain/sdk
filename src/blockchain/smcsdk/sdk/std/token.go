@@ -15,7 +15,7 @@ type Token struct {
 	TotalSupply      bn.Number     `json:"totalSupply"`      //代币的总供应量
 	AddSupplyEnabled bool          `json:"addSupplyEnabled"` //代币是否支持增发
 	BurnEnabled      bool          `json:"burnEnabled"`      //代币是否支持燃烧
-	GasPrice         int64         `json:"gasPrice"`         //代币燃料价格
+	GasPrice         int64         `json:"gasprice"`         //代币燃料价格
 }
 
 // KeyOfAllToken the access key for all tokens

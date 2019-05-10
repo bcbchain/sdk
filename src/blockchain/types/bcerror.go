@@ -6,14 +6,12 @@ type BcError struct {
 	ErrorDesc string // Error description
 }
 
-//todo 移到bclib，改名BcError
 // Error() gets error description with error code
 func (bcerror *BcError) Error() string {
 	if bcerror.ErrorDesc != "" {
 		return bcerror.ErrorDesc
 	}
 
-	// TODO: it would be better to use binary search
 	for _, error := range bcErrors {
 		if error.ErrorCode == bcerror.ErrorCode {
 			return error.ErrorDesc

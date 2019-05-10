@@ -116,7 +116,7 @@ func saveToken(token *std.Token) {
 func InitLog(moduleName string) log.Loggerf {
 	l := log.NewTMLogger("./log", moduleName)
 	l.SetOutputToFile(true)
-	l.SetOutputToScreen(true)
+	l.SetOutputToScreen(false)
 	l.AllowLevel("info")
 
 	return l

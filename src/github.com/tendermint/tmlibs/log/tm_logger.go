@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"fmt"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
 	"time"
 )
+
+const lengthOfChanLogInfoBuffer = 10000
 
 type logInfo struct {
 	level       string
@@ -34,9 +37,9 @@ type giLogger struct {
 	timeZone         string
 	fileName         string
 	logFile          *os.File
-	caStop           chan bool     //用于控制异步写线程
-	caStopped        chan bool     //用于控制异步写线程
-	cf               chan *logInfo //用于控制异步构造日志文本串
+	caStop           chan bool    //用于控制异步写线程
+	caStopped        chan bool    //用于控制异步写线程
+	cf               chan logInfo //用于控制异步构造日志文本串
 	mutex            *sync.Mutex
 }
 
@@ -61,7 +64,7 @@ func NewTMLogger(path, module string) Loggerf {
 		logFile:          nil,
 		caStop:           make(chan bool, 1),
 		caStopped:        make(chan bool, 1),
-		cf:               make(chan *logInfo, 10000),
+		cf:               make(chan logInfo, lengthOfChanLogInfoBuffer),
 		mutex:            new(sync.Mutex),
 		withThreadID:     true,
 	}
@@ -366,7 +369,11 @@ func (log *giLogger) flushMutex(logBuf *bytes.Buffer) {
 
 func asyncRun(log *giLogger) {
 	for {
-		if len(log.cf) > 0 {
+		lenChan := len(log.cf)
+		if lenChan > 0 {
+			if lenChan == lengthOfChanLogInfoBuffer {
+				print("log buffer full!!!\n")
+			}
 			logBuf := bytes.NewBuffer(nil)
 			logText := ""
 			if li := <-log.cf; li.fmt == false {
@@ -389,10 +396,10 @@ func asyncRun(log *giLogger) {
 // Log a message at specific level.
 func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
 	if log.isOutputAsync {
-		li := &logInfo{
+		li := logInfo{
 			level: level,
 			fmt:   false,
-			msg:   file_line() + msg,
+			msg:   fileLine() + msg,
 		}
 		if log.withThreadID {
 			li.goroutineID = GetGID()
@@ -404,13 +411,21 @@ func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogText(rid, level, file_line()+msg, keyvals)
+		logText := log.genLogText(rid, level, fileLine()+msg, keyvals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
 }
 
-func file_line() string {
+func fileLine() string {
 	_, fileName, fileLine, ok := runtime.Caller(3)
+
+	// tendermint 有一层 filter ，调用栈深一层
+	exe, _ := os.Executable()
+	exeName := filepath.Base(exe)
+	if exeName == "tendermint" || exeName == "tmcore" {
+		_, fileName, fileLine, ok = runtime.Caller(4)
+	}
+
 	var s string
 	if ok {
 		f := strings.Split(fileName, "/")
@@ -424,10 +439,10 @@ func file_line() string {
 // Log a message at specific level.
 func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
 	if log.isOutputAsync {
-		li := &logInfo{
+		li := logInfo{
 			level:  level,
 			fmt:    true,
-			fmtStr: file_line() + fmtStr,
+			fmtStr: fileLine() + fmtStr,
 			vals:   vals,
 		}
 		if log.withThreadID {
@@ -439,7 +454,7 @@ func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogTextEx(rid, level, file_line()+fmtStr, vals)
+		logText := log.genLogTextEx(rid, level, fileLine()+fmtStr, vals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
 }

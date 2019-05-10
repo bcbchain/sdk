@@ -15,3 +15,8 @@ func (ms *MyStorage) _storedData() uint64 {
 func (ms *MyStorage) _chkStoredData() bool {
 	return ms.sdk.Helper().StateHelper().Check("/storedData")
 }
+
+//_delStoredData This is a method of MyStorage
+func (ms *MyStorage) _delStoredData() {
+	ms.sdk.Helper().StateHelper().Delete("/storedData")
+}

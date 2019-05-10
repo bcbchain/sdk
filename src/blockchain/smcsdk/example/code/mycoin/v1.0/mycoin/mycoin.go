@@ -14,7 +14,7 @@ import (
 type Mycoin struct {
 	sdk sdk.ISmartContract
 
-	//@:public:store
+	//@:public:store:cache
 	totalSupply bn.Number
 
 	//@:public:store

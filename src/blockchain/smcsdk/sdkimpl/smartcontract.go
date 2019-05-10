@@ -44,6 +44,7 @@ type ILowLevelSDB interface {
 	McSet(key string, value interface{})                      // 保存数据到缓存和数据库
 	Commit()                                                  // 提交sdk缓存的更新数据
 	Flush()                                                   // 刷新sdk缓存数据到数据库
+	Delete(key string)                                        // 删除指定的键值
 }
 
 var _ sdk.ISmartContract = (*SmartContract)(nil)

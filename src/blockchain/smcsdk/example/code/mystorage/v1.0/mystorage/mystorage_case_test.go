@@ -22,20 +22,20 @@ func (mysuit *MySuite) TestMyStorage_Set(c *check.C) {
 	test := NewTestObject(contractOwner)
 
 	test.run().Set(0)
-	ut.AssertSDB("/mystorage/storedData", 0)
+	ut.AssertSDB("/storedData", 0)
 	retV, err := test.run().Get()
 	ut.AssertError(err, types.CodeOK)
 	ut.Assert(retV == 0)
 
 	test.run().Set(2000348989)
-	ut.AssertSDB("/mystorage/storedData", 2000348989)
+	ut.AssertSDB("/storedData", 2000348989)
 	retV, err = test.run().Get()
 	ut.AssertError(err, types.CodeOK)
 	ut.Assert(retV == 2000348989)
 
 	test.run().Set(math.MaxUint64)
 	var maxUint64 uint64 = math.MaxUint64
-	ut.AssertSDB("/mystorage/storedData", &maxUint64)
+	ut.AssertSDB("/storedData", &maxUint64)
 	retV, err = test.run().Get()
 	ut.AssertError(err, types.CodeOK)
 	ut.Assert(retV == math.MaxUint64)

@@ -1,15 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"common/bcdb"
+	"fmt"
 	"testing"
 )
 
 func TestGILevelDB(t *testing.T) {
 
 	//todo 保证多连接数据库
-	db, err := gidb.OpenDB("testdb", "127.0.0.1", "8888")
+	db, err := bcdb.OpenDB("testdb", "127.0.0.1", "8888")
 	if err != nil {
 		fmt.Println(err)
 	}
