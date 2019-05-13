@@ -10,7 +10,7 @@
 | ------------------ | ------------------------------------------------------------ |
 | V2.0.1：2018-12-18 | 初稿。                                                       |
 | V2.0.2：2019-1-29  | 增加``````sdk/forx``````。                                   |
-| V2.0.3：2019-5-10  | 定稿                                                         |
+| V2.0.3：2019-5-13  | 定稿                                                         |
 
 <div STYLE="page-break-after: always;"></div>
 [TOC]
@@ -1058,14 +1058,15 @@ func Range(args... interface{})
 
 > 模型一：
 > ```
+> func Range( m map[keyType]valType, f func(key keyType, val valType) )
 > func Range( m map[keyType]valType, f func(key keyType, val valType) bool )
 > ```
 > ```
-> 对映射表对象 m 进行遍历操作，遍历按照映射表键的顺序执行，操作函数为 f，f 返回 false 表示终止执行遍历操作，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
+> 对映射表对象 m 进行遍历操作，遍历按照映射表键的顺序执行，操作函数为 f，如果 f 的返回值定义为空，则遍历结束以后才可以结束循环，如果 f 的返回值定义为布尔类型，f 返回 false 表示终止执行遍历操作退出循环，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
 > 1. 参数 m 的类型必须是一个映射表；
-> 2. 参数 f 必须是一个函数；
+> 2. 参数 f 必须是一个函数，函数的返回值必须是在空与布尔类型之间二选一；
 > 3. 函数 f 的参数必须是两个；
 > 4. 函数 f 的第一个参数类型必须是映射表 m 的键对应的类型；
 > 5. 函数 f 的第二个参数类型必须是映射表 m 的值对应的类型。
@@ -1080,23 +1081,23 @@ func Range(args... interface{})
 > m[54] = "3432432423"
 > m[23] = "3434545345345"
 > 
-> forx.Range(m, func(k int, v string) bool {
+> forx.Range(m, func(k int, v string) {
 > 	printf("key=%v value=%v\n", k, v)
-> 	return forx.Continue();
 > }) 
 > ```
 
 
 > 模型二：
 > ```
+> func Range( s []valType, f func(i int, val valType) )
 > func Range( s []valType, f func(i int, val valType) bool )
 > ```
 > ```
-> 对切片对象 s 进行遍历操作，遍历按照切片顺序从小到大顺序执行，操作函数为 f，f 返回 false 表示终止执行遍历操作，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
+> 对切片对象 s 进行遍历操作，遍历按照切片顺序从小到大顺序执行，操作函数为 f，如果 f 的返回值定义为空，则遍历结束以后才可以结束循环，如果 f 的返回值定义为布尔类型，f 返回 false 表示终止执行遍历操作结束循环，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
 > 1. 参数 m 的类型必须是一个切片；
-> 2. 参数 f 必须是一个函数；
+> 2. 参数 f 必须是一个函数，函数的返回值必须是在空与布尔类型之间二选一；
 > 3. 函数 f 的参数必须是两个；
 > 4. 函数 f 的第一个参数类型必须是 int 类型，表示元素的索引号，从 0 开始；
 > 5. 函数 f 的第二个参数类型必须是切片 s 的元素值对应的类型。
@@ -1113,65 +1114,66 @@ func Range(args... interface{})
 > 
 > forx.Range(s, func(i int, v string) {
 > 	printf("i=%v value=%v\n", i, v)
-> 	return forx.Continue();
 > }) 
 > ```
 
 > 模型三：
 > ```
+> func Range( n intType, f func(i intType) )
 > func Range( n intType, f func(i intType) bool )
 > ```
 > ```
-> 循环执行指定次数，操作函数为 f，f 返回 false 表示终止循环操作，f 返回 true 表示继续循环操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
+> 循环执行指定次数，操作函数为 f，如果 f 的返回值定义为空，则执行完指定次数以后才可以结束循环，f 返回 false 表示终止循环操作，f 返回 true 表示继续循环操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
 > 1. 参数 n 的类型必须为表达整数的类型，例如：int、uint、int32等, 值必须大于等于 0 的整数；
-> 2. 参数 f 必须是一个函数；
+> 2. 参数 f 必须是一个函数，函数的返回值必须是在空与布尔类型之间二选一；
 > 3. 函数 f 的参数必须是一个，类型必须于参数 n 的类型相同，表示执行循环的索引号，从 0 开始。
 > ```
-> 
+>
 > 示例代码如下：
-> 
+>
 > ```
-> forx.Range(10, func(i int) bool {
+> forx.Range(10, func(i int) {
 > 	printf("i=%v=%v\n", i)
-> 	return forx.Continue();
 > }) 
 > ```
 
 > 模型四：
 > ```
+> func Range( m,n intType, f func(k intType) )
 > func Range( m,n intType, f func(k intType) bool )
 > ```
 > ```
-> 根据输入参数 m 和 n 遍历 m 到 n 之间(包含 m 和 n)的所有整数，从 m 开始执行，到 n 结束，操作函数为 f，f 返回 false 表示终止执行遍历操作，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
+> 根据输入参数遍历 m 到 n 之间(包含 m 和 n)的所有整数，从 m 开始执行，到 n 结束，操作函数为 f，如果 f 的返回值定义为空，则遍历结束以后才可以结束循环，f 返回 false 表示终止执行遍历操作退出循环，f 返回 true 表示继续执行遍历操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
 > 1. 参数 m 和 n 的类型必须为表达整数的同一类型，例如：int、uint、int32等，如果 m 小于 n，则执行顺
 >    序为增序，如果 m 大于 n，则执行顺序为降序；
-> 2. 参数 f 必须是一个函数；
+> 2. 参数 f 必须是一个函数，函数的返回值必须是在空与布尔类型之间二选一；
 > 3. 函数 f 的参数必须是一个，类型必须与参数 m 和 n 的类型相同，表示遍历的整数值，从 m 开始。
 > ```
-> 
+>
 > 示例代码如下：
-> 
+>
 > ```
 > forx.Range(1,100, func(k int) {
 > 	printf("k=%v\n", k)
-> 	return forx.Continue();
 > }) 
 > ```
 
 > 模型五：
 > ```
-> func Range( c, f func() bool )
+> func Range( c func() bool, f func(i int) )
+> func Range( c func() bool, f func(i int) bool )
 > ```
 > ```
-> 循环执行函数 f，f 返回 false 表示终止执行循环操作，f 返回 true 表示继续执行循环操作，当控制函数 c 满足返回值为 true 时立即终止循环操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
+> 循环执行函数 f，当控制函数 c 满足返回值为 true 时立即终止循环操作，如果 f 的返回值定义为布尔类型，则除了函数 c 可以控制循环结束以外，f 返回 false 表示终止执行循环操作，f 返回 true 表示继续执行循环操作，输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
-> 1. 参数 c 必须是一个函数；
-> 2. 参数 f 必须是一个函数。
+> 1. 参数 c 必须是一个函数，函数的返回值必须是布尔类型；
+> 2. 参数 f 必须是一个函数，函数的返回值必须是在空与布尔类型之间二选一；
+> 3. 函数 f 的参数必须是一个，类型必须是 int，表示执行循环次数的索引，从 0 开始。
 > ```
 >
 > 示例代码如下：
@@ -1181,59 +1183,39 @@ func Range(args... interface{})
 > forx.range( func() bool {
 >               return toVoter.delegate != "" 
 >             },
->             func() bool {                
+>             func(i int) {                
 >               to = toVoter.delegate
 >               toVoter = ballot._voters(to)
->             } bool,
-> )
+>             })
 > ```
 
 > 模型六：
 > ```
-> func Range( f func() bool )
+> func Range( f func(i int) bool )
 > ```
 > ```
 > 循环执行函数 f，f 返回 false 表示终止执行循环操作，f 返回 true 表示继续执行循环操作。输入参数要求满足如下条件，如果任意一条不满足则发生异常，当发生异常时，将会自动触发SDK进行 panic：
 > ```
 > ```
-> 1. 参数 c 必须是一个函数；
-> 2. 参数 f 必须是一个函数。
+> 1. 参数 f 必须是一个函数，函数的返回值必须是布尔类型；
+> 2. 函数 f 的参数必须是一个，类型必须是 int，表示执行循环次数的索引，从 0 开始。
 > ```
 >
 > 示例代码如下：
 >
 > ```
 > toVoter := ballot._voters(to)
-> forx.range( func() bool {                
+> forx.Range( func(i int) bool {                
 >               to = toVoter.delegate
 >               toVoter = ballot._voters(to)
-> 
+>               
 >               if toVoter.delegate != "" {
->                 return forx.Break()
+>                 return forx.Break
+>               } else {
+>                 return forx.Continue
 >               }
->             } bool,
-> )
+>             })
 > ```
-
-
-
-### 8.1.2 func Break()
-
-```
-func Break() bool
-```
-
-在智能合约中通过 ```Range()``` 函数执行循环操作时，在执行函数中调用 ```return Break()``` 可立即退出执行循环。
-
-
-
-### 8.1.3 func Continue()
-
-```
-func Continue() bool
-```
-
-在智能合约中通过 ```Range()``` 函数执行循环操作时，在执行函数中调用 ```return Continue()``` 可立即开始下一轮循环。
 
 
 

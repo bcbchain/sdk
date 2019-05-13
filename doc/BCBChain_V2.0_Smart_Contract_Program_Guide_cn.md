@@ -13,7 +13,7 @@
 | V2.0.1：2018-12-7  | 初稿。                                                       |
 | V2.0.2：2018-12-18 | 调整插件界面及功能。                                         |
 | V2.0.3：2019-1-4   | 智能合约公开的方法和接口消耗的燃料现在支持负整数。           |
-| V2.0.4：2019-5-8   | 定稿                                                         |
+| V2.0.4：2019-5-13  | 定稿                                                         |
 
 
 
@@ -344,7 +344,7 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 代码段：
 
 ```
-  sdk.RequireAddress(mc.sdk, to)
+  sdk.RequireAddress(to)
   sdk.Require(value.IsPositive(),
 		types.ErrInvalidParameter, "value must be positive")
 ```
@@ -521,6 +521,7 @@ package myballot
 
 import (
 	"blockchain/smcsdk/sdk"
+	"blockchain/smcsdk/sdk/forx"
 	"blockchain/smcsdk/sdk/types"
 )
 
@@ -558,7 +559,7 @@ func (ballot *Ballot) Init(proposalNames []string) {
 	sender := ballot.sdk.Message().Sender().Address()
 
 	// Only cntract's owner can perform init
-	sdk.RequireOwner(ballot.sdk)
+	sdk.RequireOwner()
 
 	proposals := ballot._proposals()
 	sdk.Require(len(proposals) <= 0,
@@ -573,13 +574,13 @@ func (ballot *Ballot) Init(proposalNames []string) {
 
 	// For each of the provided proposal names,
 	// create a new 'Proposal' object and add it to the end of the array
-	for i := 0; i < len(proposalNames); i++ {
+	forx.Range(proposalNames, func(i int, pName string) {
 		proposals = append(proposals,
 			Proposal{
-				name:      proposalNames[i],
+				name:      pName,
 				voteCount: 0,
 			})
-	}
+	})
 	ballot._setProposals(proposals)
 }
 
@@ -619,14 +620,17 @@ func (ballot *Ballot) Delegate(to types.Address) {
   // In this case, the delegation will not be executed, but in other 
   // situations, such loops might cause a contract to get "stuck" completely.
 	toVoter := ballot._voters(to)
-	for toVoter.delegate != "" {
-		to = toVoter.delegate
-		toVoter = ballot._voters(to)
-
-		// We found a loop in the delegation, not allowed.
-		sdk.Require(to != sender,
-			types.ErrUserDefined, "Found loop in delegation.")
-	}
+	forx.Range( func() bool {
+	              return toVoter.delegate != ""
+	            },
+	            func(i int) {
+							  to = toVoter.delegate
+							  toVoter = ballot._voters(to)
+					
+							  // We found a loop in the delegation, not allowed.
+							  sdk.Require(to != sender,
+								  types.ErrUserDefined, "Found loop in delegation.")
+						  })
 
 	sendVoter.voted = true
 	sendVoter.delegate = to
@@ -673,12 +677,12 @@ func (ballot *Ballot) WinningProposal() (winningProposal uint) {
 	var winningVoteCount uint
 	
 	proposals := ballot._proposals()
-	for p := 0; p < len(proposals); p++ {
-		if proposals[p].voteCount > winningVoteCount {
-			winningVoteCount = proposals[p].voteCount
-			winningProposal = uint(p)
+	forx.Range(proposals, func(i int, proposal Proposal) {
+		if proposal.voteCount > winningVoteCount {
+			winningVoteCount = proposal.voteCount
+			winningProposal = uint(i)
 		}
-	}
+	})
 	return
 }
 
@@ -709,6 +713,7 @@ package mydonation
 import (
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/bn"
+	"blockchain/smcsdk/sdk/forx"
 	"blockchain/smcsdk/sdk/std"
 	"blockchain/smcsdk/sdk/types"
 )
@@ -750,8 +755,8 @@ func (d *Mydonation) InitChain() {
 //AddDonee Add a new donee
 //@:public:method:gas[500]
 func (d *Mydonation) AddDonee(donee types.Address) {
-	sdk.RequireOwner(d.sdk)
-	sdk.RequireAddress(d.sdk, donee)
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
 	sdk.Require(donee != d.sdk.Message().Sender().Address(),
 		errDoneeCannotBeOwner, "Donee can not be owner")
 	sdk.Require(donee != d.sdk.Message().Contract().Address(),
@@ -770,8 +775,8 @@ func (d *Mydonation) AddDonee(donee types.Address) {
 //Donate delete a donee
 //@:public:method:gas[500]
 func (d *Mydonation) DelDonee(donee types.Address) {
-	sdk.RequireOwner(d.sdk)
-	sdk.RequireAddress(d.sdk, donee)
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
 	sdk.Require(d._chkDonations(donee),
 		errDoneeNotExist, "Donee does not exist")
 	sdk.Require(d._donations(donee).IsEqualI(0),
@@ -786,19 +791,19 @@ func (d *Mydonation) DelDonee(donee types.Address) {
 //Donate Charitable donors donate money to smart contract
 //@:public:method:gas[500]
 func (d *Mydonation) Donate(donee types.Address) {
-	sdk.RequireAddress(d.sdk, donee)
+	sdk.RequireAddress(donee)
 	sdk.Require(d._chkDonations(donee),
 		errDoneeNotExist, "Donee does not exist")
 
 	var valTome *std.Transfer
 	token := d.sdk.Helper().GenesisHelper().Token()
-	for _, receipt := range d.sdk.Message().GetTransferToMe() {
+	forx.Range( d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
 		sdk.Require(receipt.Token == token.Address(),
 			types.ErrInvalidParameter, "Accept donations in genesis token only")
 		sdk.Require(valTome == nil,
 			types.ErrInvalidParameter, "Accept only one donation at a time")
 		valTome = receipt
-	}
+	})
 	sdk.Require(valTome != nil,
 		types.ErrInvalidParameter,	"Please transfer token to me first"	)
 
@@ -817,8 +822,8 @@ func (d *Mydonation) Donate(donee types.Address) {
 //Withdraw To transfer donations to donee
 //@:public:method:gas[500]
 func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
-	sdk.RequireOwner(d.sdk)
-	sdk.RequireAddress(d.sdk, donee)
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
 	sdk.Require(value.IsGreaterThanI(0),
 		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._chkDonations(donee),
