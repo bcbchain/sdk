@@ -1,0 +1,1288 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>BCBChain_V2.0_Smart_Contract_Program_Guide_en</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 30px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(223, 226, 229); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(223, 226, 229); margin: 0px; padding: 0px; }
+table tr:nth-child(2n), thead { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(223, 226, 229); border-right-color: rgb(223, 226, 229); border-left-color: rgb(223, 226, 229); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(223, 226, 229); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-lines { padding-left: 4px; }
+.code-tooltip { box-shadow: rgba(0, 28, 36, 0.3) 0px 1px 1px 0px; border-top: 1px solid rgb(238, 242, 242); }
+.md-fences, code, tt { border: 1px solid rgb(231, 234, 237); background-color: rgb(248, 248, 248); border-radius: 3px; padding: 2px 4px 0px; font-size: 0.9em; }
+code { background-color: rgb(243, 244, 244); padding: 0px 2px; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding-top: 8px; padding-bottom: 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+.md-mathjax-midline { background: rgb(250, 250, 250); }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: rgb(167, 167, 167); opacity: 1; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+#md-notification .btn { border: 0px; }
+.dropdown-menu .divider { border-color: rgb(229, 229, 229); }
+
+
+
+
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class='typora-export os-windows' >
+<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>BCBChain V2.0 Smart Contract Program Guide</h1><p><strong>V2.0.4</strong></p><div style="page-break-after: always;"></div><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" href="#header-n0">BCBChain V2.0 Smart Contract Program Guide</a></span><span class="md-toc-item md-toc-h1" data-ref="n7"><a class="md-toc-inner" href="#header-n7">1 <strong>What is BCB</strong></a></span><span class="md-toc-item md-toc-h1" data-ref="n12"><a class="md-toc-inner" href="#header-n12">2 <strong>Smart Contract Overview</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n15"><a class="md-toc-inner" href="#header-n15">2.1 <strong>Simple smart contract</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n16"><a class="md-toc-inner" href="#header-n16">2.1.1 <strong>Storage</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n91"><a class="md-toc-inner" href="#header-n91">2.1.2 <strong>Token</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n151"><a class="md-toc-inner" href="#header-n151">2.2 <strong>Blockchain foundation</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n153"><a class="md-toc-inner" href="#header-n153">2.2.1 <strong>Transaction</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n159"><a class="md-toc-inner" href="#header-n159">2.2.2 <strong>States</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n167"><a class="md-toc-inner" href="#header-n167">2.2.3 <strong>Blocks</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n173"><a class="md-toc-inner" href="#header-n173">2.2.4 <strong>Message Calls</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n180"><a class="md-toc-inner" href="#header-n180">2.2.3 <strong>Receipt</strong></a></span><span class="md-toc-item md-toc-h1" data-ref="n183"><a class="md-toc-inner" href="#header-n183">3 <strong>Examples of Smart Contract Implementation</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n184"><a class="md-toc-inner" href="#header-n184">3.1 <strong>Voting</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n196"><a class="md-toc-inner" href="#header-n196">3.2 <strong>Charity Donations</strong></a></span><span class="md-toc-item md-toc-h1" data-ref="n201"><a class="md-toc-inner" href="#header-n201">4 <strong>Deeper Understanding of Smart Contracts</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n202"><a class="md-toc-inner" href="#header-n202">4.1 <strong>Organization</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n208"><a class="md-toc-inner" href="#header-n208">4.2 <strong>BNF Paradigm</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n222"><a class="md-toc-inner" href="#header-n222">4.3 <strong>Contract Markups</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n225"><a class="md-toc-inner" href="#header-n225">4.3.1 contract</a></span><span class="md-toc-item md-toc-h3" data-ref="n234"><a class="md-toc-inner" href="#header-n234">4.3.2 version</a></span><span class="md-toc-item md-toc-h3" data-ref="n243"><a class="md-toc-inner" href="#header-n243">4.3.3 organization</a></span><span class="md-toc-item md-toc-h3" data-ref="n251"><a class="md-toc-inner" href="#header-n251">4.3.4 author</a></span><span class="md-toc-item md-toc-h3" data-ref="n260"><a class="md-toc-inner" href="#header-n260">4.3.5 constructor</a></span><span class="md-toc-item md-toc-h3" data-ref="n269"><a class="md-toc-inner" href="#header-n269">4.3.6 public:store</a></span><span class="md-toc-item md-toc-h3" data-ref="n280"><a class="md-toc-inner" href="#header-n280">4.3.7 public:store:cache</a></span><span class="md-toc-item md-toc-h3" data-ref="n291"><a class="md-toc-inner" href="#header-n291">4.3.8 public:receipt</a></span><span class="md-toc-item md-toc-h3" data-ref="n302"><a class="md-toc-inner" href="#header-n302">4.3.9 public:method</a></span><span class="md-toc-item md-toc-h3" data-ref="n319"><a class="md-toc-inner" href="#header-n319">4.3.10 public:interface</a></span><span class="md-toc-item md-toc-h3" data-ref="n334"><a class="md-toc-inner" href="#header-n334">4.3.11 public:mine</a></span><span class="md-toc-item md-toc-h3" data-ref="n348"><a class="md-toc-inner" href="#header-n348">4.3.12 import</a></span><span class="md-toc-item md-toc-h2" data-ref="n367"><a class="md-toc-inner" href="#header-n367">4.4 <strong>Contract Specification</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n368"><a class="md-toc-inner" href="#header-n368">4.4.1 <strong>BNF Paradigm Definition</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n372"><a class="md-toc-inner" href="#header-n372">4.4.2 <strong>Package Specification</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n377"><a class="md-toc-inner" href="#header-n377">4.4.3 <strong>Whitelist</strong></a></span><span class="md-toc-item md-toc-h2" data-ref="n385"><a class="md-toc-inner" href="#header-n385">4.5 <strong>BRC20Token</strong></a></span><span class="md-toc-item md-toc-h3" data-ref="n400"><a class="md-toc-inner" href="#header-n400">4.5.1 Transfer</a></span><span class="md-toc-item md-toc-h3" data-ref="n435"><a class="md-toc-inner" href="#header-n435">4.5.2 AddSupply</a></span><span class="md-toc-item md-toc-h3" data-ref="n465"><a class="md-toc-inner" href="#header-n465">4.5.3 Burn</a></span><span class="md-toc-item md-toc-h3" data-ref="n495"><a class="md-toc-inner" href="#header-n495">4.5.4 SetGasPrice</a></span><span class="md-toc-item md-toc-h3" data-ref="n522"><a class="md-toc-inner" href="#header-n522">4.5.6 SetOwner</a></span><span class="md-toc-item md-toc-h1" data-ref="n551"><a class="md-toc-inner" href="#header-n551">5 <strong>Developing Smart Contracts</strong></a></span></p></div><script src="./github/ltview.js"></script>
+<div style="page-break-after: always;"></div><h1><a name='header-n7' class='md-header-anchor '></a>1 <strong>What is BCB</strong></h1><p>BCBChain is a blockchain system based on Tendermint. It is a scalable platform with high stability, based on system security, technological innovation, fast and easy to use, and efficient data transmissions between object to object, and human to object.</p><p>For more details, please view 《BCBChain_V1.0_Program_Reference》.</p><div style="page-break-after: always;"></div><h1><a name='header-n12' class='md-header-anchor '></a>2 <strong>Smart Contract Overview</strong></h1><p>Since V2.0, BCBChain supports independent development and deployment of smart contracts, developed using golang.</p><p>&nbsp;</p><h2><a name='header-n15' class='md-header-anchor '></a>2.1 <strong>Simple smart contract</strong></h2><h3><a name='header-n16' class='md-header-anchor '></a>2.1.1 <strong>Storage</strong></h3><p>Let us first take a look at the simplest form of a smart contract</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">package mystorage</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//MyStorage a demo contract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mystorage</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type MyStorage struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>storedData uint64</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Set set a data to the stored data</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Set(data uint64) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>ms._setStoredData(data)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Get get the stored data</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Get() uint64 {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>return ms._storedData()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 762px;"></div><div class="CodeMirror-gutters" style="display: none; height: 762px;"></div></div></div></pre><p>BBCBChain&#39;s smart contract is a combination of code (functions of the contract) and data (data types in the contract) and a set of tags (metadata of the contract), and is located at a specific address of the BCBChain.</p><p>Code line:</p><p><code>package mystorage</code></p><p>Declare the name of the smart contract code package, this can be set by the developer, so long it conforms to golang standards.</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 67px;"></div><div class="CodeMirror-gutters" style="display: none; height: 67px;"></div></div></div></pre><p>Declaration of the library to import, it is a smart contract SDK released by BCBChain. When creating the smart contract, you will need to configure the sdk path in GOPATH.</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//MyStorage a demo contract</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mystorage</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type MyStorage struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>storedData uint64</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 246px;"></div><div class="CodeMirror-gutters" style="display: none; height: 246px;"></div></div></div></pre><p>Declare the metadata and status of the smart contract.</p><ul><li><p>Comment line <em><code>//MyStorage a demo contract</code></em> A comment defining the smart contract below.</p></li><li><p>Markup<code>//@:contract:mystorage</code> Declares the struct <code>MyStorage</code> that will be defined below represents a smart contract, and also declares the name of the smart contract as mystorage. This is the contract name to be sent to the BCBChain main chain during deployment. As an organization may develop multiple different smart contracts, the names of each smart contract will need to be unique, so the authors have to plan around this restriction.</p></li><li><p>Markup   <code>//@:version:1.0</code> Declares the code version of the smart contract. </p></li><li><p>Markup  <code>//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</code>  Identifies the organization to which the smart contract belongs. The organization name in this example is: example.</p></li><li><p>Markup <code>//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</code> </p><p>Author’s public key. The code line <code>type MyStorage struct {</code>  declares the opening of the smart contract data structure, its members and its data type. The code line  <code>sdk sdk.ISmartContract</code>   indicates that the data structure is a BCBChain Smart Contract SDK and will automatically possess the smart contract access context provided by the SDK (variable names must be defined as sdk).</p></li><li><p>Markup  <code>//@:public:store</code>  indicates that the next line of code will declare a data type.</p></li><li><p>Code line  <code>storedData uint64</code>  Declares a state data variable of type<code>uint64</code> with the name <code>storedData</code>. You can view it as a member in the state database, and access or mutate its values by calling the database management functions, as well as access its KEY value (<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mystorage/storedData</code>) externally.
+The helper tools provided by BCBChain will automatically encapsulate the state variables and generate access functions<code>_storeData() uint64</code>, <code>_setStoreData(uint64)</code>、<code>_chkStoreData() bool</code>和<code>_delStoreData() bool</code>.</p></li><li><p>Code line  <code>}</code>  marks the end of this data structure’s declaration.</p></li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 90px;"></div><div class="CodeMirror-gutters" style="display: none; height: 90px;"></div></div></div></pre><p>Declares the initialization code for the smart contract when it first joins the chain (executed only on the first time,another initialization code <code>UpdateChain</code>will be executed when the contract is
+upgraded, this does not need to be defined in this contract).</p><ul><li>Markup <code>//@:constructor</code> indicates that the function  <code>InitChain()</code> defined below is an initialization function that is to be used once, when a smart contract is first deployed to BCBChain in order to complete the initialization of the smart contract on the blockchain. A part of the initialization, for example, includes the initialization of certain values in the global state variables.</li><li>Code line  <code>func (ms *MyStorage) InitChain() {</code>  A function prototype that declares the initialization of a smart contract. The function name must be <code>InitChain</code>, which has no input parameters.</li><li>The code line  <code>}</code>  completes the function.</li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Set set a data to the stored data</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Set(data uint64) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>ms._setStoredData(data)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 112px;"></div><div class="CodeMirror-gutters" style="display: none; height: 112px;"></div></div></div></pre><p>Declares the code for the smart contract</p><ul><li>Markup  <code>//@:public:method:gas[100]</code>  declares that the function  <code>Set()</code>  defined below is a public function of a smart contract, which can be called by BCBChain transaction broadcast, whereby the call information and result will be recorded in the blockchain. In doing so, the calling function will consume 100 gas.</li><li>Code line  <code>func (ms *MyStorage) Set(data uint64) {</code>  Declares a function for a smart contract. The line<code>ms._setStoredData(data)</code> is the implementation code for the function, which means that the input parameters are saved to the state variable <code>storedData</code>.</li><li>The code line   <code>}</code>  completes the smart contract function.</li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Get get the stored data</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Get() uint64 {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>return ms._storedData()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 112px;"></div><div class="CodeMirror-gutters" style="display: none; height: 112px;"></div></div></div></pre><p>Declares the code for the smart contract</p><ul><li>Markup  <code>//@:public:method:gas[100]</code> declares that the function   <code>Get()</code>  defined below is a public function of a smart contract, which can be called by BCBChain transaction broadcast, whereby the call information and result will be recorded in the blockchain. In doing so, the calling function will consume 100 gas.</li><li>Code line  <code>func (ms *MyStorage) Get() uint64 {</code>  Declare a function prototype for a smart contract. The code line  <code>return ms._storedData()</code>   is the implementation code for the function, indicating that the value of the state variable <code>storedData</code>will be read and returned to the caller.</li><li>The code line  <code>}</code>  completes the smart contract function.</li></ul><p>&nbsp;</p><p>There aren&#39;t many things that can be done with this contract: it allows anyone to store a single number in the contract, and that number can be accessed by anyone in the world, and there is no viable way to prevent you from publishing this number. Of course, anyone can call the Set() function again, passing in different values, overwriting your number, but this number will still be stored in the history of the blockchain. Later, we will see how to impose access restrictions to ensure that only you can change this number.</p><p>&nbsp;</p><p>Note:</p><ul><li>All identifiers (contract name, function name, and variable name) of the smart contract code can only use the ASCII character set.</li><li>Smart contract codes require storage in the form of ASCII or UTF-8 encoding.</li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n91' class='md-header-anchor '></a>2.1.2 <strong>Token</strong></h3><p>The following contract implements one of the simplest encryption tokens. Here, the token can indeed be produced out of nothing, but only the owner of the contract can do it, and anyone can transfer the currency to others without registering the username and password - all that is required is a BCBChain-compliant encrypted key pair.</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">package mycoin</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk/bn"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk/types"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Mycoin a demo contract for digital coin</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mycoin</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type Mycoin struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store:cache</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>totalSupply bn.Number</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>balanceOf map[types.Address]bn.Number</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">const oneToken int64 = 1000000000</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (mc *Mycoin) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  thisContract := mc.sdk.Helper().ContractHelper().ContractOfName("mycoin")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  totalSupply := bn.N1(1000000, oneToken)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  mc._setTotalSupply(totalSupply)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  mc._setBalanceOf(thisContract.Owner().Address(), totalSupply)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:receipt</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type receipt interface {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Transfer transfer coins from sender to another</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[500]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:interface:gas[450]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk.Require(value.IsPositive(),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>types.ErrInvalidParameter, "value must be positive")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sender := mc.sdk.Message().Sender().Address()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>newBalanceOfSender := mc._balanceOf(sender).Sub(value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk.Require(newBalanceOfSender.IsGEI(0),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>types.ErrInsufficientBalance, "")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>receiver := to</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setBalanceOf(sender, newBalanceOfSender)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setBalanceOf(receiver, newBalanceOfReceiver)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc.emitTransferMyCoin(</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>mc.sdk.Message().Contract().Address(),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>sender,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>receiver,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 1411px;"></div><div class="CodeMirror-gutters" style="display: none; height: 1411px;"></div></div></div></pre><p>This contract introduces some new concepts, which will be explained one-by-one in detail below</p><p>Code segment:</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store:cache</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>totalSupply bn.Number</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div><div class="CodeMirror-gutters" style="display: none; height: 45px;"></div></div></div></pre><p>Declare state data for smart contracts.</p><ul><li>Markup  <code>//@:public:store:cache</code> means that the next line of code will declare a state data that will be cached in memory.</li><li>Code line  <code>totalSupply bn.Number</code> declares a state variable of type <code>bn.Number</code>. The variable name is <code>totalSupply</code>. The<code>bn.Number</code> type represents a signed large number. The addition, subtraction,
+multiplication, and division operations do not need to consider the overflow problem. The KEY value of this variable in the database is <code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/totalSupply</code>. The helper tool provided by BCBChain will automatically encapsulate the variable and generate access functions <code>_totalSupply() bn.Number</code>,<code>_setTotalSupply(bn.Number)</code>, <code>_chkTotalSupply() bool</code> and<code>_delTotalSupply()</code>, which will also be generated due to the influence of the tag <code>cache</code>. A function to clear the memory cache <code>_clrTotalSupply()</code>.</li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n105" mdtype="fences">	//@:public:store
+	balanceOf map[types.Address]bn.Number
+</pre><p>A public state variable is also declared, but it is a more complex data type. This type maps the address to a large number and is used to store the balance corresponding to the account address that owns the token. The KEY value of this variable from the external access state database is <code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/balanceOf/address</code>, where <code>address</code> is the actual account address to be queried. The helper tool provided by BCBChain will automatically encapsulate and generate access functions for this variable<code>_balanceOf(types.Address) bn.Number</code>,<code>_setBalanceOf(types.Address, bn.Number)</code>,<code>_chkBalanceOf(types.Address) bool</code>and <code>_delBalanceOf(types.Address)</code>.</p><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n109" mdtype="fences">//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+</pre><p>Declares the receipt of the smart contract transaction, which be stored in the BCBChain chain for later access.</p><ul><li>Markup  <code>//@:public:receipt</code>  declares the next line of code as the receipt interface.</li><li>Code line  <code>type receipt interface {</code> 
+declares the start of the receipt type, with the type name as <code>receipt</code>.</li><li>Code line <code>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</code>declares a so-called receipt (receipt) that will be emitted on the last line of the Transfer function. The user
+interface (including the server application) can listen for the receipt being sent on the BCBChain chain at no cost. Once it is sent, the receipt <code>listener</code> will will be notified to facilitate tracking of the transaction.</li><li>Code line <code>}</code> marks the end of the interface definition.</li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n122" mdtype="fences">//Transfer transfer coins from sender to another
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+    .
+    .
+    .
+}
+</pre><p>Declares the code for the smart contract</p><ul><li>Markup  <code>//@:public:interface:gas[450]</code>  declares that the function<code>Transfer()</code> defined below is a public interface of a smart contract, which can be called between multiple smart contracts, and its use and results will be written into the BCBChain chain. The smart contracts from the same organization can call each other on the BCBChain. The public interface provided by BCBChain-based organization’s smart contracts can be called by any smart contract.</li></ul><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n129" mdtype="fences">  sdk.RequireAddress(to)
+  sdk.Require(value.IsPositive(),
+		types.ErrInvalidParameter, "value must be positive")
+</pre><p>Declares a part of the code logic in the contract. The function <code>sdk.RequireAddress()</code>  is provided by the
+SDK to validate if input parameter <code>to</code>is an account address. If not, it will terminate the contract excecution and return an error message in the response. The function<code>sdk.Require()</code> is provided by the SDK to detect that a certain condition must be met (in this case, the input parameter <code>value</code>must be greater than 0), otherwise, it will terminate the contract excecution and return an error message in the response.</p><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n133" mdtype="fences">  sender := mc.sdk.Message().Sender().Address()
+  newBalanceOfSender := mc._balanceOf(sender).Sub(value)
+  sdk.Require(newBalanceOfSender.IsGEI(0),
+		types.ErrInsufficientBalance, "")
+</pre><p>Declares a part of the code logic in the contract. The function <code>mc.sdk.Message().Sender().Address()</code> is
+provided by the SDK to retrieve the account address of the sender <code>mc._balanceOf(sender).Sub(value)</code> is
+used to obtain the balance of the tokens in the sender&#39;s account address after subtracting the transfer amount. The function <code>_balanceOf()</code>is automatically generated by a support tool in BCBChain. The function <code>sdk.Require()</code> is provided by the SDK to detect that a certain condition must be met (in this
+case, the balance of the sender is must be sufficient for the transfer), otherwise, it will terminate the contract excecution and return an error message in the response.</p><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n137" mdtype="fences">  receiver := to
+  newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
+</pre><p>Declares a part of the code logic in the contract. <code>mc._balanceOf(receiver).Add(value)</code>  calculates the new account balance of the transfer recipient’s account address.</p><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n141" mdtype="fences">  mc._setBalanceOf(sender, newBalanceOfSender)
+  mc._setBalanceOf(receiver, newBalanceOfReceiver)
+</pre><p>Declares a part of the code logic in the contract. Used to write the calculated new account balance to the state database, the function<code>_setBalanceOf()</code>is automatically generated by the supporting tool provided by BCBChain</p><p>&nbsp;</p><p>Code segment:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n145" mdtype="fences">  mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		receiver,
+		value)
+</pre><p>Declares a part of the code logic in the contract. It is to be used for updating the receipt of the current transfer transaction into the blockchain. The function <code>emitTransferMyCoin()</code> is automatically generated by the support tool provided by BCBChain.</p><p>&nbsp;</p><p>This contract provides two functions. The function <code>InitChain()</code> is automatically called once by the BCBChain chain after contract creation to initialize the contract. The function for actual use
+by the user or other contract, and for completing the contract, is <code>Transfer()</code>. This function can be used by
+anyone to send tokens to others (provided, of course, that the sender owns these tokens). Remember, if you use a contract to send tokens to an address, you will not see any relevant information when you view the address on the BCBChain chain browser. This is because the detailed information of the transfer and changes in balances is only stored in the data store of this contract (requires special means to query from the state database). By using receipts, you can easily create a “blockchain browser” for your new token to track transactions and balances.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n151' class='md-header-anchor '></a>2.2 <strong>Blockchain foundation</strong></h2><p>Programmers should not find the concept of blockchain difficult to understand, because most of the complex algorithms and protocols (hash, elliptic curve cryptography, peer-to-peer networking (P2P), etc.) are only used to fulfill special-case functionality and promise. Smart contract development programmers only need to accept these existing features and functions, and not care about the implementation of the underlying technology.</p><h3><a name='header-n153' class='md-header-anchor '></a>2.2.1 <strong>Transaction</strong></h3><p>A blockchain is a globally shared transactional database, which means that everyone can join the network to read the records in the database. If you want to change something in the database, you must create a transaction that is accepted by everyone else (also known as a transaction in the blockchain world). The word “transaction” means that for whatever that you want to do (assuming you want to change two values at the same time), it either occurs all at once, or not at all. In addition, when your transaction is saved to the
+database, it cannot be modified.</p><p>For example, imagine a table listing the balances of all accounts in an digital currency. If you send a request to transfer from one account to another, the transactional nature of the database ensures that if the amount is deducted from one account, it is always added to another account. If for some reason it is not possible to add an amount to the target account, the source account will not change.</p><p>In addition, the transaction is always signed by the sender (creator). This makes it very easy to add access protection mechanisms for specific modifications to the database. In the case of digital tokens, a simple check ensures that only the person holding the account key can transfer money from it.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n159' class='md-header-anchor '></a>2.2.2 <strong>States</strong></h3><p>BCBChain studied open source blockchain solutions such as Ethereum, Fabric, Tendermint, and Cosmos, and draws on some of their excellent ideas.</p><p>BCBChain is essentially a transaction-based state machine. In computer science, a state machine is a calculation model that contains a set of states, a start state, a set of input symbols (alphabet), and
+a A conversion function that maps the input symbol from current state to the next state (transition function). </p><p>In BCBChain, the state set is expressed by the state database. The initial state is called the genesis state. The input symbol set is the transaction (transaction, tx for short) in the blockchain field. The state transition function is the Smart contract.</p><p><img src='./p/statemachine.png' alt='' referrerPolicy='no-referrer' /></p><p>According to the state machine of BCBChain, we start with the genesis state. This is almost similar to a blank slate, and there is no state of any transaction in the network. When the transaction is executed, the Genesis status will be transformed into the final state. At any time, this final state represents the current state of BCBChain.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n167' class='md-header-anchor '></a>2.2.3 <strong>Blocks</strong></h3><p>The state of BCBChain is composed of thousands of transactions. These transactions are &quot;grouped&quot; into blocks. A block contains a series of transactions, each block is linked to its previous block, and each block causes the state machine to reach a new state.</p><p><img src='./p/blockchain.png' alt='' referrerPolicy='no-referrer' /></p><p>For the state transition to happen, the transaction must be valid (ie, to promote the non-repudiation characteristics of the blockchain technique). For a transaction to be considered valid, it must go through a verification process. Each transaction must be signed by the sender using its own private key, and the BCBChain&#39;s smart contract must be verified to meet certain conditions. Only then can the validation be
+successful.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n173' class='md-header-anchor '></a>2.2.4 <strong>Message Calls</strong></h3><p>Smart contracts can communicate with each other via message calls.</p><p>Each transaction can contain multiple top-level message calls that are executed in sequence. The receipt generated from the previous message call can be used as input for the next top-level message call for some logical processing.</p><p>Each top-level message called, will in turn generate more message calls across multiple contracts.</p><p>The number of message call layers is limited to 8. In order to prevent infinite loops, each layer of message calls are prohibited from forming a loop.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n180' class='md-header-anchor '></a>2.2.3 <strong>Receipt</strong></h3><p>On top of transaction result, message calls can also return the log data of the transaction execution process. Here, we call it the receipt, which is stored on the block and very easy to retrieve.</p><div style="page-break-after: always;"></div><h1><a name='header-n183' class='md-header-anchor '></a>3 <strong>Examples of Smart Contract Implementation</strong></h1><h2><a name='header-n184' class='md-header-anchor '></a>3.1 <strong>Voting</strong></h2><p>The following contract is quite complex and it implements a commissioned voting contract. Of course, the main problems with electronic voting is how to assign voting rights to the right people and how to prevent them from being manipulated. We will not resolve all the problems here, but at least we will show how to conduct a proxy vote that is automatic and completely transparent at the same time.</p><p>Our idea is to create a contract for each (vote) vote, with an abbreviation for each option. Then, as the creator of the contract - the chairman, each independent address will be given the right to vote.</p><p>Address owners can choose to vote on their own, or delegate to someone they trust to vote.</p><p>At the end of the voting period, <code>WinningProposal()</code>will return the proposal that receives the most votes.</p><p>This contract implementation uses two files, as follows:</p><p><code>myballot_types.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n191" mdtype="fences" style="break-inside: unset;">package myballot
+
+import (
+	"blockchain/smcsdk/sdk/types"
+)
+
+// Voter this declares a new complex type which will
+//       be used for variables later.
+//       it will represent a single voter.
+type Voter struct {
+	weight   uint          // weight is accumulated by delegation
+	voted    bool          // if true, that person already voted
+	delegate types.Address // person delegated to
+	vote     uint          // index of the voted proposal
+}
+
+//Proposal this is a type for a single proposal.
+type Proposal struct {
+	name      string // short name (up to 32 bytes)
+	voteCount uint   // number of accumulated votes
+}
+</pre><p><code>myballot.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n193" mdtype="fences" style="break-inside: unset;">package myballot
+
+import (
+	"blockchain/smcsdk/sdk"
+	"blockchain/smcsdk/sdk/forx"
+	"blockchain/smcsdk/sdk/types"
+)
+
+//Ballot a demo smart contract for voting with delegation.
+//@:contract:myballot
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Ballot struct {
+	sdk sdk.ISmartContract
+
+	//chairperson this declares a state variable that stores a chairperson's 
+	//            address for the contract
+	//@:public:store:cache
+	chairperson string
+
+	//voters this declares a state variable that stores a 'Voter' struct for
+	//       each possible address
+	//@:public:store
+	voters map[types.Address]Voter
+
+	//proposals a dynamically-sized array of 'Proposal' structs
+	//@:public:store:cache
+	proposals []Proposal
+}
+
+//InitChain init when deployed on the blockChain first time
+//@:constructor
+func (ballot *Ballot) InitChain() {
+}
+
+//Init create a new (voting) vote for each proposal in 'proposal Names'
+//@:public:method:gas[500]
+func (ballot *Ballot) Init(proposalNames []string) {
+	sender := ballot.sdk.Message().Sender().Address()
+
+	// Only cntract's owner can perform init
+	sdk.RequireOwner()
+
+	proposals := ballot._proposals()
+	sdk.Require(len(proposals) &lt;= 0,
+		types.ErrUserDefined, "Already inited")
+
+	chairperson := sender
+	ballot._setChairperson(chairperson)
+
+	voter := ballot._voters(chairperson)
+	voter.weight = 1
+	ballot._setVoters(chairperson, voter)
+
+	// For each of the provided proposal names,
+	// create a new 'Proposal' object and add it to the end of the array
+	forx.Range(proposalNames, func(i int, pName string) {
+		proposals = append(proposals,
+			Proposal{
+				name:      pName,
+				voteCount: 0,
+			})
+	})
+	ballot._setProposals(proposals)
+}
+
+//GiveRightToVote give `voter` the right to vote on this ballot.
+//                may only be called by 'chairperson'.
+//@:public:method:gas[500]
+func (ballot *Ballot) GiveRightToVote(voterAddr types.Address) {
+	sender := ballot.sdk.Message().Sender().Address()
+	chairperson := ballot._chairperson()
+	sdk.Require(sender == chairperson,
+		types.ErrNoAuthorization, "Only chairperson can give right to vote.")
+
+	voter := ballot._voters(voterAddr)
+	sdk.Require(voter.voted == false,
+		types.ErrUserDefined, "The voter already voted.")
+	sdk.Require(voter.weight == 0,
+		types.ErrUserDefined, "The voter's weight must be zero.")
+
+	voter.weight = 1
+	ballot._setVoters(voterAddr, voter)
+}
+
+//Delegate Delegate your vote to the voter 'to'
+//@:public:method:gas[1500]
+func (ballot *Ballot) Delegate(to types.Address) {
+	sender := ballot.sdk.Message().Sender().Address()
+	sendVoter := ballot._voters(sender)
+	
+	sdk.Require(sendVoter.voted == false,
+		types.ErrUserDefined, "You already voted.")
+	sdk.Require(to != sender,
+		types.ErrUserDefined, "Self-delegation is disallowed.")
+
+  // Forward the delegation as long as 'to' also delegated.
+  // In general, such loops are very dangerous, because if they run too 
+  // long, they might need more gas than is available in a block.
+  // In this case, the delegation will not be executed, but in other 
+  // situations, such loops might cause a contract to get "stuck" completely.
+	toVoter := ballot._voters(to)
+	forx.Range( func() bool {
+	              return toVoter.delegate != ""
+	            },
+	            func(i int) {
+							  to = toVoter.delegate
+							  toVoter = ballot._voters(to)
+					
+							  // We found a loop in the delegation, not allowed.
+							  sdk.Require(to != sender,
+								  types.ErrUserDefined, "Found loop in delegation.")
+						  })
+
+	sendVoter.voted = true
+	sendVoter.delegate = to
+	delegate := toVoter
+	if delegate.voted {
+    // If the delegate already voted,
+    // directly add to the number of votes
+		proposals := ballot._proposals()
+		proposals[int(delegate.vote)].voteCount += sendVoter.weight
+		ballot._setProposals(proposals)
+	} else {
+    // If the delegate did not vote yet,
+    // add to her weight.
+		delegate.weight += sendVoter.weight
+		ballot._setVoters(to, delegate)
+	}
+	return
+}
+
+//Vote give your vote (including votes delegated to you)
+//     to proposal `proposals[proposal].name`.
+//@:public:method:gas[500]
+func (ballot *Ballot) Vote(proposal uint) {
+	sender := ballot.sdk.Message().Sender().Address()
+	sendVoter := ballot._voters(sender)
+	
+	sdk.Require(sendVoter.voted == false,
+		types.ErrUserDefined, "You already voted.")
+
+	proposals := ballot._proposals()
+	sdk.Require(proposal &lt; uint(len(proposals)),
+		types.ErrUserDefined, "Proposal is out of index.")
+
+	sendVoter.voted = true
+	sendVoter.vote = proposal
+	proposals[int(proposal)].voteCount += sendVoter.weight
+	ballot._setProposals(proposals)
+}
+
+//WinningProposal computes the winning proposal taking all
+//                previous votes into account.
+//@:public:method:gas[500]
+func (ballot *Ballot) WinningProposal() (winningProposal uint) {
+	var winningVoteCount uint
+	
+	proposals := ballot._proposals()
+	forx.Range(proposals, func(i int, proposal Proposal) {
+		if proposal.voteCount &gt; winningVoteCount {
+			winningVoteCount = proposal.voteCount
+			winningProposal = uint(i)
+		}
+	})
+	return
+}
+
+//WinnerName calls winningProposal() function to get the index
+//           of the winner contained in the proposals array and then
+//           returns the name of the winner
+//@:public:method:gas[500]
+func (ballot *Ballot) WinnerName() (winnerName string) {
+	proposals := ballot._proposals()
+	if len(proposals) &gt; 0 {
+		winnerName = proposals[ballot.WinningProposal()].name
+	}
+	return
+}
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n196' class='md-header-anchor '></a>3.2 <strong>Charity Donations</strong></h2><p>The following contract implements a simple charitable donation function. The contract code are as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n198" mdtype="fences" style="break-inside: unset;">package mydonation
+
+import (
+	"blockchain/smcsdk/sdk"
+	"blockchain/smcsdk/sdk/bn"
+	"blockchain/smcsdk/sdk/forx"
+	"blockchain/smcsdk/sdk/std"
+	"blockchain/smcsdk/sdk/types"
+)
+
+//Mydonation This is struct of contract
+//@:contract:mydonation
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Mydonation struct {
+	sdk sdk.ISmartContract
+
+	//Total donations received by donees
+	//@:public:store
+	donations map[types.Address]bn.Number // key=address of donee
+}
+
+const (
+	errDoneeCannotBeOwner = 55000 + iota
+	errDoneeCannotBeSmc
+	errDoneeAlreadyExist
+	errDoneeNotExist
+	errDonationExist
+	errDonationNotEnough
+)
+
+//@:public:receipt
+type receipt interface {
+	emitAddDonee(donee types.Address)
+	emitDelDonee(donee types.Address)
+	emitDonate(from, donee types.Address, value, balance bn.Number)
+	emitTransferDonation(donee types.Address, value, balance bn.Number)
+}
+
+//InitChain Constructor of this Mydonation
+//@:constructor
+func (d *Mydonation) InitChain() {
+}
+
+//AddDonee Add a new donee
+//@:public:method:gas[500]
+func (d *Mydonation) AddDonee(donee types.Address) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(donee != d.sdk.Message().Sender().Address(),
+		errDoneeCannotBeOwner, "Donee can not be owner")
+	sdk.Require(donee != d.sdk.Message().Contract().Address(),
+		errDoneeCannotBeSmc, "Donee can not be this smart contract")
+	sdk.Require(donee != d.sdk.Message().Contract().Account().Address(),
+		errDoneeCannotBeSmc, "Donee can not be account of this smart contract")
+	sdk.Require(!d._chkDonations(donee),
+		errDoneeAlreadyExist, "Donee already exists")
+
+	d._setDonations(donee, bn.N(0))
+
+	//emit receipt
+	d.emitAddDonee(donee)
+}
+
+//Donate delete a donee
+//@:public:method:gas[500]
+func (d *Mydonation) DelDonee(donee types.Address) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, "Donee does not exist")
+	sdk.Require(d._donations(donee).IsEqualI(0),
+		errDonationExist, "Donation exists")
+
+	d._delDonations(donee)
+
+	//emit receipt
+	d.emitDelDonee(donee)
+}
+
+//Donate Charitable donors donate money to smart contract
+//@:public:method:gas[500]
+func (d *Mydonation) Donate(donee types.Address) {
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, "Donee does not exist")
+
+	var valTome *std.Transfer
+	token := d.sdk.Helper().GenesisHelper().Token()
+	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
+		sdk.Require(receipt.Token == token.Address(),
+			types.ErrInvalidParameter, "Accept donations in genesis token only")
+		sdk.Require(valTome == nil,
+			types.ErrInvalidParameter, "Accept only one donation at a time")
+		valTome = receipt
+	})
+	sdk.Require(valTome != nil,
+		types.ErrInvalidParameter, "Please transfer token to me first")
+
+	balance := d._donations(donee).Add(valTome.Value)
+	d._setDonations(donee, balance)
+
+	//emit receipt
+	d.emitDonate(
+		d.sdk.Message().Sender().Address(),
+		donee,
+		valTome.Value,
+		balance,
+	)
+}
+
+//Withdraw To transfer donations to donee
+//@:public:method:gas[500]
+func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, "Donee does not exist")
+	sdk.Require(value.IsGreaterThanI(0),
+		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
+	sdk.Require(d._donations(donee).IsGE(value),
+		errDonationNotEnough, "Donation is not enough")
+
+	token := d.sdk.Helper().GenesisHelper().Token()
+	account := d.sdk.Message().Contract().Account()
+	account.TransferByToken(token.Address(), donee, value)
+	balance := d._donations(donee).Sub(value)
+	d._setDonations(donee, balance)
+
+	//emit receipt
+	d.emitTransferDonation(
+		donee,
+		value,
+		balance,
+	)
+}
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n201' class='md-header-anchor '></a>4 <strong>Deeper Understanding of Smart Contracts</strong></h1><h2><a name='header-n202' class='md-header-anchor '></a>4.1 <strong>Organization</strong></h2><p>The smart contracts developed for the BCBChain backbone are organized according to the organization&#39;s architecture, and all smart contracts developed for the same organization will be integrated into a contract process for users to call.</p><p>In a smart contract, you can call the interface that is implemented by other smart contracts. Through the interface in the called smart contract, you can call another smart contract interface. BCBChain supports up to 8 levels of such nested cross-contract calls, but they are not allowed to form a loop.</p><p>BCBChain has set up a base organization, and the smart contracts developed for this base organization will be integrated into the contract process of all organizations for users to call. The organization is mainly set up to provide some cross-contract calls that can be executed by any organization at any time, such as the basic validators for the BCBChain main chain and the token template contract.</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n208' class='md-header-anchor '></a>4.2 <strong>BNF Paradigm</strong></h2><p>This section describes the contract specifications using the BNF paradigm.</p><p>The English abbreviation for the Backus paradigm is BNF, a formal grammatical representation of the American name Backus and the Danish name Naur, used to describe a formal system of grammar. A
+typical meta language. Also known as the Backus-Naur form. Not only does it strictly represent grammatical rules, but the described grammar is context-independent. It has the characteristics of simple syntax, clear
+definition, and easy parsing and compilation.</p><p>The way the BNF paradigm represents grammar rules is:</p><ul><li>Nonterminals are enclosed in angle brackets.</li><li>The left part of each rule is a non-terminal character, and the right part is a symbol string consisting of non-terminal symbols and terminators. The middle is usually separated by ::=.</li><li>Rules with the same left part can share one left part, with the right parts separated by a vertical line &quot;|&quot;.</li></ul><p>The metacharacters commonly used in the BNF paradigm and their meanings are as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n220" mdtype="fences">1. Characters in double quotes (such as "word") represent the characters themselves.  
+   Double_quote is used to represent double quotes themselves.
+2. Words outside the double quotes (possibly underlined) represent the grammar part.
+3. The angle brackets &lt; &gt; are mandatory.
+4. The square brackets [ ] contain optional items.
+5. The braces { } contain items that can be repeated from 0 to innumerable.
+6. A set of all the items contained in parentheses ( ) is used to control the priority of
+   the expression.
+7. Vertical line | means that you can choose one of the left and right sides, which is
+   equivalent to "OR".
+8. ::= means "defined as".
+9. Blank Characters The blank character spacing that appears in the BNF paradigm
+   definition is only required for typesetting and is not part of the specification.
+</pre><p>&nbsp;</p><h2><a name='header-n222' class='md-header-anchor '></a>4.3 <strong>Contract Markups</strong></h2><p>The BCBChain smart contract code uses the notation to describe the contract&#39;s metadata in the contract code&#39;s comments.</p><p>Below is a detailed syntax description of the various tags used by the BCBChain Smart Contract.</p><h3><a name='header-n225' class='md-header-anchor '></a>4.3.1 contract</h3><p>The markup <code>contract</code> is used to identify the contract name, which must be unique within the  organization. Please ask the developer of the smart contract to design the contract names accordingly.</p><p>The markup <code>contract</code>is mandatory, but can only appear once in the entire contract code.</p><p>The BNF paradigm for <code>contract</code> markup is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n229" mdtype="fences" style="break-inside: unset;">&lt;contract markup syntax&gt; ::= "//@:contract:" &lt;contract name&gt;
+&lt;contract name&gt; ::= &lt;letter&gt; | &lt;contract name&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | 
+                          &lt;decimal number&gt; | 
+                          &lt;alphanumeric string&gt; &lt;letter&gt; | 
+                          &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;let&gt; ::= "_" | "-" | "." | &lt;lowercase&gt; | &lt;uppercase&gt;
+&lt;lowercase letter&gt; ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
+                       "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
+                       "u" | "v" | "w" | "x" | "y" | "z"
+&lt;Capital letter&gt; ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" |
+                     "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
+                     "U" | "V" | "W" | "X" | "Y" | "Z"
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+</pre><p>The code after the <code>contract</code>markup must be strictly followed by a contract class definition containing the <code>sdk.ISmartContract</code> member. This contract class follows the context of the smart contract. Each time there is a message call to a smart contract, an instance of the contract class will be automatically created, and its smart contract method will be called. The methods that it provide for the outside to call, must be a member function of its class. The first letter of the class name must be capitalized.</p><p>Example below：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n232" mdtype="fences">//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store:cache
+	totalSupply bn.Number
+
+	//@:public:store
+	balanceOf map[types.Address]bn.Number
+}
+</pre><p>&nbsp;</p><h3><a name='header-n234' class='md-header-anchor '></a>4.3.2 version</h3><p>The markup<code>version</code>is used to identify the version of the contract and can only appear once in the entire contract code.</p><p><code>version</code>is mandatory, but can only appear once in the entire contract code.</p><p>The BNF paradigm for <code>version</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n238" mdtype="fences">&lt;version markup syntax&gt; ::= "//@:version:" &lt;contract version&gt;
+&lt;Contract version&gt; ::= &lt;decimal number&gt; |
+          	&lt;decimal number&gt; "." &lt;decimal number&gt; |
+          	&lt;decimal number&gt; "." &lt;decimal number&gt; "." &lt;decimal number&gt; |
+          	&lt;decimal number&gt; "." &lt;decimal number&gt; "." &lt;decimal number&gt; "." &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n240" mdtype="fences">//@:version:1.0
+</pre><p>Note: The BCBChain chain does not require specific rules for smart contract versions, ie the contract version can be either a one-segment (eg 1, 2, 3) or a two-segment (1.0, 1.1, 1.2), three-segment (1.0. 1, 1.0.2, 1.0.3), four-segment (1.0.1.102, 1.0.1.103), but different versions of the same smart contract need to maintain the consistency of the number of version format segments.</p><p>&nbsp;</p><h3><a name='header-n243' class='md-header-anchor '></a>4.3.3 organization</h3><p>The markup<code>organization</code>is used to identify the ID of the organization to which the contract belongs.</p><p><code>organization</code>is mandatory, but can only appear once in the entire contract code.</p><p>The BNF paradigm for <code>organization</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n247" mdtype="fences">&lt;organization markup syntax&gt; ::= "//@:organization:" &lt;organization ID&gt;
+&lt;Organization ID&gt; ::= &lt;prefix code&gt; &lt;Base58 string&gt;
+&lt;prefix code&gt; ::= "org"
+&lt;Base58 string&gt; ::= &lt;Base58 character&gt; | &lt;Base58 string&gt; &lt;Base58 character&gt;
+&lt;Base58 characters&gt; ::= &lt;decimal numbers&gt; | &lt;uppercase letters&gt; | &lt;lowercase letters&gt;
+&lt;decimal number&gt; ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+&lt;Capital Letters&gt; ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "J" | "K" | 
+                      "L" | "M" | "N" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | 
+                      "W" | "X" | "Y" | "Z"
+&lt;lowercase letter&gt; ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
+                       "k" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" |
+                       "v" | "w" | "x" | "y" | "z"
+</pre><p>An example is as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n249" mdtype="fences">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+</pre><p>&nbsp;</p><h3><a name='header-n251' class='md-header-anchor '></a>4.3.4 author</h3><p>The markup<code>author</code>is used to identify the account public key of the contract author.</p><p><code>author</code>is a mandatory markup, but can only appear once in the entire contract code.</p><p>The BNF paradigm for<code>author</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n255" mdtype="fences">&lt;author markup syntax&gt; ::= "//@:author:" &lt;account public key&gt;
+&lt;account public key&gt; ::= &lt;hex string&gt;
+&lt;hexadecimal string&gt; ::= &lt;hexadecimal number&gt; | &lt;hexadecimal string&gt; &lt;hexadecimal number&gt;
+&lt;hexadecimal number&gt; ::= "0" | 1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9" |
+              	         "A" | "B" | "C" | "D" | "E" | "F" |
+              	         "a" | "b" | "c" | "d" | "e" | "f"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n257" mdtype="fences">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+</pre><p>Note: The hexadecimal public key string length
+must be equal to 64.</p><p>&nbsp;</p><h3><a name='header-n260' class='md-header-anchor '></a>4.3.5 constructor</h3><p>The markup <code>constructor</code>is used to identify the chain&#39;s <em>initialization</em> function.</p><p>The valid code that follows the <code>constructor</code> must be a no-argument function called <code>InitChain</code>or <code>UpdateChain</code> , which will automatically make the only call when the first created (<code>InitChain</code>) or upgrade
+(<code>UpdateChain</code>) of the contract on the BCBChain chain, in order to complete its initialization work in the block, such as initializing the initial values of some global state data.</p><p><code>constructor</code>is optional, but can only appear up to two times in the entire contract code, once for the <code>InitChain</code>function, and once for the <code>UpdateChain</code>function.</p><p>The BNF paradigm for<code>constructor</code> is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n265" mdtype="fences">&lt;author markup syntax&gt; ::= "//@:constructor"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n267" mdtype="fences">//@:constructor
+func (mc *Mycoin) InitChain() {
+	...
+}
+
+//@:constructor
+func (mc *Mycoin) UpdateChain() {
+	...
+}
+</pre><p>&nbsp;</p><h3><a name='header-n269' class='md-header-anchor '></a>4.3.6 public:store</h3><p>The markup <code>public:store</code> is used to identify a state variable, which must be a valid member variable
+of the contract class (one with the <code>contract</code> markup).</p><p>The valid code that follows<code>public:store</code> must be the definition of a member variable.</p><p><code>public:store</code>is an optional markup that can appear multiple times in the contract class definition, each time identifying a different state variable.</p><p>The BNF paradigm for <code>public:store</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n274" mdtype="fences">&lt;public:store markup syntax&gt; ::= "//@:public:store"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n276" mdtype="fences">//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+	...
+	//@:public:store
+	balanceOf map[types.Address]bn.Number
+}
+</pre><p>The state variable with the <code>public:store</code> markup cannot be directly accessed in the contract code. According to the BCBChain contract specification, the SDK matching tool provided by BCBChain automatically generates a read/write function for the state variable. Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n278" mdtype="fences" style="break-inside: unset;">//Read the function of balanceOf
+func (mc *Mycoin) _balanceOf(k types.Address) bn.Number {
+	return *mc.sdk.Helper().StateHelper().GetEx(
+	    fmt.Sprintf("/balanceOf/%v", k), &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
+}
+
+//A function that detects whether balanceOf exists
+func (mc *Mycoin) _chkBalanceOf(k types.Address) bool {
+	return mc.sdk.Helper().StateHelper().Check(fmt.Sprintf("/balanceOf/%v", k))
+}
+
+//Configures the function of balanceOf
+func (mc *Mycoin) _setBalanceOf(k types.Address, v bn.Number) {
+	mc.sdk.Helper().StateHelper().Set(fmt.Sprintf("/balanceOf/%v", k), &amp;v)
+}
+
+//Function to remove the key value of balanceOf from the state database
+func (mc *Mycoin) _delBalanceOf(k types.Address) {
+	mc.sdk.Helper().StateHelper().Delete(fmt.Sprintf("/balanceOf/%v", k))
+} 
+</pre><p>&nbsp;</p><h3><a name='header-n280' class='md-header-anchor '></a>4.3.7 public:store:cache</h3><p>The markup <code>public:store:cache</code>is used to identify a state variable that can be cached in memory, which must be a valid member variable of the contract class (one with the <code>contract</code> markup).</p><p>The valid code that follows<code>public:store:cache</code> must be the definition of a member variable.</p><p><code>public:store:cache</code> is an optional markup that can appear multiple times in the contract class definition, each time identifying a state variable.</p><p>The BNF paradigm for <code>public:store:cache</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n285" mdtype="fences">&lt;public:store:cache markup syntax&gt; ::= "//@:public:store:cache"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n287" mdtype="fences">//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+	...
+	//@:public:store:cache
+	totalSupply bn.Number
+}
+</pre><p>The cacheable state variable cannot be directly accessed in the contract code. According to the BCBChain contract specification, the SDK matching tool provided by BCBChain automatically generates a read/write function for the state variable. Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n289" mdtype="fences" style="break-inside: unset;">//Read the function of the state variable totalSupply
+func (mc *Mycoin) _totalSupply() bn.Number {
+	return *mc.sdk.Helper().StateHelper().McGetEx(
+	    "/totalSupply", &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
+}
+
+//A function that detects whether totalSupply exists
+func (mc *Mycoin) _chkTotalSupply() bool {
+	return mc.sdk.Helper().StateHelper().McCheck("/totalSupply")
+}
+
+//Sets the function of totalSupply
+func (mc *Mycoin) _setTotalSupply(v bn.Number) {
+	mc.sdk.Helper().StateHelper().McSet("/totalSupply", &amp;v)
+}
+
+//Clears the function of totalSupply
+func (mc *Mycoin) _clrTotalSupply() {
+	mc.sdk.Helper().StateHelper().McClear("/totalSupply")
+}
+
+//Remove totalSupply from the state database
+func (m *Mycoin) _delTotalSupply() {
+	m.sdk.Helper().StateHelper().McDelete("/totalSupply")
+} 
+</pre><p>&nbsp;</p><h3><a name='header-n291' class='md-header-anchor '></a>4.3.8 public:receipt</h3><p>The markup<code>public:receipt</code>
+is used to identify the definition of all receipts in the contract.</p><p>The valid code following <code>public:receipt</code> must be an interface definition called <code>receipt</code>.</p><p><code>public:receipt</code>is optional and can only appear at most once in the entire contract
+code.</p><p>The BNF paradigm for <code>public:receipt</code>is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n296" mdtype="fences">&lt;public:receipt markup syntax&gt; ::= "//@:public:receipt"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n298" mdtype="fences">//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+</pre><p>Every method that sends a <code>receipt</code>must start with the word “<code>emit</code>”, as defined in the <em>Receipt</em> interface. The first word after the word “<code>emit</code>” is converted to lowercase and must be the name of the receipt struct, which can be used to retrieve from the BCBChain chain. Based on BCBChain contract specification, the SDK supporting tool provided by BCBChain will automatically generate the implementation code for the sending receipt function. Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n300" mdtype="fences" style="break-inside: unset;">//The following functions are automatically generated by the BCBChain tool.
+func (mc *Mycoin) emitTransferMyCoin(token, from, to types.Address, value bn.Number) {
+	type transferMyCoin struct {
+		Token types.Address `json:"token"`
+		From types.Address `json:"from"`
+		To types.Address `json:"to"`
+		Value bn.Number `json:"value"`
+	}
+	mc.sdk.Helper().ReceiptHelper().Emit(
+	    transferMycoin{
+		    Token:   token,
+		    From:    from,
+		    To:      to,
+		    Value:   value,
+	    })
+}
+
+//The following is a sample code for sending a receipt, located in the implementation of the Transfer function.
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+
+	//Business logic code that implements the transfer
+	...
+
+	//Send a transfer receipt
+	mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		to,
+		value)
+}
+</pre><p>&nbsp;</p><h3><a name='header-n302' class='md-header-anchor '></a>4.3.9 public:method</h3><p>The markup<code>public:method</code> is used to identify a public method of the contract.</p><p>The valid code following <code>public:method</code> must be a member function definition of the contract class (one with the <code>contract</code>markup) The function name must start with an uppercase letter, and it can be executed
+from BCBChain transaction broadcasts.</p><p><code>public:method</code>is optional and can appear zero, one or more times throughout the contract code.</p><p>The BNF paradigm for <code>public:method</code> is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n307" mdtype="fences">&lt;public:method markup syntax&gt; ::= "//@:public:method:gas[" &lt;gas quantity&gt; "]"
+&lt;number of gas&gt; ::= ["-"] &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+</pre><p>Note:</p><ul><li>A positive integer number indicates that the gas cost consumed by the method call is paid by the original sender of the transaction;</li><li>A gas quantity of 0 means no payment is required;</li><li>A negative integer number indicates that the gas cost consumed by the method call is paid by the current smart contract account.</li></ul><p>Example below</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n317" mdtype="fences">//@:public:method:gas[500]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</pre><p>&nbsp;</p><h3><a name='header-n319' class='md-header-anchor '></a>4.3.10 public:interface</h3><p>The markup<code>public:interface</code> is used to identify the public interface of the contract.</p><p>The valid code following <code>public:interface</code> must be a member function definition for the contract class (one with the <code>contract</code> markup). The function name must start with an uppercase letter, and can be
+cross-called from other contracts.</p><p><code>public:interface</code> is optional and can appear zero, one or more times throughout the contract code.</p><p>The BNF paradigm for<code>public:interface</code> is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n324" mdtype="fences">&lt;public:interface markup syntax&gt; ::= "//@:public:interface:gas[" &lt;gas quantity&gt; "]"
+&lt;number of gas&gt; ::= &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n326" mdtype="fences">//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</pre><p>Note:</p><ul><li>The amount of gas must be greater than or equal to zero.</li></ul><p>Markups <code>public:interface</code>and <code>public:method</code>can be used simultaneously on same member function of the contract class. The example above can be written as belows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n332" mdtype="fences">//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</pre><p>&nbsp;</p><h3><a name='header-n334' class='md-header-anchor '></a>4.3.11 public:mine</h3><p>The markup <code>public:mine</code> is used to identify the mining interface exposed by the contract.</p><p>The valid code following <code>public:mine</code>must be a member function definition for the contract
+class (one with the <code>contract</code> markup).
+The mining function prototype must be:<code>func Mine() int64</code>, and it will automatically execute after BCBChain block reaches a consensus.</p><p><code>public:mine</code> is optional and can appear zero or one time throughout the contract code. Only the smart contract of the underlying organization of BCBChain is allowed to use this mining interface.</p><p>The BNF paradigm for <code>public:mine</code> is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n339" mdtype="fences">&lt;public:interface tag syntax&gt; ::= "//@:public:mine"
+</pre><p>Example below:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n341" mdtype="fences">//@:public:mine
+func (mc *Mycoin) Mine() int64 {
+	...
+}
+</pre><p>Note:</p><ul><li>The mining function  <code>Mine()</code> can only be used with the markup<code>public:mine</code>.</li></ul><p>&nbsp;</p><h3><a name='header-n348' class='md-header-anchor '></a>4.3.12 import</h3><p>The markup <code>import</code> is used to import an interface prototype for an external contract, making it easy to call external contracts from the current contract.</p><p><code>import</code>is optional, and can appear multiple times in the entire contract code. Each time you import a cross-contract call interface of an external contract, the external contract can only be imported once.</p><p>The BNF paradigm for <code>import</code> is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n352" mdtype="fences">&lt;import tag syntax&gt; ::= "//@:import:" &lt;contract name&gt;
+&lt;contract name&gt; ::= &lt;letter&gt; | &lt;contract name&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | &lt;decimal number&gt; | &lt;alphanumeric string&gt; &lt;letter&gt; | &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;let&gt; ::= "_" | "-" | "." | &lt;lowercase&gt; | &lt;uppercase&gt;
+&lt;lowercase letter&gt; ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" |
+                       "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" |
+                       "u" | "v" | "w" | "x" | "y" | "z"
+&lt;Capital letter&gt; ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | 
+                     "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" |
+                     "U" | "V" | "W" | "X" | "Y" | "Z"
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+</pre><p>Using the previous <code>mycoin</code>token contract as an example, if you need to call the contract from other contracts, you need to write the following code:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n354" mdtype="fences">//This code is in the contract mycontract
+
+//@:import:mycoin
+type mycoin interface {
+	Transfer(to types.Address, value bn.Number)
+}
+</pre><p>The interface name of the external contract is customizable, so long it follows the golang syntax specification.</p><p>The interface of the external contract cannot be directly accessed from the contract. According to the BCBChain contract specification, the SDK supporting tool provided by BCBChain will automatically
+generate an implementation function to access the external contract interface. The generated code example is as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n357" mdtype="fences" style="break-inside: unset;">// This code is automatically generated by the SDK supporting tools
+
+//mycoin This is method of MyContract 
+func (m *MyContract) mycoin() *InterfacemycoinStub {
+	return &amp;InterfacemycoinStub{}
+}
+
+//Transfer This is a method of InterfacemycoinStub
+func (is *InterfacemycoinStub) Transfer(to types.Address, value bn.Number) {
+	return
+}
+
+//run Transfer some receipts to destination contract
+func (is *InterfacemycoinStub) run(f func()) (*InterfacemycoinStub) {
+	...
+	f()
+	...
+	return is
+}
+
+//contract Wrap the destination contract information
+func (is *InterfacemycoinStub) contract() IContract {
+	...
+	return contract
+}
+</pre><p>Below is a sample code that calls an external contract in the contract code:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n359" mdtype="fences">//This code is in the contract mycontract
+
+func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
+	m.mycoin().Transfer(to, value)
+}
+</pre><p>cross-contract calling support transmit receipts to conntract that it&#39;s called, example code in below(from contract2 to call contract1&#39;s interface):</p><blockquote><p>contract1, supply cross-contract interface service:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n363" mdtype="fences" style="break-inside: unset;">//@:contract:contract1
+type C1 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:public:interface:gas[450]
+func (c *C1) Register() {
+
+//I need receipt from caller
+transfers := dw.sdk.Message().GetTransferToMe()
+sdk.Require(transfers!=nil &amp;&amp; len(transfers)==1,
+types.ErrInvalidParameter, "Please transfer to me first")
+
+token := transfers[0].Token
+value := transfers[0].Value
+
+...
+}
+</pre><p>contract2, cross-contract invoker:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n365" mdtype="fences" style="break-inside: unset;">//@:contract:contract2
+type C2 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:import:contract1
+type mycoin interface {
+	Register()
+}
+
+//@:public:method:gas[450]
+func (c *C2) Register() {
+...
+c.contract1().run(func(){
+c.sdk.Message().Contract().Account.TransferByName(
+"bcb",
+c.contract1().contract().Account().Address(),
+bn.N(1000000000),
+)
+}).Register()
+...
+}
+</pre></blockquote><p>&nbsp;</p><h2><a name='header-n367' class='md-header-anchor '></a>4.4 <strong>Contract Specification</strong></h2><h3><a name='header-n368' class='md-header-anchor '></a>4.4.1 <strong>BNF Paradigm Definition</strong></h3><p>Combining the above description of the contract mark, the following defines the BNF paradigm of the contract specification:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n370" mdtype="fences" style="break-inside: unset;">&lt;BCBChain Smart Contract&gt; ::= &lt;Contract Definition Code File&gt; {&lt;Contract Implementation Code File&gt;} {&lt;Contract Test Code File&gt;}
+
+&lt;Contract Definition Code File&gt; ::= &lt;Code Package Definition&gt; &lt;Contract Definition Code&gt;
+&lt;contract implementation code file&gt; ::= &lt;code package definition&gt; &lt;contract implementation code&gt;
+&lt;Contract Test Code File&gt; ::= &lt;Code Package Definition&gt; &lt;Contract Test Code&gt;
+&lt;code package definition&gt; ::= "package" &lt;contract package name&gt;
+&lt;contract package name&gt; ::= follows the glang syntax specification
+&lt;contract definition code&gt; ::= "import ("
+                 	&lt;Contract SDK root path&gt;
+                 	{[package alias] &lt;contract support code package path&gt;}
+             	")"
+ &lt;contract class definition&gt;
+             	[&lt;Contracting chain initialization function definition&gt;]
+             	[&lt;mining definition&gt;]
+             	[&lt;Contract Receipt Definition&gt;]
+             	{&lt;Cross-contract call interface definition&gt;}
+             	{&lt;Contract public function definition&gt;}
+             	{&lt;contract implementation code&gt;}
+&lt;contract SDK root path&gt; ::= double_quote "blockchain/smcsdk/sdk" double_quote
+&lt;Contract Support Code Package Path&gt; ::= Follow the golang code package path specification, follow the whitelist and graylist specifications of the BCBChain contract specification
+&lt;package alias&gt; ::= Code package alias that follows the golang code specification, cannot use '.'
+&lt;contract implementation code&gt; ::= Contract implementation code that follows the golang code specification (code that does not require BCBChain contract tags), including type definitions,
+             	Constant definition, function definition (Note: can not contain global variable definition, do not allow the use of the for keyword, does not allow recursion
+             	transfer)
+&lt;contract test code&gt; ::= Test code that follows the golang unit test specification
+
+&lt;contract class definition&gt; ::= "//@:contract:" &lt;contract name&gt;
+           	"//@:version:" &lt;contract version&gt;
+           	"//@:organization:" &lt;organization ID&gt;
+           	"//@:author:" &lt;account public key&gt;
+           	"type" &lt;contract class name&gt; " struct {"
+           	" sdk sdk.ISmartContract"
+               	{&lt;state variable definition&gt;}
+   {&lt;golang variable definition&gt;}
+           	"}"
+&lt;contract name&gt; ::= See &lt;contract mark: contract&gt;
+&lt;contract version&gt; ::= See &lt;contract mark: version&gt;
+&lt;Organization ID&gt; ::= See &lt;Contract Mark: organization&gt;
+&lt;account public key&gt; ::= See &lt;contract mark: author&gt;
+&lt;contract class name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+&lt;golang variable definition&gt; ::= Standard variable definition code that follows the golang code specification
+&lt;state variable definition&gt; ::= &lt;basic state variable definition&gt; | &lt;state variable definition with cache&gt;
+&lt;Basic state variable definition&gt; ::= "//@:public:store"
+                    	&lt;variable name&gt; ["*"] &lt;variable type&gt;
+&lt;state variable definition with cache&gt; ::= "//@:public:store:cache"
+                       	&lt;variable name&gt; ["*"] &lt;variable type&gt;
+&lt;variable name&gt; ::= &lt;identifier&gt;
+&lt;variable type&gt; ::= &lt;metadata type&gt; | &lt;array type&gt; | &lt;map table type&gt;
+
+&lt;Contracting chain initialization function definition&gt; ::= &lt;deployment function&gt; | &lt;upgrade function&gt;
+&lt;deployment function&gt; ::= "//@:constructor"
+          	"func (" &lt;contract object definition&gt; ") InitChain() {"
+            	&lt;winding code&gt;
+          	"}"
+&lt;upgrade function&gt; ::= "//@:constructor"
+          	"func (" &lt;contract object definition&gt; ") UpdateChain() {"
+            	&lt;winding code&gt;
+          	"}"
+&lt; Mining definition&gt; ::= "//@:public:mine"
+          	"func (" &lt;contract object definition&gt; ") Mine() {"
+            	&lt;mining code&gt;
+          	"}"
+&lt;contract object definition&gt; ::= &lt;variable name&gt; "*" &lt;contract class name&gt;
+&lt;winding code&gt; ::= &lt;golang function body&gt;
+          	Note 1: Only access to state variables is allowed
+          	Note 2: Access to Message() and Tx() is not allowed in sdk
+&lt;mining code&gt; ::= &lt;golang function body&gt;
+          	Note 1: Access to Message() and Tx() is not allowed in sdk
+&lt;golang function body&gt; ::= Following the implementation of the body of the golang code specification, see the definition of &lt;contract implementation code&gt;
+
+&lt;Contract Receipt Definition&gt; ::= "//@:public:receipt"
+             	"type receipt interface {"
+                 	&lt;receipt function name&gt; &lt;function entry parameter definition&gt;
+             	"}"
+&lt;receipt function name&gt; ::= "emit" &lt;identifier at the beginning of uppercase letters&gt;
+&lt;function entry parameter definition&gt; ::= "(" &lt;parameter table&gt; ")"
+&lt;Parameter Table&gt; ::= &lt;Parameter Definition&gt; | &lt;Parameter Table&gt; "," &lt;Parameter Definition&gt;
+&lt;parameter definition&gt; ::= &lt;variable name&gt; ["*"] &lt;variable type&gt;
+
+&lt;Cross-contract call interface definition&gt; ::= "//@:import:" &lt;contract name&gt;
+                  	"type "&lt;interface class name&gt;" interface {"
+                         	&lt;interface function name&gt; &lt;function entry parameter definition&gt; &lt;function return definition&gt;
+                  	"}"
+&lt;interface class name&gt; ::= &lt;identifier at the beginning of uppercase letters&gt;
+&lt;interface function name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+&lt;function return definition&gt; ::= &lt;empty&gt; | ["*"] &lt;variable type&gt; | "(" &lt;return table&gt; ")"
+&lt;empty&gt; ::= blank
+&lt;back to table&gt; ::= &lt;return definition&gt; | &lt;return table&gt; "," &lt;return definition&gt;
+&lt;return definition&gt; ::= [&lt;variable name&gt;] ["*"] &lt;variable type&gt;
+
+&lt;Contract public function definition&gt; ::=[&lt;contract public method tag&gt;]
+               	[&lt;Contract Public Interface Tag&gt;]
+            	"func (" &lt;contract object definition&gt; ")" &lt;public function name&gt; &lt;function entry parameter definition&gt; &lt;function return definition&gt; "{"
+                 	&lt;golang function body&gt;
+            	"}"
+&lt;Contract public method tag&gt; ::= "//@:public:method:gas[ "&lt;gas quantity&gt; "]"
+&lt;Contract public interface tag&gt; ::= "//@:public:interface:gas[ "&lt;gas quantity&gt; "]"
+&lt;number of gas&gt; ::= See &lt;contract mark: public:method&gt;
+&lt;public function name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+
+&lt;identifier&gt; ::= &lt;letter&gt; | &lt;identifier&gt; &lt;alphanumeric string&gt;
+&lt;identifier at the beginning of uppercase letters&gt; ::= &lt;capital letter&gt; | &lt;identifier at the beginning of uppercase letter&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | &lt;decimal number&gt; | &lt;alphanumeric string&gt; &lt;letter&gt; | &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;letter&gt; ::= "_" | &lt;lowercase&gt; | &lt;uppercase letter&gt;
+&lt;lowercase letter&gt; ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" |
+          	"m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" |
+          	"y" | "z"
+&lt;Capital letter&gt; ::= "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" |
+          	"M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" |
+          	"Y" | "Z"
+&lt;decimal number&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+
+&lt;metadata type&gt; := &lt;golang built-in type&gt; | &lt;SDK built-in type&gt; | &lt;custom data structure&gt;
+&lt;golang built-in type&gt; ::= "int" | "int8" | "int16" | "int32" | "int64" |
+                	"uint" | "uint8" | "uint16" | "uint32" | "uint64" |
+                	"bool" | "string" | "byte"
+&lt;SDK built-in type&gt; ::= &lt;Address&gt; | &lt;HexBytes&gt; | &lt;Hash&gt; | &lt;PubKey&gt; | &lt;Number&gt;
+&lt;Address&gt; ::= "types.Address"
+&lt;HexBytes&gt; ::= "types.HexBytes"
+&lt;Hash&gt; ::= "types.Hash"
+&lt;PubKey&gt; ::= "types.PubKey"
+&lt;Number&gt; ::= "bn.Number"
+&lt;custom data structure&gt; ::= "type" &lt;identifier&gt; " struct {"
+                  	{&lt;variable name&gt; ["*"] &lt;variable type&gt;}
+              	"}"
+&lt;array type&gt; ::= &lt;array dimension definition&gt; [&lt;array dimension definition&gt;] &lt;metadata type&gt;
+&lt;array dimension definition&gt; ::= "[" [&lt;decimal number&gt;] "]"
+&lt;map table type&gt; ::= &lt;map table type 1&gt; | &lt;map table type 2&gt;
+&lt;map table type 1&gt; ::= &lt;map table definition&gt; [&lt;map table definition&gt;] &lt;metadata type&gt;
+&lt;map table type 2&gt; ::= &lt;map table definition&gt; [&lt;map table definition&gt;] &lt;array type&gt;
+&lt;map table definition&gt; ::= "map[" &lt;metadata type&gt; "]"
+
+</pre><p>&nbsp;</p><h3><a name='header-n372' class='md-header-anchor '></a>4.4.2 <strong>Package Specification</strong></h3><p>The BNF paradigm for defining the contract package structure is as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n374" mdtype="fences">&lt;Smart Contract Package Structure&gt; ::= &lt;Contract Definition Code File&gt; {&lt;Contract Implementation Code File&gt;} {&lt;Contract Test Code File&gt;}
+&lt;Contract Definition Code File&gt; ::= &lt;Contract Code Directory&gt; "/" &lt;golang Implementation Code File Name&gt;
+&lt;contract implementation code file&gt; ::= &lt;contract code directory&gt; "/" &lt;golang implementation code file name&gt;
+&lt;Contract Test Code File&gt; ::= &lt;Contract Code Directory&gt; "/" &lt;golang test code file name&gt;
+&lt;contract code directory&gt; ::= &lt;GOPATH&gt; "/" &lt;contract root directory&gt; "/" &lt;contract name&gt; "/v" &lt;contract version&gt; "/" &lt;contract name&gt;
+&lt;GOPATH&gt; ::= golang standard environment variable GOPATH points to the directory
+&lt;contract root directory&gt; ::= "src/contract/" &lt;organization ID&gt; "/code"
+&lt;Organization ID&gt; ::= See &lt;Contract Mark: organization&gt;
+&lt;golang implementation code file name&gt; ::= &lt;legal file name&gt; ".go"
+&lt;golang test code file name&gt; ::= &lt;legal file name&gt; "_test.go"
+&lt;arbitrary file name&gt; ::= &lt;legal file name&gt;|&lt;illegal file name&gt;
+&lt;Illegal file name&gt; ::= [&lt;legal file name&gt;] "autogen" [&lt;legal file name&gt;] | &lt;arbitrary file name&gt; "_test"
+&lt;legal file name&gt; ::= Exclude &lt;illegal file name&gt; after all operating systems recognize the string as the file name
+</pre><p>Note: The white space interval that appears in the specification definition is only required for typesetting and is not part of the specification.</p><p>&nbsp;</p><h3><a name='header-n377' class='md-header-anchor '></a>4.4.3 <strong>Whitelist</strong></h3><p>For security reasons, the BCBChain Smart Contract is limited to allow only packages that follow explicit import behavior and do not produce inconsistent results for different nodes. Such packages are included in the whitelist.</p><p>The code packages supported in the whitelist are safe to use in smart contracts.</p><p>The specific contents of the whitelist and graylist will be different with the upgrade of the smart contract SDK and the matching BCBChain plugin version. For details, please refer to the related documents of the smart contract SDK and the matching BCBChain plugin.</p><p>Below is the first version of the whitelist:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n382" mdtype="fences" style="break-inside: unset;">//The following are available golang ID packages
+bytes
+container/heap
+container/list
+container/ring
+crypto
+crypto/aes
+crypto/cipher
+crypto/des
+crypto/hmac
+crypto/md5
+crypto/rc4
+crypto/sha1
+crypto/sha256
+crypto/sha512
+encoding
+encoding/ascii85
+encoding/asn1
+encoding/base32
+encoding/base64
+encoding/binary
+encoding/csv
+encoding/gob
+encoding/hex
+encoding/json
+encoding/pem
+encoding/xml
+errors
+fmt
+hash
+hash/adler32
+hash/crc32
+hash/crc64
+hash/fnv
+index/suffixarray
+math
+math/big
+math/bits
+math/cmplx
+reflect
+regexp
+regexp/syntax
+sort
+strconv
+strings
+unicode
+unicode/utf16
+unicode/utf8
+
+//Below is standard package for the SDK
+blockchain/smcsdk/sdk
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n385' class='md-header-anchor '></a>4.5 <strong>BRC20Token</strong></h2><p>The smart contract “Token” issued in Section 2.1.2 of this guide is a sample token contract, not a BRC20 token that complies with the BCBChain standard.</p><p>Users of BCBChain can write their own smart contracts to issue tokens that comply with the BRC20 token specification. This section defines smart contracts that comply with the BRC20 token specification.</p><p>The specification is described as follows:</p><ul><li><p>The contract must explicitly call the interface provided by the Smart Contract SDK <code>ITokenHelper::RegisterToken(...)</code> to register a new token with BCBChain (each smart contract can only register one token);</p></li><li><p>The contract registration token will automatically record a standard token generation receipt on BCBChain. The receipt is defined as follows:</p></li><li><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n395" mdtype="fences" style="break-inside: unset;">import (
+    "blockchain/smcsdk/sdk/bn"
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::newToken
+type NewToken struct {
+    TokenAddress     types.Address `json:"tokenAddr"`     // Token Address
+    ContractAddress  types.Address `json:"contractAddr"`  // Coin Contract Address
+    Owner            types.Address `json:"owner"`         // Token Owner’s external
+                                                          // account address
+    Name             string      `json:"name"`            // Token Name
+    Symbol           string      `json:"symbol"`          // Token Symbol
+    TotalSupply      bn.Number   `json:"totalSupply"`     // Total Token Supply
+                                                          // (Unit: Cong)
+    AddSupplyEnabled bool        `json:"addSupplyEnabled"`// Whether additional 
+                                                          // issuance is supported
+    BurnEnabled      bool        `json:"burnEnabled"`     // Whether burn is enabled
+  GasPrice         int64       `json:"gasPrice"`        // Gas Price (Unit: Cong)
+}
+</pre></li><li><p>The contract must implement the methods and interfaces defined in this section</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n400' class='md-header-anchor '></a>4.5.1 Transfer</h3><p><strong>Method Prototype</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n402" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+    "blockchain/smcsdk/sdk/types"
+)
+
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+Transfer(types.Address,bn.Number)
+</pre><p><strong>Function Description</strong></p><ul><li>Execute the token transfer</li></ul><p><strong>Implementation note</strong></p><ul><li>Must be implemented</li><li>Must be marked with markup <code>public:method</code>；</li><li>Must be marked with markup <code>public:interface</code></li></ul><p><strong>Usage</strong></p><ul><li>Allows calls from transaction broadcasts;</li><li>Allows cross-contract calls with other smart contracts of the organization;</li><li>Allows other smart contracts with the organization to be called directly via the interface provided by the SDK,<code>IAccount::Transfer</code> (the underlying SDK automatically performs cross-contract
+calls).</li></ul><p><strong>Input Parameters</strong></p><ul><li>_to<span>		</span>  types.Address <span>	</span>Token recipient address (can be external account address, contract account address, contract address)</li></ul><p>  _value<span>	</span>bn.Number<span>			</span>Token transfer amount (Unit: Cong)</p><p>  Note: If the recipient address is a contract address, the received token will be automatically transferred to the account address of the contract.</p><p><strong>Receipt Output</strong></p><ul><li><p>The BRC20 Token Transfer() method automatically records a standard token transfer receipt on BCBChain. The receipt is defined as follows：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n433" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::transfer
+type Transfer struct {
+    Token      smc.Address  `json:"token"` //Token address
+    From       smc.Address  `json:"from"`  //From address
+    To         smc.Address  `json:"to"`    //Token recipient address
+    Value      bn.Number    `json:"value"` //The amount of token transferred(unit: 
+                                           //cong)
+}
+</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n435' class='md-header-anchor '></a>4.5.2 AddSupply</h3><p><strong>Method Prototype</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n437" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+)
+
+//@:public:method:gas[2400]
+AddSupply(bn.Number)
+</pre><p><strong>Function Description</strong></p><ul><li>Increase supply of tokens</li></ul><p><strong>Implementation Note</strong></p><ul><li>Optional</li><li>If implemented, requires markup <code>public:method</code>.</li></ul><p><strong>Usage</strong></p><ul><li>Only token owners can make calls through transaction broadcasts</li></ul><p><strong>Input Parameters</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>Newly added supply (Unit: Cong).</li></ul><p><strong>Receipt Output</strong></p><ul><li><p>The BRC20 Token <em>AddSupply()</em> method automatically records a standard token extension receipt on BCBChain. The receipt is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n460" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::addSupply
+type AddSupply struct {
+    Token       types.Address `json:"token"`       //Token address
+    Value       bn.Number     `json:"value"`       //Additional supply (Unit: Cong)
+    TotalSupply bn.Number     `json:"totalSupply"` // New total supply (Unit: Cong)
+}
+</pre></li><li><p>The BRC20 Token AddSupply() method also automatically records a standard <code>std::transfer</code>receipt on BCBChain</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n465' class='md-header-anchor '></a>4.5.3 Burn</h3><p><strong>Method Prototype</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n467" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+)
+
+//@:public:method:gas[2400]
+Burn(bn.Number)
+</pre><p><strong>Function Description</strong></p><ul><li>Burns the amount supplied</li></ul><p><strong>Implementation Note</strong></p><ul><li>Optional</li><li>If implemented, requires markup<code>public:method</code>.</li></ul><p><strong>Usage</strong></p><ul><li>Only token owners can make calls through transaction broadcasts</li></ul><p><strong>Input Parameters</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>Burn the amount supplied (Unit: Cong)</li></ul><p><strong>Receipt Output</strong></p><ul><li><p>The BRC20 Token () method automatically records a standard token burning receipt on BCBChain. The receipt is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n490" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/bn"
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::burn
+type Burn struct {
+    Token       types.Address `json:"token"`       //Token address
+    Value       bn.Number     `json:"value"`       //Amount to be burnt (Unit: Cong)
+    TotalSupply bn.Number     `json:"totalSupply"` //New total amount (Unit: Cong)
+}
+</pre></li><li><p>The BRC20 Token Burn() method also automatically records a standard
+<code>std::transfer</code> receipt on BCBChain.</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n495' class='md-header-anchor '></a>4.5.4 SetGasPrice</h3><p><strong>Method Prototype</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n497" mdtype="fences">//@:public:method:gas[2400]
+SetGasPrice(int64)
+</pre><p><strong>Function Description</strong></p><ul><li>Sets the price for Gas</li></ul><p><strong>Implementation Note</strong></p><ul><li>Optional</li><li>If implemented, requires markup <code>public:method</code>.</li></ul><p><strong>Usage</strong></p><ul><li>Only token owners can make calls through transaction broadcasts</li></ul><p><strong>Input Parameters</strong></p><ul><li>_value<span>	</span>int64<span>		</span>New gas price (Unit: Cong)</li></ul><p><strong>Receipt Output</strong></p><ul><li><p>The BRC20 Token SetGasPrice() method automatically records a standard set gas price receipt on BCBChain. The receipt is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n520" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::setGasPrice
+type SetGasPrice struct {
+    Token    types.Address `json:"token"`    //Token address
+    GasPrice int64         `json:"gasPrice"` //Gas Price (Unit: Cong)
+}
+</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n522' class='md-header-anchor '></a>4.5.6 SetOwner</h3><p><strong>Method Prototype</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n524" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/types"
+)
+
+//@:public:method:gas[2400]
+SetOwner(types.Address)
+</pre><p><strong>Function Description</strong></p><ul><li>Transfer ownership of smart contracts and tokens.</li></ul><p><strong>Implementation Note</strong></p><ul><li>Optional</li><li>If implemented, requires markup <code>public:method</code>.</li></ul><p><strong>Usage</strong></p><ul><li>Only token owners can make calls through transaction broadcasts</li></ul><p><strong>Input Parameters</strong></p><ul><li>_newOwner<span>	</span>types.Address<span>	</span>Address of the new owner of the contract</li></ul><p><strong>Receipt Output</strong></p><ul><li><p>The BRC20 Token SetOwner() method automatically records a standard transfer ownership receipt on BCBChain. The receipt is defined as follows:</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n547" mdtype="fences">import (
+    "blockchain/smcsdk/sdk/types"
+)
+
+// Name of receipt: std::setOwner
+type SetOwner struct {
+    ContractAddr types.Address `json:"contractAddr"` //Address of the smart contract
+    NewOwner     types.Address `json:"newOwner"`     //The external account address
+                                                     //of the new owner
+}
+</pre></li><li><p>The BRC20 Token SetOwner() method also automatically records a standard
+<code>std::transfer</code> receipt on BCBChain.</p></li></ul><div style="page-break-after: always;"></div><h1><a name='header-n551' class='md-header-anchor '></a>5 <strong>Developing Smart Contracts</strong></h1><p>Detailed instructions for preparing the development environment, developing, testing, and deploying smart contracts can be found in the document BCBChain_V2.0_Quick_Start.</p></div>
+</body>
+</html>

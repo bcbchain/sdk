@@ -149,79 +149,6 @@ iframe { max-width: 100%; width: 100%; border: none; }
 .highlight td, .highlight tr { border: 0px; }
 
 
-.CodeMirror { height: auto; }
-.CodeMirror.cm-s-inner { background: inherit; }
-.CodeMirror-scroll { overflow-y: hidden; overflow-x: auto; z-index: 3; }
-.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
-.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
-.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
-.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
-.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
-.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
-.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
-.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
-.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
-.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
-.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
-.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
-.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
-.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
-.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
-.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
-.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
-.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
-.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
-.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
-.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
-.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
-.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
-.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
-.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
-.cm-negative { color: rgb(221, 68, 68); }
-.cm-positive { color: rgb(34, 153, 34); }
-.cm-header, .cm-strong { font-weight: 700; }
-.cm-del { text-decoration: line-through; }
-.cm-em { font-style: italic; }
-.cm-link { text-decoration: underline; }
-.cm-error { color: red; }
-.cm-invalidchar { color: red; }
-.cm-constant { color: rgb(38, 139, 210); }
-.cm-defined { color: rgb(181, 137, 0); }
-div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
-div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
-.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
-.CodeMirror { position: relative; overflow: hidden; }
-.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
-.CodeMirror-sizer { position: relative; }
-.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; }
-.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
-.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: hidden; }
-.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
-.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
-.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 30px; z-index: 3; }
-.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
-.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
-.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
-.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
-.CodeMirror-lines { cursor: text; }
-.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; word-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
-.CodeMirror-wrap pre { word-wrap: break-word; white-space: pre-wrap; word-break: normal; }
-.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
-.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
-.CodeMirror-linebackground { position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px; z-index: 0; }
-.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
-.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
-.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
-.CodeMirror-measure pre { position: static; }
-.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
-.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
-.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
-.cm-searching { background: rgba(255, 255, 0, 0.4); }
-@media print {
-  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
-}
-
-
 :root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
 html { font-size: 16px; }
 body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
@@ -300,14 +227,142 @@ header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Aria
 </style>
 </head>
 <body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>BCBChain V2.0 Smart Contract Program Guide</h1><p><strong>V2.0.4</strong></p><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n5' class='md-header-anchor '></a>修订历史</h1><figure><table><thead><tr><th>版本&amp;日期</th><th>修订内容&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th></tr></thead><tbody><tr><td>V2.0.1：2018-12-7</td><td>初稿。</td></tr><tr><td>V2.0.2：2018-12-18</td><td>调整插件界面及功能。</td></tr><tr><td>V2.0.3：2019-1-4</td><td>智能合约公开的方法和接口消耗的燃料现在支持负整数。</td></tr><tr><td>V2.0.4：2019-5-13</td><td>定稿</td></tr></tbody></table></figure><p>&nbsp;</p><p>&nbsp;</p><div style="page-break-after: always;"></div><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n0">BCBChain V2.0 Smart Contract Program Guide</a></span><span class="md-toc-item md-toc-h1" data-ref="n5"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n5">修订历史</a></span><span class="md-toc-item md-toc-h1" data-ref="n28"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n28">1 什么是BCBChain</a></span><span class="md-toc-item md-toc-h1" data-ref="n35"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n35">2 智能合约概述</a></span><span class="md-toc-item md-toc-h2" data-ref="n38"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n38">2.1 简单的智能合约</a></span><span class="md-toc-item md-toc-h3" data-ref="n39"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n39">2.1.1 存储</a></span><span class="md-toc-item md-toc-h3" data-ref="n116"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n116">2.1.2 代币</a></span><span class="md-toc-item md-toc-h2" data-ref="n177"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n177">2.2 区块链基础</a></span><span class="md-toc-item md-toc-h3" data-ref="n179"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n179">2.2.1 交易/事务</a></span><span class="md-toc-item md-toc-h3" data-ref="n185"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n185">2.2.2 状态</a></span><span class="md-toc-item md-toc-h3" data-ref="n193"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n193">2.2.3 区块</a></span><span class="md-toc-item md-toc-h3" data-ref="n199"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n199">2.2.4 调用</a></span><span class="md-toc-item md-toc-h3" data-ref="n206"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n206">2.2.3 收据</a></span><span class="md-toc-item md-toc-h1" data-ref="n210"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n210">3 智能合约编程实例</a></span><span class="md-toc-item md-toc-h2" data-ref="n211"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n211">3.1 委托投票</a></span><span class="md-toc-item md-toc-h2" data-ref="n223"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n223">3.2 慈善捐款</a></span><span class="md-toc-item md-toc-h1" data-ref="n228"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n228">4 深入理解智能合约</a></span><span class="md-toc-item md-toc-h2" data-ref="n229"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n229">4.1 组织机构</a></span><span class="md-toc-item md-toc-h2" data-ref="n235"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n235">4.2 BNF范式</a></span><span class="md-toc-item md-toc-h2" data-ref="n249"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n249">4.3 合约标记</a></span><span class="md-toc-item md-toc-h3" data-ref="n252"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n252">4.3.1 contract</a></span><span class="md-toc-item md-toc-h3" data-ref="n261"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n261">4.3.2 version</a></span><span class="md-toc-item md-toc-h3" data-ref="n270"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n270">4.3.3 organization</a></span><span class="md-toc-item md-toc-h3" data-ref="n278"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n278">4.3.4 author</a></span><span class="md-toc-item md-toc-h3" data-ref="n287"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n287">4.3.5 constructor</a></span><span class="md-toc-item md-toc-h3" data-ref="n296"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n296">4.3.6 public:store</a></span><span class="md-toc-item md-toc-h3" data-ref="n307"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n307">4.3.7 public:store:cache</a></span><span class="md-toc-item md-toc-h3" data-ref="n318"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n318">4.3.8 public:receipt</a></span><span class="md-toc-item md-toc-h3" data-ref="n329"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n329">4.3.9 public:method</a></span><span class="md-toc-item md-toc-h3" data-ref="n346"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n346">4.3.10 public:interface</a></span><span class="md-toc-item md-toc-h3" data-ref="n361"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n361">4.3.11 public:mine</a></span><span class="md-toc-item md-toc-h3" data-ref="n375"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n375">4.3.12 import</a></span><span class="md-toc-item md-toc-h2" data-ref="n388"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n388">4.4 合约规范</a></span><span class="md-toc-item md-toc-h3" data-ref="n389"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n389">4.4.1 BNF范式定义</a></span><span class="md-toc-item md-toc-h3" data-ref="n393"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n393">4.4.2 包结构规范</a></span><span class="md-toc-item md-toc-h3" data-ref="n398"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n398">4.4.3 白名单列表</a></span><span class="md-toc-item md-toc-h2" data-ref="n406"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n406">4.5 BRC20代币</a></span><span class="md-toc-item md-toc-h3" data-ref="n420"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n420">4.5.1 Transfer</a></span><span class="md-toc-item md-toc-h3" data-ref="n455"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n455">4.5.2 AddSupply</a></span><span class="md-toc-item md-toc-h3" data-ref="n485"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n485">4.5.3 Burn</a></span><span class="md-toc-item md-toc-h3" data-ref="n515"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n515">4.5.4 SetGasPrice</a></span><span class="md-toc-item md-toc-h3" data-ref="n542"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n542">4.5.6 SetOwner</a></span><span class="md-toc-item md-toc-h1" data-ref="n572"><a class="md-toc-inner" style="cursor: pointer;" href="#header-n572">5 开发智能合约</a></span></p></div><script src="./github/ltview.js"></script><div style="page-break-after: always;"></div><h1><a name='header-n28' class='md-header-anchor '></a>1 什么是BCBChain</h1><p>&nbsp;</p><p>BCBChain是以Tendermint为基础开发的区块链体系，以系统安全性为依归，进行技术创新，实现物与物、人与物之间高效的价值信息传递，打造快速应用，具备高性能及高扩展性的平台。</p><p>更详细的介绍参见《BCBChain_V2.0_Program_Reference》。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n35' class='md-header-anchor '></a>2 智能合约概述</h1><p>BCBChain从V2.0版开始支持独立开发与部署智能合约，智能合约采用golang进行开发。</p><p>&nbsp;</p><h2><a name='header-n38' class='md-header-anchor '></a>2.1 简单的智能合约</h2><h3><a name='header-n39' class='md-header-anchor '></a>2.1.1 存储</h3><p>让我们先看一个最简单的智能合约。</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><span><span>​</span>x</span></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">package mystorage</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//MyStorage a demo contract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mystorage</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type MyStorage struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>storedData uint64</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Set set a data to the stored data</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Set(data uint64) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>ms._setStoredData(data)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Get get the stored data</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Get() uint64 {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>return ms._storedData()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 762px;"></div><div class="CodeMirror-gutters" style="display: none; height: 762px;"></div></div></div></pre><p>BCBChain的智能合约就是一组代码（合约的函数）和数据（合约的状态数据）以及一组标记（合约的元数据），它位于BCBChain的一个特定地址上。</p><p>&nbsp;</p><p>代码行：</p><p><code>package mystorage</code></p><p>声明智能合约代码包的名称，开发者可以自由设定，只需要符合 golang 标准即可。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 67px;"></div><div class="CodeMirror-gutters" style="display: none; height: 67px;"></div></div></div></pre><p>声明智能合约需要引入的代码包，上述代码引入了BCBChain发布的智能合约SDK的相关代码包，在开发智能合约时需要在 GOPATH 中配置智能合约SDK的路径。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//MyStorage a demo contract</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mystorage</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type MyStorage struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>storedData uint64</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 246px;"></div><div class="CodeMirror-gutters" style="display: none; height: 246px;"></div></div></div></pre><p>声明智能合约的元数据以及状态数据。</p><ul><li>注释行  <code>//MyStorage a demo contract</code>  对下面定义的合约进行注释。</li><li>标记行  <code>//@:contract:mystorage</code>  声明下面定义的数据结构  <code>MyStorage</code>  代表一个智能合约，同时声明该智能合约的名称为  <code>mystorage</code>，合约名称是将智能合约代码部署到BCBChain主链上的时候需要提供的名称，同一个组织开发的不同智能合约的合约名称不能相同，请智能合约的开发者进行合理的规划。</li><li>标记行  <code>//@:version:1.0</code>  声明智能合约的代码版本。</li><li>标记行  <code>//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</code>  标识智能合约所属的组织，示例中的组织对应的组织名称为：<code>example</code>。</li><li>标记行  <code>//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</code>  标识智能合约的开发者公钥。
-代码行  <code>type MyStorage struct {</code>  声明智能合约的数据结构开始，智能合约的函数与状态数据都是该数据结构下的成员。代码行  <code>sdk sdk.ISmartContract</code>  表示该数据结构是遵循BCBChain智能合约SDK的智能合约，将自动聚合SDK提供的智能合约访问上下文（变量名必须定义为sdk）。</li><li>标记行  <code>//@:public:store</code>  表示下一行代码将声明一个状态数据。</li><li>代码行  <code>storedData uint64</code>  声明一个类型为<code>uint64</code>的状态变量，变量名为<code>storedData</code>，你可以认为它是状态数据库里的一个位置，可以通过调用管理数据库的函数进行查询和变更，从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mystorage/storedData</code>。BCBChain提供的辅助工具将会为该状态变量自动封装并生成访问函数<code>_storeData() uint64</code>、<code>_setStoreData(uint64)</code>、<code>_chkStoreData() bool</code>和<code>_delStoreData() bool</code>。</li><li>代码行  <code>}</code>  表示智能合约数据结构定义完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 90px;"></div><div class="CodeMirror-gutters" style="display: none; height: 90px;"></div></div></div></pre><p>声明智能合约的上链初始化代码（只在第一次部署时执行，升级合约时将执行另一个初始化代码 <code>UpdateChain</code>，在本合约中不需要定义）。</p><ul><li>标记行  <code>//@:constructor</code>  声明下面定义的函数 <code>InitChain()</code> 是一个智能合约的标准区块链初始化函数，在BCBChain上第一次部署这个合约的时候自动进行唯一一次调用，以完成智能合约在区块链上的初始化工作，例如初始化某些全局状态变量的初始值。</li><li>代码行  <code>func (ms *MyStorage) InitChain() {</code>  声明智能合约上链初始化的函数原型，函数名必须为<code>InitChain</code>，该函数没有输入参数。</li><li>代码行  <code>}</code>  表示智能合约上链初始化的函数实现完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Set set a data to the stored data</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Set(data uint64) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>ms._setStoredData(data)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 112px;"></div><div class="CodeMirror-gutters" style="display: none; height: 112px;"></div></div></div></pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:method:gas[100]</code>  声明下面定义的函数 <code>Set()</code> 是一个智能合约的公共函数，可以通过BCBChain交易广播的方式进行调用，并将调用信息及结果记录在区块链上，同时声明对该函数的调用将消耗的燃料为100。</li><li>代码行  <code>func (ms *MyStorage) Set(data uint64) {</code>  声明一个智能合约的函数原型。代码行  <code>ms._setStoredData(data)</code>  为该函数的实现代码，表示将输入的参数保存到状态变量<code>storedData</code>中。</li><li>代码行  <code>}</code>  表示智能合约函数实现完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Get get the stored data</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[100]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (ms *MyStorage) Get() uint64 {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>return ms._storedData()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 112px;"></div><div class="CodeMirror-gutters" style="display: none; height: 112px;"></div></div></div></pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:method:gas[100]</code>  声明下面定义的函数  <code>Get()</code>  是一个智能合约的公共函数，可以通过BCBChain交易广播的方式进行调用，并将调用信息及结果记录在区块链上，同时声明对该函数的调用将消耗的燃料为100。</li><li>代码行  <code>func (ms *MyStorage) Get() uint64 {</code>  声明一个智能合约的函数原型。代码行  <code>return ms._storedData()</code>  为该函数的实现代码，表示将读取状态变量<code>storedData</code>的值并返回给调用者。</li><li>代码行  <code>}</code>  表示智能合约函数实现完成。</li></ul><p>&nbsp;</p><p>该合约能完成的事情并不多：它能允许任何人在合约中存储一个单独的数字，并且这个数字可以被世界上任何人访问，且没有可行的办法阻止你发布这个数字。当然，任何人都可以再次调用 Set ，传入不同的值，覆盖你的数字，但是这个数字仍会被存储在区块链的历史记录中。随后，我们会看到怎样施加访问限制，以确保只有你才能改变这个数字。</p><p>&nbsp;</p><p>备注：</p><ul><li>智能合约代码所有的标识符（合约名称，函数名称和变量名称）都只能使用ASCII字符集。</li><li>智能合约代码要求使用ASSCII或UTF-8编码的形式存储。</li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n116' class='md-header-anchor '></a>2.1.2 代币</h3><p>下面的合约实现了一个最简单的加密代币。在这里，代币确实可以无中生有地产生，但是只有合约的拥有者才能做到，而且，任何人都可以给其他人转币，不需要注册用户名和密码 —— 所需要的只是符合 BCBChain 规范的密钥对。</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">package mycoin</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">import (</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk/bn"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>"blockchain/smcsdk/sdk/types"</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Mycoin a demo contract for digital coin</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:contract:mycoin</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:version:1.0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type Mycoin struct {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk sdk.ISmartContract</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store:cache</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>totalSupply bn.Number</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>balanceOf map[types.Address]bn.Number</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">const oneToken int64 = 1000000000</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//InitChain init when deployed on the blockchain first time</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:constructor</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (mc *Mycoin) InitChain() {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  thisContract := mc.sdk.Helper().ContractHelper().ContractOfName("mycoin")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>totalSupply := bn.N1(1000000, oneToken)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setTotalSupply(totalSupply)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setBalanceOf(thisContract.Owner(), totalSupply)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:receipt</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">type receipt interface {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//Transfer transfer coins from sender to another</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:method:gas[500]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">//@:public:interface:gas[450]</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk.Require(value.IsPositive(),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>types.ErrInvalidParameter, "value must be positive")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sender := mc.sdk.Message().Sender().Address()</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>newBalanceOfSender := mc._balanceOf(sender).Sub(value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>sdk.Require(newBalanceOfSender.IsGEI(0),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>types.ErrInsufficientBalance, "")</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>receiver := to</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setBalanceOf(sender, newBalanceOfSender)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc._setBalanceOf(receiver, newBalanceOfReceiver)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="">​</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>mc.emitTransferMyCoin(</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>mc.sdk.Message().Contract().Address(),</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>sender,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>receiver,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span>value)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 1411px;"></div><div class="CodeMirror-gutters" style="display: none; height: 1411px;"></div></div></div></pre><p>这个合约引入了一些新的概念，下面逐一解读。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences md-end-block ty-contain-cm modeLoaded" lang=""><div class="CodeMirror cm-s-inner CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 0px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>//@:public:store:cache</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span>totalSupply bn.Number</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 45px;"></div><div class="CodeMirror-gutters" style="display: none; height: 45px;"></div></div></div></pre><p>声明智能合约的状态数据。</p><ul><li>标记行  <code>//@:public:store:cache</code>  表示下一行代码将声明一个状态数据，该状态数据将会在内存中进行缓存。</li><li>代码行  <code>totalSupply bn.Number</code>  声明一个类型为<code>bn.Number</code>的状态变量，变量名为<code>totalSupply</code>，<code>bn.Number</code>类型表示一个带符号的大数，进行加减乘除操作时不必考虑溢出的问题，从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/totalSupply</code>。BCBChain提供的辅助工具将会为该变量自动封装并生成访问函数<code>_totalSupply() bn.Number</code>、<code>_setTotalSupply(bn.Number)</code>、<code>_chkTotalSupply() bool</code>和<code>_delTotalSupply()</code>，由于标记<code>cache</code>的影响，还会生成一个清除内存缓存的函数<code>_clrTotalSupply()</code>。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n131" mdtype="fences">	//@:public:store
+<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>BCBChain V2.0 Smart Contract Program Guide</h1><p><strong>V2.0.4</strong></p><div style="page-break-after: always;"></div><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="n0"><a class="md-toc-inner" href="#header-n0">BCBChain V2.0 Smart Contract Program Guide</a></span><span class="md-toc-item md-toc-h1" data-ref="n8"><a class="md-toc-inner" href="#header-n8">1 什么是BCBChain</a></span><span class="md-toc-item md-toc-h1" data-ref="n14"><a class="md-toc-inner" href="#header-n14">2 智能合约概述</a></span><span class="md-toc-item md-toc-h2" data-ref="n17"><a class="md-toc-inner" href="#header-n17">2.1 简单的智能合约</a></span><span class="md-toc-item md-toc-h3" data-ref="n18"><a class="md-toc-inner" href="#header-n18">2.1.1 存储</a></span><span class="md-toc-item md-toc-h3" data-ref="n95"><a class="md-toc-inner" href="#header-n95">2.1.2 代币</a></span><span class="md-toc-item md-toc-h2" data-ref="n156"><a class="md-toc-inner" href="#header-n156">2.2 区块链基础</a></span><span class="md-toc-item md-toc-h3" data-ref="n158"><a class="md-toc-inner" href="#header-n158">2.2.1 交易/事务</a></span><span class="md-toc-item md-toc-h3" data-ref="n164"><a class="md-toc-inner" href="#header-n164">2.2.2 状态</a></span><span class="md-toc-item md-toc-h3" data-ref="n172"><a class="md-toc-inner" href="#header-n172">2.2.3 区块</a></span><span class="md-toc-item md-toc-h3" data-ref="n178"><a class="md-toc-inner" href="#header-n178">2.2.4 调用</a></span><span class="md-toc-item md-toc-h3" data-ref="n185"><a class="md-toc-inner" href="#header-n185">2.2.3 收据</a></span><span class="md-toc-item md-toc-h1" data-ref="n189"><a class="md-toc-inner" href="#header-n189">3 智能合约编程实例</a></span><span class="md-toc-item md-toc-h2" data-ref="n190"><a class="md-toc-inner" href="#header-n190">3.1 委托投票</a></span><span class="md-toc-item md-toc-h2" data-ref="n202"><a class="md-toc-inner" href="#header-n202">3.2 慈善捐款</a></span><span class="md-toc-item md-toc-h1" data-ref="n207"><a class="md-toc-inner" href="#header-n207">4 深入理解智能合约</a></span><span class="md-toc-item md-toc-h2" data-ref="n208"><a class="md-toc-inner" href="#header-n208">4.1 组织机构</a></span><span class="md-toc-item md-toc-h2" data-ref="n214"><a class="md-toc-inner" href="#header-n214">4.2 BNF范式</a></span><span class="md-toc-item md-toc-h2" data-ref="n228"><a class="md-toc-inner" href="#header-n228">4.3 合约标记</a></span><span class="md-toc-item md-toc-h3" data-ref="n231"><a class="md-toc-inner" href="#header-n231">4.3.1 contract</a></span><span class="md-toc-item md-toc-h3" data-ref="n240"><a class="md-toc-inner" href="#header-n240">4.3.2 version</a></span><span class="md-toc-item md-toc-h3" data-ref="n249"><a class="md-toc-inner" href="#header-n249">4.3.3 organization</a></span><span class="md-toc-item md-toc-h3" data-ref="n257"><a class="md-toc-inner" href="#header-n257">4.3.4 author</a></span><span class="md-toc-item md-toc-h3" data-ref="n266"><a class="md-toc-inner" href="#header-n266">4.3.5 constructor</a></span><span class="md-toc-item md-toc-h3" data-ref="n275"><a class="md-toc-inner" href="#header-n275">4.3.6 public:store</a></span><span class="md-toc-item md-toc-h3" data-ref="n286"><a class="md-toc-inner" href="#header-n286">4.3.7 public:store:cache</a></span><span class="md-toc-item md-toc-h3" data-ref="n297"><a class="md-toc-inner" href="#header-n297">4.3.8 public:receipt</a></span><span class="md-toc-item md-toc-h3" data-ref="n308"><a class="md-toc-inner" href="#header-n308">4.3.9 public:method</a></span><span class="md-toc-item md-toc-h3" data-ref="n325"><a class="md-toc-inner" href="#header-n325">4.3.10 public:interface</a></span><span class="md-toc-item md-toc-h3" data-ref="n340"><a class="md-toc-inner" href="#header-n340">4.3.11 public:mine</a></span><span class="md-toc-item md-toc-h3" data-ref="n354"><a class="md-toc-inner" href="#header-n354">4.3.12 import</a></span><span class="md-toc-item md-toc-h2" data-ref="n373"><a class="md-toc-inner" href="#header-n373">4.4 合约规范</a></span><span class="md-toc-item md-toc-h3" data-ref="n374"><a class="md-toc-inner" href="#header-n374">4.4.1 BNF范式定义</a></span><span class="md-toc-item md-toc-h3" data-ref="n378"><a class="md-toc-inner" href="#header-n378">4.4.2 包结构规范</a></span><span class="md-toc-item md-toc-h3" data-ref="n383"><a class="md-toc-inner" href="#header-n383">4.4.3 白名单列表</a></span><span class="md-toc-item md-toc-h2" data-ref="n391"><a class="md-toc-inner" href="#header-n391">4.5 BRC20代币</a></span><span class="md-toc-item md-toc-h3" data-ref="n405"><a class="md-toc-inner" href="#header-n405">4.5.1 Transfer</a></span><span class="md-toc-item md-toc-h3" data-ref="n440"><a class="md-toc-inner" href="#header-n440">4.5.2 AddSupply</a></span><span class="md-toc-item md-toc-h3" data-ref="n470"><a class="md-toc-inner" href="#header-n470">4.5.3 Burn</a></span><span class="md-toc-item md-toc-h3" data-ref="n500"><a class="md-toc-inner" href="#header-n500">4.5.4 SetGasPrice</a></span><span class="md-toc-item md-toc-h3" data-ref="n527"><a class="md-toc-inner" href="#header-n527">4.5.6 SetOwner</a></span><span class="md-toc-item md-toc-h1" data-ref="n557"><a class="md-toc-inner" href="#header-n557">5 开发智能合约</a></span></p></div><script src="./github/ltview.js"></script>
+<div style="page-break-after: always;"></div><h1><a name='header-n8' class='md-header-anchor '></a>1 什么是BCBChain</h1><p>BCBChain是以Tendermint为基础开发的区块链体系，以系统安全性为依归，进行技术创新，实现物与物、人与物之间高效的价值信息传递，打造快速应用，具备高性能及高扩展性的平台。</p><p>更详细的介绍参见《BCBChain_V2.0_Program_Reference》。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n14' class='md-header-anchor '></a>2 智能合约概述</h1><p>BCBChain从V2.0版开始支持独立开发与部署智能合约，智能合约采用golang进行开发。</p><p>&nbsp;</p><h2><a name='header-n17' class='md-header-anchor '></a>2.1 简单的智能合约</h2><h3><a name='header-n18' class='md-header-anchor '></a>2.1.1 存储</h3><p>让我们先看一个最简单的智能合约。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n20" mdtype="fences" style="break-inside: unset;">package mystorage
+
+import (
+	"blockchain/smcsdk/sdk"
+)
+
+//MyStorage a demo contract
+//@:contract:mystorage
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type MyStorage struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store
+	storedData uint64
+}
+
+//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (ms *MyStorage) InitChain() {
+}
+
+//Set set a data to the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Set(data uint64) {
+	ms._setStoredData(data)
+}
+
+//Get get the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Get() uint64 {
+	return ms._storedData()
+}
+</pre><p>BCBChain的智能合约就是一组代码（合约的函数）和数据（合约的状态数据）以及一组标记（合约的元数据），它位于BCBChain的一个特定地址上。</p><p>&nbsp;</p><p>代码行：</p><p><code>package mystorage</code></p><p>声明智能合约代码包的名称，开发者可以自由设定，只需要符合 golang 标准即可。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n28" mdtype="fences">import (
+	"blockchain/smcsdk/sdk"
+)
+</pre><p>声明智能合约需要引入的代码包，上述代码引入了BCBChain发布的智能合约SDK的相关代码包，在开发智能合约时需要在 GOPATH 中配置智能合约SDK的路径。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n32" mdtype="fences">//MyStorage a demo contract
+//@:contract:mystorage
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type MyStorage struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store
+	storedData uint64
+}
+</pre><p>声明智能合约的元数据以及状态数据。</p><ul><li>注释行  <code>//MyStorage a demo contract</code>  对下面定义的合约进行注释。</li><li>标记行  <code>//@:contract:mystorage</code>  声明下面定义的数据结构  <code>MyStorage</code>  代表一个智能合约，同时声明该智能合约的名称为  <code>mystorage</code>，合约名称是将智能合约代码部署到BCBChain主链上的时候需要提供的名称，同一个组织开发的不同智能合约的合约名称不能相同，请智能合约的开发者进行合理的规划。</li><li>标记行  <code>//@:version:1.0</code>  声明智能合约的代码版本。</li><li>标记行  <code>//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</code>  标识智能合约所属的组织，示例中的组织对应的组织名称为：<code>example</code>。</li><li>标记行  <code>//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</code>  标识智能合约的开发者公钥。
+代码行  <code>type MyStorage struct {</code>  声明智能合约的数据结构开始，智能合约的函数与状态数据都是该数据结构下的成员。代码行  <code>sdk sdk.ISmartContract</code>  表示该数据结构是遵循BCBChain智能合约SDK的智能合约，将自动聚合SDK提供的智能合约访问上下文（变量名必须定义为sdk）。</li><li>标记行  <code>//@:public:store</code>  表示下一行代码将声明一个状态数据。</li><li>代码行  <code>storedData uint64</code>  声明一个类型为<code>uint64</code>的状态变量，变量名为<code>storedData</code>，你可以认为它是状态数据库里的一个位置，可以通过调用管理数据库的函数进行查询和变更，从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mystorage/storedData</code>。BCBChain提供的辅助工具将会为该状态变量自动封装并生成访问函数<code>_storeData() uint64</code>、<code>_setStoreData(uint64)</code>、<code>_chkStoreData() bool</code>和<code>_delStoreData() bool</code>。</li><li>代码行  <code>}</code>  表示智能合约数据结构定义完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n53" mdtype="fences">//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (ms *MyStorage) InitChain() {
+}
+</pre><p>声明智能合约的上链初始化代码（只在第一次部署时执行，升级合约时将执行另一个初始化代码 <code>UpdateChain</code>，在本合约中不需要定义）。</p><ul><li>标记行  <code>//@:constructor</code>  声明下面定义的函数 <code>InitChain()</code> 是一个智能合约的标准区块链初始化函数，在BCBChain上第一次部署这个合约的时候自动进行唯一一次调用，以完成智能合约在区块链上的初始化工作，例如初始化某些全局状态变量的初始值。</li><li>代码行  <code>func (ms *MyStorage) InitChain() {</code>  声明智能合约上链初始化的函数原型，函数名必须为<code>InitChain</code>，该函数没有输入参数。</li><li>代码行  <code>}</code>  表示智能合约上链初始化的函数实现完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n64" mdtype="fences">//Set set a data to the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Set(data uint64) {
+	ms._setStoredData(data)
+}
+</pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:method:gas[100]</code>  声明下面定义的函数 <code>Set()</code> 是一个智能合约的公共函数，可以通过BCBChain交易广播的方式进行调用，并将调用信息及结果记录在区块链上，同时声明对该函数的调用将消耗的燃料为100。</li><li>代码行  <code>func (ms *MyStorage) Set(data uint64) {</code>  声明一个智能合约的函数原型。代码行  <code>ms._setStoredData(data)</code>  为该函数的实现代码，表示将输入的参数保存到状态变量<code>storedData</code>中。</li><li>代码行  <code>}</code>  表示智能合约函数实现完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n75" mdtype="fences">//Get get the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Get() uint64 {
+	return ms._storedData()
+}
+</pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:method:gas[100]</code>  声明下面定义的函数  <code>Get()</code>  是一个智能合约的公共函数，可以通过BCBChain交易广播的方式进行调用，并将调用信息及结果记录在区块链上，同时声明对该函数的调用将消耗的燃料为100。</li><li>代码行  <code>func (ms *MyStorage) Get() uint64 {</code>  声明一个智能合约的函数原型。代码行  <code>return ms._storedData()</code>  为该函数的实现代码，表示将读取状态变量<code>storedData</code>的值并返回给调用者。</li><li>代码行  <code>}</code>  表示智能合约函数实现完成。</li></ul><p>&nbsp;</p><p>该合约能完成的事情并不多：它能允许任何人在合约中存储一个单独的数字，并且这个数字可以被世界上任何人访问，且没有可行的办法阻止你发布这个数字。当然，任何人都可以再次调用 Set ，传入不同的值，覆盖你的数字，但是这个数字仍会被存储在区块链的历史记录中。随后，我们会看到怎样施加访问限制，以确保只有你才能改变这个数字。</p><p>&nbsp;</p><p>备注：</p><ul><li>智能合约代码所有的标识符（合约名称，函数名称和变量名称）都只能使用ASCII字符集。</li><li>智能合约代码要求使用ASSCII或UTF-8编码的形式存储。</li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n95' class='md-header-anchor '></a>2.1.2 代币</h3><p>下面的合约实现了一个最简单的加密代币。在这里，代币确实可以无中生有地产生，但是只有合约的拥有者才能做到，而且，任何人都可以给其他人转币，不需要注册用户名和密码 —— 所需要的只是符合 BCBChain 规范的密钥对。</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n97" mdtype="fences" style="break-inside: unset;">package mycoin
+
+import (
+	"blockchain/smcsdk/sdk"
+	"blockchain/smcsdk/sdk/bn"
+	"blockchain/smcsdk/sdk/types"
+)
+
+//Mycoin a demo contract for digital coin
+//@:contract:mycoin
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Mycoin struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store:cache
+	totalSupply bn.Number
+
+	//@:public:store
 	balanceOf map[types.Address]bn.Number
-</pre><p>也声明了一个公共状态变量，但它是一个更复杂的数据类型。 该类型将地址映射为大数，用于存储拥有该种代币的账户地址对应的余额。 从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/balanceOf/address</code>，其中<code>address</code>为实际要查询的账户地址。BCBChain提供的辅助工具将会为该变量自动封装并生成访问函数<code>_balanceOf(types.Address) bn.Number</code>、<code>_setBalanceOf(types.Address, bn.Number)</code>、<code>_chkBalanceOf(types.Address) bool</code>和<code>_delBalanceOf(types.Address)</code>。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n135" mdtype="fences">//@:public:receipt
+}
+
+const oneToken int64 = 1000000000
+
+//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (mc *Mycoin) InitChain() {
+  thisContract := mc.sdk.Helper().ContractHelper().ContractOfName("mycoin")
+  totalSupply := bn.N1(1000000, oneToken)
+  mc._setTotalSupply(totalSupply)
+  mc._setBalanceOf(thisContract.Owner().Address(), totalSupply)
+}
+
+//@:public:receipt
 type receipt interface {
 	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
 }
-</pre><p>声明智能合约方法执行时发送的收据，收据将会被保存在BCBChain链中供人们查询。</p><ul><li>标记行  <code>//@:public:receipt</code>  声明下一行代码为收据接口定义。</li><li>代码行  <code>type receipt interface {</code>  声明实际的收据接口类型开始，类型名称固定为 <code>receipt</code>  。</li><li>代码行  <code>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</code>  声明了一个所谓的收据（receipt），它会在 Transfer函数的最后一行被发出。用户界面（当然也包括服务器应用程序）可以监听BCBChain链上正在发送的收据，而不会花费太多成本。一旦它被发出，监听该收据的<code>listener</code>都将收到通知，可方便追踪交易。</li><li>代码行  <code>}</code>  表示收据接口定义完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n148" mdtype="fences">//Transfer transfer coins from sender to another
+
+//Transfer transfer coins from sender to another
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	sdk.Require(value.IsPositive(),
+		types.ErrInvalidParameter, "value must be positive")
+
+	sender := mc.sdk.Message().Sender().Address()
+	newBalanceOfSender := mc._balanceOf(sender).Sub(value)
+	sdk.Require(newBalanceOfSender.IsGEI(0),
+		types.ErrInsufficientBalance, "")
+
+	receiver := to
+	newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
+
+	mc._setBalanceOf(sender, newBalanceOfSender)
+	mc._setBalanceOf(receiver, newBalanceOfReceiver)
+
+	mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		receiver,
+		value)
+}
+</pre><p>这个合约引入了一些新的概念，下面逐一解读。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n101" mdtype="fences">	//@:public:store:cache
+	totalSupply bn.Number
+</pre><p>声明智能合约的状态数据。</p><ul><li>标记行  <code>//@:public:store:cache</code>  表示下一行代码将声明一个状态数据，该状态数据将会在内存中进行缓存。</li><li>代码行  <code>totalSupply bn.Number</code>  声明一个类型为<code>bn.Number</code>的状态变量，变量名为<code>totalSupply</code>，<code>bn.Number</code>类型表示一个带符号的大数，进行加减乘除操作时不必考虑溢出的问题，从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/totalSupply</code>。BCBChain提供的辅助工具将会为该变量自动封装并生成访问函数<code>_totalSupply() bn.Number</code>、<code>_setTotalSupply(bn.Number)</code>、<code>_chkTotalSupply() bool</code>和<code>_delTotalSupply()</code>，由于标记<code>cache</code>的影响，还会生成一个清除内存缓存的函数<code>_clrTotalSupply()</code>。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n110" mdtype="fences">	//@:public:store
+	balanceOf map[types.Address]bn.Number
+</pre><p>也声明了一个公共状态变量，但它是一个更复杂的数据类型。 该类型将地址映射为大数，用于存储拥有该种代币的账户地址对应的余额。 从外部访问状态数据库中的这个变量的KEY值为<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/balanceOf/address</code>，其中<code>address</code>为实际要查询的账户地址。BCBChain提供的辅助工具将会为该变量自动封装并生成访问函数<code>_balanceOf(types.Address) bn.Number</code>、<code>_setBalanceOf(types.Address, bn.Number)</code>、<code>_chkBalanceOf(types.Address) bool</code>和<code>_delBalanceOf(types.Address)</code>。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n114" mdtype="fences">//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+</pre><p>声明智能合约方法执行时发送的收据，收据将会被保存在BCBChain链中供人们查询。</p><ul><li>标记行  <code>//@:public:receipt</code>  声明下一行代码为收据接口定义。</li><li>代码行  <code>type receipt interface {</code>  声明实际的收据接口类型开始，类型名称固定为 <code>receipt</code>  。</li><li>代码行  <code>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</code>  声明了一个所谓的收据（receipt），它会在 Transfer函数的最后一行被发出。用户界面（当然也包括服务器应用程序）可以监听BCBChain链上正在发送的收据，而不会花费太多成本。一旦它被发出，监听该收据的<code>listener</code>都将收到通知，可方便追踪交易。</li><li>代码行  <code>}</code>  表示收据接口定义完成。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n127" mdtype="fences">//Transfer transfer coins from sender to another
 //@:public:method:gas[500]
 //@:public:interface:gas[450]
 func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
@@ -315,23 +370,23 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
     .
     .
 }
-</pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:interface:gas[450]</code>  声明下面定义的函数  <code>Transfer()</code>  是一个智能合约的公共接口，可以通过智能合约之间相互进行跨合约调用的机制进行调用，并将调用信息及结果记录在BCBChain链上。同一组织在BCBChain上部署的智能合约之间可以进行相互调用，BCBChain基础组织部署的智能合约所提供的公共接口可以由任意智能合约进行调用。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n155" mdtype="fences">  sdk.RequireAddress(to)
+</pre><p>声明智能合约的代码。</p><ul><li>标记行  <code>//@:public:interface:gas[450]</code>  声明下面定义的函数  <code>Transfer()</code>  是一个智能合约的公共接口，可以通过智能合约之间相互进行跨合约调用的机制进行调用，并将调用信息及结果记录在BCBChain链上。同一组织在BCBChain上部署的智能合约之间可以进行相互调用，BCBChain基础组织部署的智能合约所提供的公共接口可以由任意智能合约进行调用。</li></ul><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n134" mdtype="fences">  sdk.RequireAddress(to)
   sdk.Require(value.IsPositive(),
 		types.ErrInvalidParameter, "value must be positive")
-</pre><p>声明一段合约代码逻辑。函数 <code>sdk.RequireAddress()</code>  由SDK提供用于检测输入参数<code>to</code>是否是一个标准的账户地址，如果不满足则自动结束合约的执行，并返回响应的错误信息。函数 <code>sdk.Require()</code>  由SDK提供，用于检测某个条件必须成立(此处是检测输入参数<code>value</code>必须大于0)，否则自动结束合约的执行，并返回响应的错误信息。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n159" mdtype="fences">  sender := mc.sdk.Message().Sender().Address()
+</pre><p>声明一段合约代码逻辑。函数 <code>sdk.RequireAddress()</code>  由SDK提供用于检测输入参数<code>to</code>是否是一个标准的账户地址，如果不满足则自动结束合约的执行，并返回相应的错误信息。函数 <code>sdk.Require()</code>  由SDK提供，用于检测某个条件必须成立(此处是检测输入参数<code>value</code>必须大于0)，否则自动结束合约的执行，并返回相应的错误信息。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n138" mdtype="fences">  sender := mc.sdk.Message().Sender().Address()
   newBalanceOfSender := mc._balanceOf(sender).Sub(value)
   sdk.Require(newBalanceOfSender.IsGEI(0),
 		types.ErrInsufficientBalance, "")
-</pre><p>声明一段合约代码逻辑。函数 <code>mc.sdk.Message().Sender().Address()</code> 由SDK提供，用于获取消息发起者的账户地址。<code>mc._balanceOf(sender).Sub(value)</code> 用于获取发消息起者账户地址所拥有代币的余额并减去转账金额，计算出新的账户余额，函数<code>_balanceOf()</code>是由BCBChain提供的辅助工具自动生成的。函数 <code>sdk.Require()</code>  由SDK提供，用于检测某个条件必须成立(此处是检测转账发起者的余额足够进行转账操作)，否则自动结束合约的执行，并返回响应的错误信息。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n163" mdtype="fences">  receiver := to
+</pre><p>声明一段合约代码逻辑。函数 <code>mc.sdk.Message().Sender().Address()</code> 由SDK提供，用于获取消息发起者的账户地址。<code>mc._balanceOf(sender).Sub(value)</code> 用于获取消息发起者账户地址所拥有代币的余额并减去转账金额，计算出新的账户余额，函数<code>_balanceOf()</code>是由BCBChain提供的辅助工具自动生成的。函数 <code>sdk.Require()</code>  由SDK提供，用于检测某个条件必须成立(此处是检测转账发起者的余额足够进行转账操作)，否则自动结束合约的执行，并返回相应的错误信息。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n142" mdtype="fences">  receiver := to
   newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
-</pre><p>声明一段合约代码逻辑。<code>mc._balanceOf(receiver).Add(value)</code> 用于计算接收转账的账户地址所拥有的新的账户余额。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n167" mdtype="fences">  mc._setBalanceOf(sender, newBalanceOfSender)
+</pre><p>声明一段合约代码逻辑。<code>mc._balanceOf(receiver).Add(value)</code> 用于计算接收转账的账户地址所拥有的新的账户余额。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n146" mdtype="fences">  mc._setBalanceOf(sender, newBalanceOfSender)
   mc._setBalanceOf(receiver, newBalanceOfReceiver)
-</pre><p>声明一段合约代码逻辑。用于将计算得出的新的账户余额写入状态数据库中，函数<code>_setBalanceOf()</code>是由BCBChain提供的辅助工具自动生成的。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n171" mdtype="fences">  mc.emitTransferMyCoin(
+</pre><p>声明一段合约代码逻辑。用于将计算得出的新的账户余额写入状态数据库中，函数<code>_setBalanceOf()</code>是由BCBChain提供的辅助工具自动生成的。</p><p>&nbsp;</p><p>代码段：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n150" mdtype="fences">  mc.emitTransferMyCoin(
 		mc.sdk.Message().Contract().Address(),
 		sender,
 		receiver,
 		value)
-</pre><p>声明一段合约代码逻辑。用于向区块链发送本次转账的收据，函数<code>emitTransferMyCoin()</code>是由BCBChain提供的辅助工具自动生成的。</p><p>&nbsp;</p><p>这个合约提供了两个函数，函数 <code>InitChain()</code>是在部署合约之后由BCBChain链自动调用一次，用于对合约进行初始化。 真正被用户或其他合约所调用的，以完成本合约功能的函数是<code>Transfer()</code>。 函数<code>Transfer()</code>可被任何人用于向他人发送代币 (当然，前提是发送者拥有这些代币)。记住，如果你使用合约发送代币给一个地址，当你在BCBChain链浏览器上查看该地址时是看不到任何相关信息的。因为，实际上你发送代币和更改余额的信息仅仅存储在这个合约的数据存储器中（需要使用特殊的查询手段从状态数据库进行查询）。通过使用收据，你可以非常简单地为你的新代币创建一个“区块链浏览器”来追踪交易和余额。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n177' class='md-header-anchor '></a>2.2 区块链基础</h2><p>程序员对于区块链这个概念应该并不难理解，这是因为大多数复杂的算法与协议 (哈希 ，椭圆曲线密码学 ，点对点网络（P2P） 等) 都只是用于提供特定的功能和承诺。对于智能合约开发程序员来说，只需接受这些既有的特性与功能，不必关心底层技术的实现方案。</p><h3><a name='header-n179' class='md-header-anchor '></a>2.2.1 交易/事务</h3><p>区块链是一种全球共享的事务性数据库，这意味着每个人都可加入网络来阅读数据库中的记录。如果你想改变数据库中的某些东西，你必须创建一个被所有其他人所接受的事务（在区块链世界又被称为交易）。事务一词意味着你想做的（假设您想要同时更改两个值），要么一点没做，要么全部完成。此外，当你的事务被应用到数据库时，其他事务不能修改数据库。</p><p>举个例子，设想一张表，列出电子货币中所有账户的余额。如果你请求从一个账户转移到另一个账户，数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。</p><p>此外，交易总是由发送人（创建者）签名。这样，就可非常简单地为数据库的特定修改增加访问保护机制。在数字代币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n185' class='md-header-anchor '></a>2.2.2 状态</h3><p>BCBChain参考了Ethereum、Fabric、Tendermint、Cosmos等开源区块链方案，借鉴了其中一些优秀思想。</p><p>BCBChain在本质上是一个基于交易的状态机(transaction-based state machine)。在计算机科学中，状态机是一个包含一组状态集（states）、一个起始状态（start state）、一组输入符号集（alphabet）、一个映射输入符号和当前状态到下一状态的转换函数（transition function）的计算模型。</p><p>在BCBChain其中状态集由状态数据库进行表达，起始状态被称为创世状态（genesis state），输入的符号集就是在区块链领域常说的交易（transaction，简称tx），状态转换函数就是智能合约。</p><p><img src='./p/statemachine.png' alt='' referrerPolicy='no-referrer' /></p><p>根据BCBChain的状态机，我们从创世状态(genesis state)开始。这差不多类似于一片空白的石板，在网络中还没有任何交易产生的状态。当交易被执行后，这个创世纪状态就会转变成最终状态。在任何时刻，这个最终状态都代表着BCBChain当前的状态。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n193' class='md-header-anchor '></a>2.2.3 区块</h3><p>BCBChain的状态由成千上万个交易达成。这些交易都被 “组团” 到一个个区块中。一个区块包含了一系列的交易，每个区块都与它的前一个区块链接起来，这正是“区块链”这个词的来源，每一个区块都会导致状态机达到一个新的状态。</p><p><img src='./p/blockchain.png' alt='' referrerPolicy='no-referrer' /></p><p>为了让一个状态转换成下一个状态，交易必须是有效的（也就是促使采用区块链技术的不可抵赖特性需求）。为了让一个交易被认为是有效的，它必须要经过一个验证过程，每一个交易都必须由交易发起人通过自己的私钥进行签名，并且在BCBChain的智能合约中校验满足一定的条件，才能被认为是有效的。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n199' class='md-header-anchor '></a>2.2.4 调用</h3><p>智能合约可以通过消息调用的方式来调用其它智能合约。</p><p>每个交易都可以包含多个按顺序执行的顶层消息调用，前一个消息调用的输出收据可以作为下一个顶层消息调用的</p><p>输入，在下一个顶层消息调用中执行一些逻辑处理代码。每一个顶层消息调用，这个消息调用会依次产生更多的跨合约的消息调用。</p><p>消息调用层数被限制为8层，为了预防死循环，各层消息调用不能形成环路。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n206' class='md-header-anchor '></a>2.2.3 收据</h3><p>每一个消息调用除了返回结果以外，还可以返回执行合约业务逻辑过程中的日志数据，在这里我们把它称为收据，这些收据数据保存在区块上，可以很方便的进行检索。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n210' class='md-header-anchor '></a>3 智能合约编程实例</h1><h2><a name='header-n211' class='md-header-anchor '></a>3.1 委托投票</h2><p>以下的合约相当复杂，它实现了一个委托投票合约。 当然，电子投票的主要问题是如何将投票权分配给正确的人员以及如何防止被操纵。 我们不会在这里解决所有的问题，但至少我们会展示如何进行委托投票，同时，计票又是自动和完全透明的 。</p><p>我们的想法是为每个（投票）表决创建一份合约，为每个选项提供简称。 然后作为合约的创造者——即主席，将给予每个独立的地址以投票权。</p><p>地址后面的人可以选择自己投票，或者委托给他们信任的人来投票。</p><p>在投票时间结束时，<code>WinningProposal()</code>将返回获得最多投票的提案。</p><p>这个合约实现采用了两个文件，分别如下：</p><p><code>myballot_types.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n218" mdtype="fences" style="break-inside: unset;">package myballot
+</pre><p>声明一段合约代码逻辑。用于向区块链发送本次转账的收据，函数<code>emitTransferMyCoin()</code>是由BCBChain提供的辅助工具自动生成的。</p><p>&nbsp;</p><p>这个合约提供了两个函数，函数 <code>InitChain()</code>是在部署合约之后由BCBChain链自动调用一次，用于对合约进行初始化。 真正被用户或其他合约所调用的，以完成本合约功能的函数是<code>Transfer()</code>。 函数<code>Transfer()</code>可被任何人用于向他人发送代币 (当然，前提是发送者拥有这些代币)。记住，如果你使用合约发送代币给一个地址，当你在BCBChain链浏览器上查看该地址时是看不到任何相关信息的。因为，实际上你发送代币和更改余额的信息仅仅存储在这个合约的数据存储器中（需要使用特殊的查询手段从状态数据库进行查询）。通过使用收据，你可以非常简单地为你的新代币创建一个“区块链浏览器”来追踪交易和余额。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n156' class='md-header-anchor '></a>2.2 区块链基础</h2><p>程序员对于区块链这个概念应该并不难理解，这是因为大多数复杂的算法与协议 (哈希 ，椭圆曲线密码学 ，点对点网络（P2P） 等) 都只是用于提供特定的功能和承诺。对于智能合约开发程序员来说，只需接受这些既有的特性与功能，不必关心底层技术的实现方案。</p><h3><a name='header-n158' class='md-header-anchor '></a>2.2.1 交易/事务</h3><p>区块链是一种全球共享的事务性数据库，这意味着每个人都可加入网络来阅读数据库中的记录。如果你想改变数据库中的某些东西，你必须创建一个被所有其他人所接受的事务（在区块链世界又被称为交易）。事务一词意味着你想做的（假设您想要同时更改两个值），要么一点没做，要么全部完成。此外，当你的事务被应用到数据库时，其他事务不能修改数据库。</p><p>举个例子，设想一张表，列出电子货币中所有账户的余额。如果你请求从一个账户转移到另一个账户，数据库的事务特性确保了如果从一个账户扣除金额，它总被添加到另一个账户。如果由于某些原因，无法添加金额到目标账户时，源账户也不会发生任何变化。</p><p>此外，交易总是由发送人（创建者）签名。这样，就可非常简单地为数据库的特定修改增加访问保护机制。在数字代币的例子中，一个简单的检查可以确保只有持有账户密钥的人才能从中转账。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n164' class='md-header-anchor '></a>2.2.2 状态</h3><p>BCBChain参考了Ethereum、Fabric、Tendermint、Cosmos等开源区块链方案，借鉴了其中一些优秀思想。</p><p>BCBChain在本质上是一个基于交易的状态机(transaction-based state machine)。在计算机科学中，状态机是一个包含一组状态集（states）、一个起始状态（start state）、一组输入符号集（alphabet）、一个映射输入符号和当前状态到下一状态的转换函数（transition function）的计算模型。</p><p>在BCBChain其中状态集由状态数据库进行表达，起始状态被称为创世状态（genesis state），输入的符号集就是在区块链领域常说的交易（transaction，简称tx），状态转换函数就是智能合约。</p><p><img src='./p/statemachine.png' alt='' referrerPolicy='no-referrer' /></p><p>根据BCBChain的状态机，我们从创世状态(genesis state)开始。这差不多类似于一片空白的石板，在网络中还没有任何交易产生的状态。当交易被执行后，这个创世纪状态就会转变成最终状态。在任何时刻，这个最终状态都代表着BCBChain当前的状态。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n172' class='md-header-anchor '></a>2.2.3 区块</h3><p>BCBChain的状态由成千上万个交易达成。这些交易都被 “组团” 到一个个区块中。一个区块包含了一系列的交易，每个区块都与它的前一个区块链接起来，这正是“区块链”这个词的来源，每一个区块都会导致状态机达到一个新的状态。</p><p><img src='./p/blockchain.png' alt='' referrerPolicy='no-referrer' /></p><p>为了让一个状态转换成下一个状态，交易必须是有效的（也就是促使采用区块链技术的不可抵赖特性需求）。为了让一个交易被认为是有效的，它必须要经过一个验证过程，每一个交易都必须由交易发起人通过自己的私钥进行签名，并且在BCBChain的智能合约中校验满足一定的条件，才能被认为是有效的。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n178' class='md-header-anchor '></a>2.2.4 调用</h3><p>智能合约可以通过消息调用的方式来调用其它智能合约。</p><p>每个交易都可以包含多个按顺序执行的顶层消息调用，前一个消息调用的输出收据可以作为下一个顶层消息调用的</p><p>输入，在下一个顶层消息调用中执行一些逻辑处理代码。每一个顶层消息调用，这个消息调用会依次产生更多的跨合约的消息调用。</p><p>消息调用层数被限制为8层，为了预防死循环，各层消息调用不能形成环路。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n185' class='md-header-anchor '></a>2.2.3 收据</h3><p>每一个消息调用除了返回结果以外，还可以返回执行合约业务逻辑过程中的日志数据，在这里我们把它称为收据，这些收据数据保存在区块上，可以很方便的进行检索。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n189' class='md-header-anchor '></a>3 智能合约编程实例</h1><h2><a name='header-n190' class='md-header-anchor '></a>3.1 委托投票</h2><p>以下的合约相当复杂，它实现了一个委托投票合约。 当然，电子投票的主要问题是如何将投票权分配给正确的人员以及如何防止被操纵。 我们不会在这里解决所有的问题，但至少我们会展示如何进行委托投票，同时，计票又是自动和完全透明的 。</p><p>我们的想法是为每个（投票）表决创建一份合约，为每个选项提供简称。 然后作为合约的创造者——即主席，将给予每个独立的地址以投票权。</p><p>地址后面的人可以选择自己投票，或者委托给他们信任的人来投票。</p><p>在投票时间结束时，<code>WinningProposal()</code>将返回获得最多投票的提案。</p><p>这个合约实现采用了两个文件，分别如下：</p><p><code>myballot_types.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n197" mdtype="fences" style="break-inside: unset;">package myballot
 
 import (
 	"blockchain/smcsdk/sdk/types"
@@ -352,7 +407,7 @@ type Proposal struct {
 	name      string // short name (up to 32 bytes)
 	voteCount uint   // number of accumulated votes
 }
-</pre><p><code>myballot.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n220" mdtype="fences" style="break-inside: unset;">package myballot
+</pre><p><code>myballot.go</code></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n199" mdtype="fences" style="break-inside: unset;">package myballot
 
 import (
 	"blockchain/smcsdk/sdk"
@@ -532,7 +587,7 @@ func (ballot *Ballot) WinnerName() (winnerName string) {
 	}
 	return
 }
-</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n223' class='md-header-anchor '></a>3.2 慈善捐款</h2><p>以下的合约实现了一个简单的慈善捐款功能。 合约代码如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n225" mdtype="fences" style="break-inside: unset;">package mydonation
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n202' class='md-header-anchor '></a>3.2 慈善捐款</h2><p>以下的合约实现了一个简单的慈善捐款功能。 合约代码如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n204" mdtype="fences" style="break-inside: unset;">package mydonation
 
 import (
 	"blockchain/smcsdk/sdk"
@@ -552,7 +607,7 @@ type Mydonation struct {
 
 	//Total donations received by donees
 	//@:public:store
-	donations map[types.Address]bn.Number   	// key=address of donee
+	donations map[types.Address]bn.Number // key=address of donee
 }
 
 const (
@@ -563,6 +618,7 @@ const (
 	errDonationExist
 	errDonationNotEnough
 )
+
 //@:public:receipt
 type receipt interface {
 	emitAddDonee(donee types.Address)
@@ -585,7 +641,7 @@ func (d *Mydonation) AddDonee(donee types.Address) {
 		errDoneeCannotBeOwner, "Donee can not be owner")
 	sdk.Require(donee != d.sdk.Message().Contract().Address(),
 		errDoneeCannotBeSmc, "Donee can not be this smart contract")
-	sdk.Require(donee != d.sdk.Message().Contract().Account(),
+	sdk.Require(donee != d.sdk.Message().Contract().Account().Address(),
 		errDoneeCannotBeSmc, "Donee can not be account of this smart contract")
 	sdk.Require(!d._chkDonations(donee),
 		errDoneeAlreadyExist, "Donee already exists")
@@ -621,7 +677,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 
 	var valTome *std.Transfer
 	token := d.sdk.Helper().GenesisHelper().Token()
-	forx.Range( d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
+	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
 		sdk.Require(receipt.Token == token.Address(),
 			types.ErrInvalidParameter, "Accept donations in genesis token only")
 		sdk.Require(valTome == nil,
@@ -629,7 +685,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 		valTome = receipt
 	})
 	sdk.Require(valTome != nil,
-		types.ErrInvalidParameter,	"Please transfer token to me first"	)
+		types.ErrInvalidParameter, "Please transfer token to me first")
 
 	balance := d._donations(donee).Add(valTome.Value)
 	d._setDonations(donee, balance)
@@ -640,7 +696,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 		donee,
 		valTome.Value,
 		balance,
-		)
+	)
 }
 
 //Withdraw To transfer donations to donee
@@ -648,15 +704,15 @@ func (d *Mydonation) Donate(donee types.Address) {
 func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
 	sdk.RequireOwner()
 	sdk.RequireAddress(donee)
-	sdk.Require(value.IsGreaterThanI(0),
-		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._chkDonations(donee),
 		errDoneeNotExist, "Donee does not exist")
+	sdk.Require(value.IsGreaterThanI(0),
+		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._donations(donee).IsGE(value),
 		errDonationNotEnough, "Donation is not enough")
 
-	account := d.sdk.Helper().AccountHelper().AccountOf(d.sdk.Message().Contract().Account())
 	token := d.sdk.Helper().GenesisHelper().Token()
+	account := d.sdk.Message().Contract().Account()
 	account.TransferByToken(token.Address(), donee, value)
 	balance := d._donations(donee).Sub(value)
 	d._setDonations(donee, balance)
@@ -666,18 +722,18 @@ func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
 		donee,
 		value,
 		balance,
-		)
+	)
 }
-</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n228' class='md-header-anchor '></a>4 深入理解智能合约</h1><h2><a name='header-n229' class='md-header-anchor '></a>4.1 组织机构</h2><p>为BCBChain主链开发的智能合约按照组织的架构进行组织，为同一个组织机构开发的所有智能合约都将被集成在一个合约进程中供用户进行调用。</p><p>在一个智能合约中可以调用其它智能合约提供的接口，在那个接口对应的智能合约代码中又可以调用另一个智能合约的接口，BCBChain最多支持8级嵌套的跨合约调用，嵌套调用不允许包含环形调用结构。</p><p>BCBChain设定了一个基础组织，为该基础组织开发的智能合约将被集成到所有组织的合约进程中供用户调用，这个组织的设定主要是为了提供一些可以随时被任意组织跨合约调用执行的基础合约，例如BCBChain主链的基础通证以及代币模板合约。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n235' class='md-header-anchor '></a>4.2 BNF范式</h2><p>本章对合约规范的描述采用巴科斯(BNF)范式。</p><p>巴科斯范式的英文缩写为BNF，它是以美国人巴科斯(Backus)和丹麦人诺尔(Naur)的名字命名的一种形式化的语法表示方法，用来描述语法的一种形式体系，是一种典型的元语言。又称巴科斯-诺尔形式(Backus-Naur form)。它不仅能严格地表示语法规则，而且所描述的语法是与上下文无关的。它具有语法简单，表示明确，便于语法分析和编译的特点。</p><p>BNF范式表示语法规则的方式为：</p><ul><li>非终结符用尖括号括起。</li><li>每条规则的左部是一个非终结符，右部是由非终结符和终结符组成的一个符号串，中间一般以::=分开。</li><li>具有相同左部的规则可以共用一个左部，各右部之间以竖线“|”隔开。</li></ul><p>BNF范式中常用的元字符及其表示的意义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n247" mdtype="fences">在双引号中的字符(例如"word")代表着这些字符本身。而double_quote用来代表双引号本身。 
-在双引号外的字(有可能有下划线)代表着语法部分。 
-尖括号 &lt; &gt; 内包含的为必选项。 
-方括号 [ ] 内包含的为可选项。 
-大括号 { } 内包含的为可重复0至无数次的项。 
-圆括号 ( ) 内包含的所有项为一组，用来控制表达式的优先级。
-竖线 | 表示在其左右两边任选一项，相当于"OR"的意思。 
-::= 是“被定义为”的意思。 
-空白字符 BNF范式定义中出现的空白字符间隔仅为排版需要，不作为规范的一部分。
-</pre><p>&nbsp;</p><h2><a name='header-n249' class='md-header-anchor '></a>4.3 合约标记</h2><p>BCBChain智能合约代码采用标记法在合约代码的注释中对合约的元数据进行描述。</p><p>下面为BCBChain智能合约所使用的各种标记的详细语法描述。</p><h3><a name='header-n252' class='md-header-anchor '></a>4.3.1 contract</h3><p>标记<code>contract</code>用于标识合约名称，同一组织之下的合约名称必须唯一，请智能合约的开发者进行合理的规划。</p><p>标记<code>contract</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>contract</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n256" mdtype="fences">&lt;contract标记语法&gt; ::= "//@:contract:" &lt;合约名称&gt;
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n207' class='md-header-anchor '></a>4 深入理解智能合约</h1><h2><a name='header-n208' class='md-header-anchor '></a>4.1 组织机构</h2><p>为BCBChain主链开发的智能合约按照组织的架构进行组织，为同一个组织机构开发的所有智能合约都将被集成在一个合约进程中供用户进行调用。</p><p>在一个智能合约中可以调用其它智能合约提供的接口，在那个接口对应的智能合约代码中又可以调用另一个智能合约的接口，BCBChain最多支持8级嵌套的跨合约调用，嵌套调用不允许包含环形调用结构。</p><p>BCBChain设定了一个基础组织，为该基础组织开发的智能合约将被集成到所有组织的合约进程中供用户调用，这个组织的设定主要是为了提供一些可以随时被任意组织跨合约调用执行的基础合约，例如BCBChain主链的基础通证以及代币模板合约。</p><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n214' class='md-header-anchor '></a>4.2 BNF范式</h2><p>本章对合约规范的描述采用巴科斯(BNF)范式。</p><p>巴科斯范式的英文缩写为BNF，它是以美国人巴科斯(Backus)和丹麦人诺尔(Naur)的名字命名的一种形式化的语法表示方法，用来描述语法的一种形式体系，是一种典型的元语言。又称巴科斯-诺尔形式(Backus-Naur form)。它不仅能严格地表示语法规则，而且所描述的语法是与上下文无关的。它具有语法简单，表示明确，便于语法分析和编译的特点。</p><p>BNF范式表示语法规则的方式为：</p><ul><li>非终结符用尖括号括起。</li><li>每条规则的左部是一个非终结符，右部是由非终结符和终结符组成的一个符号串，中间一般以::=分开。</li><li>具有相同左部的规则可以共用一个左部，各右部之间以竖线“|”隔开。</li></ul><p>BNF范式中常用的元字符及其表示的意义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n226" mdtype="fences">1. 在双引号中的字符(例如"word")代表着这些字符本身。而double_quote用来代表双引号本身。 
+2. 在双引号外的字(有可能有下划线)代表着语法部分。 
+3. 尖括号 &lt; &gt; 内包含的为必选项。 
+4. 方括号 [ ] 内包含的为可选项。 
+5. 大括号 { } 内包含的为可重复0至无数次的项。 
+6. 圆括号 ( ) 内包含的所有项为一组，用来控制表达式的优先级。
+7. 竖线 | 表示在其左右两边任选一项，相当于"OR"的意思。 
+8. ::= 是“被定义为”的意思。 
+9. 空白字符 BNF范式定义中出现的空白字符间隔仅为排版需要，不作为规范的一部分。
+</pre><p>&nbsp;</p><h2><a name='header-n228' class='md-header-anchor '></a>4.3 合约标记</h2><p>BCBChain智能合约代码采用标记法在合约代码的注释中对合约的元数据进行描述。</p><p>下面为BCBChain智能合约所使用的各种标记的详细语法描述。</p><h3><a name='header-n231' class='md-header-anchor '></a>4.3.1 contract</h3><p>标记<code>contract</code>用于标识合约名称，同一组织之下的合约名称必须唯一，请智能合约的开发者进行合理的规划。</p><p>标记<code>contract</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>contract</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n235" mdtype="fences">&lt;contract标记语法&gt; ::= "//@:contract:" &lt;合约名称&gt;
 &lt;合约名称&gt; ::= &lt;字母&gt; | &lt;合约名称&gt; &lt;字母数字串&gt;
 &lt;字母数字串&gt; ::= &lt;字母&gt; | &lt;十进制数字&gt; | &lt;字母数字串&gt; &lt;字母&gt; | &lt;字母数字串&gt; &lt;十进制数字&gt; 
 &lt;字母&gt; ::= "_" | "-" | "." | &lt;小写字母&gt; | &lt;大写字母&gt; 
@@ -688,7 +744,7 @@ func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
               "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | 
               "Y" | "Z" 
 &lt;十进制数字&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
-</pre><p>标记<code>contract</code>之后的有效代码必须紧跟一个包含<code>sdk.ISmartContract</code>成员的合约类定义，这个合约类为智能合约的上下文环境，每次针对智能合约的消息调用都会自动创建这个合约类的一个实例，在这个实例上调用智能合约的方法。智能合约对外提供的方法必须属于这个类的成员函数。类名首字母必须大写。</p><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n259" mdtype="fences">//@:contract:mycoin
+</pre><p>标记<code>contract</code>之后的有效代码必须紧跟一个包含<code>sdk.ISmartContract</code>成员的合约类定义，这个合约类为智能合约的上下文环境，每次针对智能合约的消息调用都会自动创建这个合约类的一个实例，在这个实例上调用智能合约的方法。智能合约对外提供的方法必须属于这个类的成员函数。类名首字母必须大写。</p><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n238" mdtype="fences">//@:contract:mycoin
 type Mycoin struct {
 	sdk sdk.ISmartContract
 
@@ -698,15 +754,15 @@ type Mycoin struct {
 	//@:public:store
 	balanceOf map[types.Address]bn.Number
 }
-</pre><p>&nbsp;</p><h3><a name='header-n261' class='md-header-anchor '></a>4.3.2 version</h3><p>标记<code>version</code>用于标识合约的版本，在整个合约代码中只能出现一次。</p><p>标记<code>version</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>version</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n265" mdtype="fences">&lt;version标记语法&gt; ::= "//@:version:" &lt;合约版本&gt;
+</pre><p>&nbsp;</p><h3><a name='header-n240' class='md-header-anchor '></a>4.3.2 version</h3><p>标记<code>version</code>用于标识合约的版本，在整个合约代码中只能出现一次。</p><p>标记<code>version</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>version</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n244" mdtype="fences">&lt;version标记语法&gt; ::= "//@:version:" &lt;合约版本&gt;
 &lt;合约版本&gt; ::= &lt;十进制数&gt; |
               &lt;十进制数&gt; "." &lt;十进制数&gt; |
               &lt;十进制数&gt; "." &lt;十进制数&gt; "." &lt;十进制数&gt; |
               &lt;十进制数&gt; "." &lt;十进制数&gt; "." &lt;十进制数&gt; "." &lt;十进制数&gt;
 &lt;十进制数&gt; ::= &lt;十进制数字&gt; | &lt;十进制数&gt; &lt;十进制数字&gt;
 &lt;十进制数字&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n267" mdtype="fences">//@:version:1.0
-</pre><p>注：BCBChain链不要求智能合约版本的具体规则，即合约版本既可以采用一段式（例如1、2、3），也可以采用两段式（1.0、1.1、1.2）、三段式（1.0.1、1.0.2、1.0.3）、四段式（1.0.1.102、1.0.1.103），但是同一智能合约的不同版本需要保持版本格式段数的一致性。</p><p>&nbsp;</p><h3><a name='header-n270' class='md-header-anchor '></a>4.3.3 organization</h3><p>标记<code>organization</code>用于标识合约所属组织机构的ID。</p><p>标记<code>organization</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>organization</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n274" mdtype="fences">&lt;organization标记语法&gt; ::= "//@:organization:" &lt;组织ID&gt;
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n246" mdtype="fences">//@:version:1.0
+</pre><p>注：BCBChain链不要求智能合约版本的具体规则，即合约版本既可以采用一段式（例如1、2、3），也可以采用两段式（1.0、1.1、1.2）、三段式（1.0.1、1.0.2、1.0.3）、四段式（1.0.1.102、1.0.1.103），但是同一智能合约的不同版本需要保持版本格式段数的一致性。</p><p>&nbsp;</p><h3><a name='header-n249' class='md-header-anchor '></a>4.3.3 organization</h3><p>标记<code>organization</code>用于标识合约所属组织机构的ID。</p><p>标记<code>organization</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>organization</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n253" mdtype="fences">&lt;organization标记语法&gt; ::= "//@:organization:" &lt;组织ID&gt;
 &lt;组织ID&gt; ::= &lt;前缀码&gt; &lt;Base58字符串&gt;
 &lt;前缀码&gt; ::= "org"
 &lt;Base58字符串&gt; ::= &lt;Base58字符&gt; | &lt;Base58字符串&gt; &lt;Base58字符&gt;
@@ -717,16 +773,16 @@ type Mycoin struct {
 &lt;小写字母&gt; ::= "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "m" |
               "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" |
               "z" 
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n276" mdtype="fences">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
-</pre><p>&nbsp;</p><h3><a name='header-n278' class='md-header-anchor '></a>4.3.4 author</h3><p>标记<code>author</code>用于标识合约作者的账户公钥。</p><p>标记<code>author</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>author</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n282" mdtype="fences">&lt;author标记语法&gt; ::= "//@:author:" &lt;账户公钥&gt;
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n255" mdtype="fences">//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+</pre><p>&nbsp;</p><h3><a name='header-n257' class='md-header-anchor '></a>4.3.4 author</h3><p>标记<code>author</code>用于标识合约作者的账户公钥。</p><p>标记<code>author</code>为必须标记，但在整个合约代码中只能出现一次。</p><p>标记<code>author</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n261" mdtype="fences">&lt;author标记语法&gt; ::= "//@:author:" &lt;账户公钥&gt;
 &lt;账户公钥&gt; ::= &lt;十六进制字符串&gt;
 &lt;十六进制字符串&gt; ::= &lt;十六进制数字&gt; | &lt;十六进制字符串&gt; &lt;十六进制数字&gt;
 &lt;十六进制数字&gt; ::= "0" | 1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9" |
                  "A" | "B" | "C" | "D" | "E" | "F" |
                  "a" | "b" | "c" | "d" | "e" | "f"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n284" mdtype="fences">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
-</pre><p>注：十六进制公钥字符串长度必须等于64。</p><p>&nbsp;</p><h3><a name='header-n287' class='md-header-anchor '></a>4.3.5 constructor</h3><p>标记<code>constructor</code>用于标识合约的上链初始化函数。</p><p>标记<code>constructor</code>之后的有效代码必须紧跟一个名为<code>InitChain</code> 或 <code>UpdateChain</code> 的无参数函数，该函数将在BCBChain链上第一次部署(<code>InitChain</code>)或者升级(<code>UpdateChain</code>)这个合约的时候自动进行唯一一次调用，以完成智能合约在区块链上的初始化工作，例如初始化某些全局状态数据的初始值。</p><p>标记<code>constructor</code>为可选标记，但在整个合约代码中最多只能出现两次，一次标识 <code>InitChain</code> 函数，一次标识 <code>UpdateChain</code>函数。</p><p>标记<code>constructor</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n292" mdtype="fences">&lt;author标记语法&gt; ::= "//@:constructor"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n294" mdtype="fences">//@:constructor
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n263" mdtype="fences">//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+</pre><p>注：十六进制公钥字符串长度必须等于64。</p><p>&nbsp;</p><h3><a name='header-n266' class='md-header-anchor '></a>4.3.5 constructor</h3><p>标记<code>constructor</code>用于标识合约的上链初始化函数。</p><p>标记<code>constructor</code>之后的有效代码必须紧跟一个名为<code>InitChain</code> 或 <code>UpdateChain</code> 的无参数函数，该函数将在BCBChain链上第一次部署(<code>InitChain</code>)或者升级(<code>UpdateChain</code>)这个合约的时候自动进行唯一一次调用，以完成智能合约在区块链上的初始化工作，例如初始化某些全局状态数据的初始值。</p><p>标记<code>constructor</code>为可选标记，但在整个合约代码中最多只能出现两次，一次标识 <code>InitChain</code> 函数，一次标识 <code>UpdateChain</code>函数。</p><p>标记<code>constructor</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n271" mdtype="fences">&lt;author标记语法&gt; ::= "//@:constructor"
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n273" mdtype="fences">//@:constructor
 func (mc *Mycoin) InitChain() {
 	...
 }
@@ -735,15 +791,15 @@ func (mc *Mycoin) InitChain() {
 func (mc *Mycoin) UpdateChain() {
 	...
 }
-</pre><p>&nbsp;</p><h3><a name='header-n296' class='md-header-anchor '></a>4.3.6 public:store</h3><p>标记<code>public:store</code>用于标识一个状态变量，状态变量必须是通过标记<code>contract</code>标注的合约类的成员变量。</p><p>标记<code>public:store</code>之后的有效代码必须紧跟一个成员变量的定义。</p><p>标记<code>public:store</code>为可选标记，在合约类定义中可以出现多次，每次标识一个状态变量。</p><p>标记<code>public:store</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n301" mdtype="fences">&lt;public:store标记语法&gt; ::= "//@:public:store"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n303" mdtype="fences">//@:contract:mycoin
+</pre><p>&nbsp;</p><h3><a name='header-n275' class='md-header-anchor '></a>4.3.6 public:store</h3><p>标记<code>public:store</code>用于标识一个状态变量，状态变量必须是通过标记<code>contract</code>标注的合约类的成员变量。</p><p>标记<code>public:store</code>之后的有效代码必须紧跟一个成员变量的定义。</p><p>标记<code>public:store</code>为可选标记，在合约类定义中可以出现多次，每次标识一个状态变量。</p><p>标记<code>public:store</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n280" mdtype="fences">&lt;public:store标记语法&gt; ::= "//@:public:store"
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n282" mdtype="fences">//@:contract:mycoin
 type Mycoin struct {
 	sdk sdk.ISmartContract
 	...
 	//@:public:store
 	balanceOf map[types.Address]bn.Number
 }
-</pre><p>标记<code>public:store</code>标识的状态变量在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain链提供的SDK配套工具会自动生成访问该状态变量的读写函数，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n305" mdtype="fences" style="break-inside: unset;">//读取状态变量balanceOf的函数
+</pre><p>标记<code>public:store</code>标识的状态变量在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain链提供的SDK配套工具会自动生成访问该状态变量的读写函数，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n284" mdtype="fences" style="break-inside: unset;">//读取状态变量balanceOf的函数
 func (mc *Mycoin) _balanceOf(k types.Address) bn.Number {
 	return *mc.sdk.Helper().StateHelper().GetEx(
 	    fmt.Sprintf("/balanceOf/%v", k), &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
@@ -763,15 +819,15 @@ func (mc *Mycoin) _setBalanceOf(k types.Address, v bn.Number) {
 func (mc *Mycoin) _delBalanceOf(k types.Address) {
 	mc.sdk.Helper().StateHelper().Delete(fmt.Sprintf("/balanceOf/%v", k))
 } 
-</pre><p>&nbsp;</p><h3><a name='header-n307' class='md-header-anchor '></a>4.3.7 public:store:cache</h3><p>标记<code>public:store:cache</code>用于标识一个可缓存在内存的状态变量，状态变量必须是通过标记<code>contract</code>标注的合约类的成员变量。</p><p>标记<code>public:store:cache</code>之后的有效代码必须紧跟一个成员变量的定义。</p><p>标记<code>public:store:cache</code>为可选标记，在合约类定义中可以出现多次，每次标识一个状态变量。</p><p>标记<code>public:store:cache</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n312" mdtype="fences">&lt;public:store:cache标记语法&gt; ::= "//@:public:store:cache"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n314" mdtype="fences">//@:contract:mycoin
+</pre><p>&nbsp;</p><h3><a name='header-n286' class='md-header-anchor '></a>4.3.7 public:store:cache</h3><p>标记<code>public:store:cache</code>用于标识一个可缓存在内存的状态变量，状态变量必须是通过标记<code>contract</code>标注的合约类的成员变量。</p><p>标记<code>public:store:cache</code>之后的有效代码必须紧跟一个成员变量的定义。</p><p>标记<code>public:store:cache</code>为可选标记，在合约类定义中可以出现多次，每次标识一个状态变量。</p><p>标记<code>public:store:cache</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n291" mdtype="fences">&lt;public:store:cache标记语法&gt; ::= "//@:public:store:cache"
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n293" mdtype="fences">//@:contract:mycoin
 type Mycoin struct {
 	sdk sdk.ISmartContract
 	...
 	//@:public:store:cache
 	totalSupply bn.Number
 }
-</pre><p>可缓存的状态变量在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成访问该状态变量的读写函数，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n316" mdtype="fences" style="break-inside: unset;">//读取状态变量totalSupply的函数
+</pre><p>可缓存的状态变量在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成访问该状态变量的读写函数，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n295" mdtype="fences" style="break-inside: unset;">//读取状态变量totalSupply的函数
 func (mc *Mycoin) _totalSupply() bn.Number {
 	return *mc.sdk.Helper().StateHelper().McGetEx(
 	    "/totalSupply", &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
@@ -796,12 +852,12 @@ func (mc *Mycoin) _clrTotalSupply() {
 func (m *Mycoin) _delTotalSupply() {
 	m.sdk.Helper().StateHelper().McDelete("/totalSupply")
 } 
-</pre><p>&nbsp;</p><h3><a name='header-n318' class='md-header-anchor '></a>4.3.8 public:receipt</h3><p>标记<code>public:receipt</code>用于标识合约中所有收据的定义。</p><p>标记<code>public:receipt</code>之后的有效代码必须紧跟一个名为<code>receipt</code>的接口定义。</p><p>标记<code>public:receipt</code>为可选标记，在整个合约代码中最多只能出现一次。</p><p>标记<code>public:receipt</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n323" mdtype="fences">&lt;public:receipt标记语法&gt; ::= "//@:public:receipt"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n325" mdtype="fences">//@:public:receipt
+</pre><p>&nbsp;</p><h3><a name='header-n297' class='md-header-anchor '></a>4.3.8 public:receipt</h3><p>标记<code>public:receipt</code>用于标识合约中所有收据的定义。</p><p>标记<code>public:receipt</code>之后的有效代码必须紧跟一个名为<code>receipt</code>的接口定义。</p><p>标记<code>public:receipt</code>为可选标记，在整个合约代码中最多只能出现一次。</p><p>标记<code>public:receipt</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n302" mdtype="fences">&lt;public:receipt标记语法&gt; ::= "//@:public:receipt"
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n304" mdtype="fences">//@:public:receipt
 type receipt interface {
 	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
 }
-</pre><p>接口<code>receipt</code>之中定义的每一个发送收据的方法必须以<code>emit</code>开头。<code>emit</code>之后的第一个单词首字母转为小写后就是这个收据的名称，可以根据收据名称到BCBChain链上进行检索。根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成发送收据函数的实现代码，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n327" mdtype="fences" style="break-inside: unset;">//下面的函数是由配套工具自动生成的
+</pre><p>接口<code>receipt</code>之中定义的每一个发送收据的方法必须以<code>emit</code>开头。<code>emit</code>之后的第一个单词首字母转为小写后就是这个收据的名称，可以根据收据名称到BCBChain链上进行检索。根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成发送收据函数的实现代码，示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n306" mdtype="fences" style="break-inside: unset;">//下面的函数是由配套工具自动生成的
 func (mc *Mycoin) emitTransferMyCoin(token, from, to types.Address, value bn.Number) {
 	type transferMyCoin struct {
 		Token types.Address `json:"token"`
@@ -831,33 +887,33 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 		to,
 		value)
 }
-</pre><p>&nbsp;</p><h3><a name='header-n329' class='md-header-anchor '></a>4.3.9 public:method</h3><p>标记<code>public:method</code>用于标识合约的公开方法。</p><p>标记<code>public:method</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（函数名称必须由大写字母开头），这个合约的成员函数可以通过BCBChain链的广播交易来执行。</p><p>标记<code>public:method</code>为可选标记，在整个合约代码中可以出现零次、一次或多次。</p><p>标记<code>public:method</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n334" mdtype="fences">&lt;public:method标记语法&gt; ::= "//@:public:method:gas[" &lt;燃料数量&gt; "]"
+</pre><p>&nbsp;</p><h3><a name='header-n308' class='md-header-anchor '></a>4.3.9 public:method</h3><p>标记<code>public:method</code>用于标识合约的公开方法。</p><p>标记<code>public:method</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（函数名称必须由大写字母开头），这个合约的成员函数可以通过BCBChain链的广播交易来执行。</p><p>标记<code>public:method</code>为可选标记，在整个合约代码中可以出现零次、一次或多次。</p><p>标记<code>public:method</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n313" mdtype="fences">&lt;public:method标记语法&gt; ::= "//@:public:method:gas[" &lt;燃料数量&gt; "]"
 &lt;燃料数量&gt; ::= ["-"] &lt;十进制数&gt;
 &lt;十进制数&gt; ::= &lt;十进制数字&gt; | &lt;十进制数&gt; &lt;十进制数字&gt;
 &lt;十进制数字&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
-</pre><p>注：</p><ul><li>燃料数量为正整数表示该方法调用消耗的燃料费用由交易最初的发起者支付；</li><li>燃料数量为0表示不需要支付手续费；</li><li>燃料数量为负整数表示该方法调用消耗的燃料费用由当前智能合约的账户进行支付。</li></ul><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n344" mdtype="fences">//@:public:method:gas[500]
+</pre><p>注：</p><ul><li>燃料数量为正整数表示该方法调用消耗的燃料费用由交易最初的发起者支付；</li><li>燃料数量为0表示不需要支付手续费；</li><li>燃料数量为负整数表示该方法调用消耗的燃料费用由当前智能合约的账户进行支付。</li></ul><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n323" mdtype="fences">//@:public:method:gas[500]
 func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 	...
 }
-</pre><p>&nbsp;</p><h3><a name='header-n346' class='md-header-anchor '></a>4.3.10 public:interface</h3><p>标记<code>public:interface</code>用于标识合约的公开接口。</p><p>标记<code>public:interface</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（函数名称必须由大写字母开头），这个合约的成员函数可以从别的合约通过跨合约调用机制来执行。</p><p>标记<code>public:interface</code>为可选标记，在整个合约代码中可以出现零次、一次或多次。</p><p>标记<code>public:interface</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n351" mdtype="fences">&lt;public:interface标记语法&gt; ::= "//@:public:interface:gas[" &lt;燃料数量&gt; "]"
+</pre><p>&nbsp;</p><h3><a name='header-n325' class='md-header-anchor '></a>4.3.10 public:interface</h3><p>标记<code>public:interface</code>用于标识合约的公开接口。</p><p>标记<code>public:interface</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（函数名称必须由大写字母开头），这个合约的成员函数可以从别的合约通过跨合约调用机制来执行。</p><p>标记<code>public:interface</code>为可选标记，在整个合约代码中可以出现零次、一次或多次。</p><p>标记<code>public:interface</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n330" mdtype="fences">&lt;public:interface标记语法&gt; ::= "//@:public:interface:gas[" &lt;燃料数量&gt; "]"
 &lt;燃料数量&gt; ::= &lt;十进制数&gt;
 &lt;十进制数&gt; ::= &lt;十进制数字&gt; | &lt;十进制数&gt; &lt;十进制数字&gt;
 &lt;十进制数字&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n353" mdtype="fences">//@:public:interface:gas[450]
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n332" mdtype="fences">//@:public:interface:gas[450]
 func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 	...
 }
-</pre><p>注：</p><ul><li>燃料数量大于等于0。</li></ul><p>标记<code>public:interface</code>标记<code>public:method</code>可以同时标注合约类的同一个成员函数，上面的例子实际上应该定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n359" mdtype="fences">//@:public:method:gas[500]
+</pre><p>注：</p><ul><li>燃料数量大于等于0。</li></ul><p>标记<code>public:interface</code>标记<code>public:method</code>可以同时标注合约类的同一个成员函数，上面的例子实际上应该定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n338" mdtype="fences">//@:public:method:gas[500]
 //@:public:interface:gas[450]
 func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 	...
 }
-</pre><p>&nbsp;</p><h3><a name='header-n361' class='md-header-anchor '></a>4.3.11 public:mine</h3><p>标记<code>public:mine</code>用于标识合约公开的挖矿接口。</p><p>标记<code>public:mine</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（挖矿函数原型必须为：<code>func Mine()</code>），这个挖矿函数将在 BCBChain 的区块达成共识后自动执行。</p><p>标记<code>public:mine</code>为可选标记，在整个合约代码中可以出现零次或一次。只有 BCBChain 的基础组织的智能合约才允许包含挖矿接口。</p><p>标记<code>public:mine</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n366" mdtype="fences">&lt;public:interface标记语法&gt; ::= "//@:public:mine"
-</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n368" mdtype="fences">//@:public:mine
-func (mc *Mycoin) Mine() {
+</pre><p>&nbsp;</p><h3><a name='header-n340' class='md-header-anchor '></a>4.3.11 public:mine</h3><p>标记<code>public:mine</code>用于标识合约公开的挖矿接口。</p><p>标记<code>public:mine</code>之后的有效代码必须紧跟一个针对通过标记<code>contract</code>标注的合约类的成员函数定义（挖矿函数原型必须为：<code>func Mine() int64</code>），这个挖矿函数将在 BCBChain 的区块达成共识后自动执行。</p><p>标记<code>public:mine</code>为可选标记，在整个合约代码中可以出现零次或一次。只有 BCBChain 的基础组织的智能合约才允许包含挖矿接口。</p><p>标记<code>public:mine</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n345" mdtype="fences">&lt;public:interface标记语法&gt; ::= "//@:public:mine"
+</pre><p>示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n347" mdtype="fences">//@:public:mine
+func (mc *Mycoin) Mine() int64 {
 	...
 }
-</pre><p>注：</p><ul><li>挖矿函数 <code>Mine()</code> 只能与标记 <code>public:mine</code>  进行配合。</li></ul><p>&nbsp;</p><h3><a name='header-n375' class='md-header-anchor '></a>4.3.12 import</h3><p>标记<code>import</code>用于导入一个外部合约的接口原型，方便在当前合约中调用外部合约。</p><p>标记<code>import</code>为可选标记，在整个合约代码中可以出现多次，每次导入一个外部合约的跨合约调用接口，每一个外部合约只能导入一次。</p><p>标记<code>import</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n379" mdtype="fences">&lt;import标记语法&gt; ::= "//@:import:" &lt;合约名称&gt;
+</pre><p>注：</p><ul><li>挖矿函数 <code>Mine()</code> 只能与标记 <code>public:mine</code>  进行配合。</li></ul><p>&nbsp;</p><h3><a name='header-n354' class='md-header-anchor '></a>4.3.12 import</h3><p>标记<code>import</code>用于导入一个外部合约的接口原型，方便在当前合约中调用外部合约。</p><p>标记<code>import</code>为可选标记，在整个合约代码中可以出现多次，每次导入一个外部合约的跨合约调用接口，每一个外部合约只能导入一次。</p><p>标记<code>import</code>的BNF范式定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n358" mdtype="fences">&lt;import标记语法&gt; ::= "//@:import:" &lt;合约名称&gt;
 &lt;合约名称&gt; ::= &lt;字母&gt; | &lt;合约名称&gt; &lt;字母数字串&gt;
 &lt;字母数字串&gt; ::= &lt;字母&gt; | &lt;十进制数字&gt; | &lt;字母数字串&gt; &lt;字母&gt; | &lt;字母数字串&gt; &lt;十进制数字&gt; 
 &lt;字母&gt; ::= "_" | "-" | "." | &lt;小写字母&gt; | &lt;大写字母&gt; 
@@ -868,13 +924,13 @@ func (mc *Mycoin) Mine() {
               "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | 
               "Y" | "Z" 
 &lt;十进制数字&gt; ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | 8 | "9"
-</pre><p>以前面的<code>mycoin</code>代币合约为例，如果在其它合约中需要调用该合约，需要编写如下代码：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n381" mdtype="fences">//本段代码在合约mycontract中
+</pre><p>以前面的<code>mycoin</code>代币合约为例，如果在其它合约中需要调用该合约，需要编写如下代码：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n360" mdtype="fences">//本段代码在合约mycontract中
 
 //@:import:mycoin
 type mycoin interface {
 	Transfer(to types.Address, value bn.Number)
 }
-</pre><p>外部合约的接口名称自定义，只要遵循golang语法规范即可。</p><p>外部合约的接口在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成访问该外部合约接口的实现函数，自动生成的代码示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n384" mdtype="fences">//本段代码是由SDK配套工具自动生成的
+</pre><p>外部合约的接口名称自定义，只要遵循golang语法规范即可。</p><p>外部合约的接口在合约代码中不能直接访问，根据BCBChain合约规范，BCBChain提供的SDK配套工具会自动生成访问该外部合约接口的实现函数，自动生成的代码示例如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n363" mdtype="fences" style="break-inside: unset;">//本段代码是由SDK配套工具自动生成的
 
 //mycoin This is method of MyContract 
 func (m *MyContract) mycoin() *InterfacemycoinStub {
@@ -885,18 +941,74 @@ func (m *MyContract) mycoin() *InterfacemycoinStub {
 func (is *InterfacemycoinStub) Transfer(to types.Address, value bn.Number) {
 	return
 }
-</pre><p>下面是在合约代码中调用外部合约的示例代码：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n386" mdtype="fences">//本段代码在合约mycontract中
+
+//run Transfer some receipts to destination contract
+func (is *InterfacemycoinStub) run(f func()) (*InterfacemycoinStub) {
+	...
+	f()
+	...
+	return is
+}
+
+//contract Wrap the destination contract information
+func (is *InterfacemycoinStub) contract() IContract {
+	...
+	return contract
+}
+</pre><p>下面是在合约代码中调用外部合约的示例代码：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n365" mdtype="fences">//本段代码在合约mycontract中
 
 func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 	m.mycoin().Transfer(to, value)
 }
-</pre><p>&nbsp;</p><h2><a name='header-n388' class='md-header-anchor '></a>4.4 合约规范</h2><h3><a name='header-n389' class='md-header-anchor '></a>4.4.1 BNF范式定义</h3><p>综合上面对合约标记的描述，下面定义合约规范的BNF范式：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n391" mdtype="fences" style="break-inside: unset;">&lt;BCBChain智能合约&gt; ::= &lt;合约定义代码文件&gt; {&lt;合约实现代码文件&gt;} {&lt;合约测试代码文件&gt;}
+</pre><p>跨合约调用还支持向被调用合约传递收据，以下为示例代码（从合约 contract2 中调用合约 contract1 的接口）：</p><blockquote><p>合约1，提供跨合约接口服务：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n369" mdtype="fences" style="break-inside: unset;">//@:contract:contract1
+type C1 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:public:interface:gas[450]
+func (c *C1) Register() {
+
+//I need receipt from caller
+transfers := dw.sdk.Message().GetTransferToMe()
+sdk.Require(transfers!=nil &amp;&amp; len(transfers)==1,
+ types.ErrInvalidParameter, "Please transfer to me first")
+
+token := transfers[0].Token
+value := transfers[0].Value
+
+...
+}
+</pre><p>合约2，跨合约调用者：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n371" mdtype="fences" style="break-inside: unset;">//@:contract:contract2
+type C2 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:import:contract1
+type mycoin interface {
+	Register()
+}
+
+//@:public:method:gas[450]
+func (c *C2) Register() {
+...
+c.contract1().run(func(){
+ c.sdk.Message().Contract().Account.TransferByName(
+   "bcb",
+   c.contract1().contract().Account().Address(),
+   bn.N(1000000000),
+ )
+}).Register()
+...
+}
+</pre></blockquote><p>&nbsp;</p><h2><a name='header-n373' class='md-header-anchor '></a>4.4 合约规范</h2><h3><a name='header-n374' class='md-header-anchor '></a>4.4.1 BNF范式定义</h3><p>综合上面对合约标记的描述，下面定义合约规范的BNF范式：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n376" mdtype="fences" style="break-inside: unset;">&lt;智能合约&gt; ::= &lt;合约定义代码文件&gt; {&lt;合约实现代码文件&gt;} {&lt;合约测试代码文件&gt;}
 
 &lt;合约定义代码文件&gt; ::= &lt;代码包定义&gt; &lt;合约定义代码&gt;
 &lt;合约实现代码文件&gt; ::= &lt;代码包定义&gt; &lt;合约实现代码&gt;
 &lt;合约测试代码文件&gt; ::= &lt;代码包定义&gt; &lt;合约测试代码&gt;
 &lt;代码包定义&gt; ::= "package" &lt;合约包名&gt;
-&lt;合约包名&gt; ::= 遵循glang语法规范
+&lt;合约包名&gt; ::= 遵循glang语法规范，但不能为 std
 &lt;合约定义代码&gt; ::= "import ("
                      &lt;合约SDK包根路径&gt;
                      {[包别名] &lt;合约支撑代码包路径&gt;}
@@ -910,7 +1022,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
                  {&lt;合约实现代码&gt;}
 &lt;合约SDK包根路径&gt; ::= double_quote "blockchain/smcsdk/sdk" double_quote
 &lt;合约支撑代码包路径&gt; ::= 遵循golang代码包路径规范，遵循BCBChain合约规范的白名单与灰名单规范
-&lt;包别名&gt; ::= 遵循golang代码规范的代码包别名
+&lt;包别名&gt; ::= 遵循golang代码规范的代码包别名，不允许使用 '.'
 &lt;合约实现代码&gt; ::= 遵循golang代码规范的合约实现代码（不需要BCBChain合约标记的代码），包括类型定义、
                  常量定义、函数定义（注：不能包含全局变量定义，不允许使用 for 关键字，不允许递归
                  调用）
@@ -935,7 +1047,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 &lt;基本状态变量定义&gt; ::= "//@:public:store"
                    	 &lt;变量名称&gt; ["*"] &lt;变量类型&gt;
 &lt;带缓存的状态变量定义&gt; ::= "//@:public:store:cache"
-                   	    &lt;变量名称&gt; &lt;变量类型&gt;
+                   	    &lt;变量名称&gt; ["*"] &lt;变量类型&gt;
 &lt;变量名称&gt; ::= &lt;标识符&gt;
 &lt;变量类型&gt; ::= &lt;元数据类型&gt; | &lt;数组类型&gt; | &lt;映射表类型&gt;
 
@@ -948,8 +1060,8 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
               "func (" &lt;合约对象定义&gt; ") UpdateChain() {"
                 &lt;上链代码&gt;
               "}"
-&lt;挖矿定义&gt; ::= "//@:mine"
-              "func (" &lt;合约对象定义&gt; ") Mine() {"
+&lt;挖矿定义&gt; ::= "//@:public:mine"
+              "func (" &lt;合约对象定义&gt; ") Mine() int64 {"
                 &lt;挖矿代码&gt;
               "}"
 &lt;合约对象定义&gt; ::= &lt;变量名称&gt; "*" &lt;合约类名&gt;
@@ -957,7 +1069,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
               注1：只允许访问状态变量
               注2：sdk中不允许访问Message()和Tx()
 &lt;挖矿代码&gt; ::= &lt;golang函数体&gt;
-              注1：sdk中不允许访问Tx()                   
+              注1：sdk中不允许访问Message()和Tx()
 &lt;golang函数体&gt; ::= 遵循golang代码规范的函数体实现代码，参见 &lt;合约实现代码&gt; 的定义
 
 &lt;合约收据定义&gt; ::= "//@:public:receipt"
@@ -1022,7 +1134,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 &lt;映射表类型1&gt; ::= &lt;映射表定义&gt; [&lt;映射表定义&gt;] &lt;元数据类型&gt;
 &lt;映射表类型2&gt; ::= &lt;映射表定义&gt; [&lt;映射表定义&gt;] &lt;数组类型&gt;
 &lt;映射表定义&gt; ::= "map[" &lt;元数据类型&gt; "]"
-</pre><p>&nbsp;</p><h3><a name='header-n393' class='md-header-anchor '></a>4.4.2 包结构规范</h3><p>下面定义合约包结构的BNF范式：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n395" mdtype="fences">&lt;智能合约包结构&gt; ::= &lt;合约定义代码文件&gt; {&lt;合约实现代码文件&gt;} {&lt;合约测试代码文件&gt;}
+</pre><p>&nbsp;</p><h3><a name='header-n378' class='md-header-anchor '></a>4.4.2 包结构规范</h3><p>下面定义合约包结构的BNF范式：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n380" mdtype="fences">&lt;智能合约包结构&gt; ::= &lt;合约定义代码文件&gt; {&lt;合约实现代码文件&gt;} {&lt;合约测试代码文件&gt;}
 &lt;合约定义代码文件&gt; ::= &lt;合约代码目录&gt; "/" &lt;golang实现代码文件名&gt;
 &lt;合约实现代码文件&gt; ::= &lt;合约代码目录&gt; "/" &lt;golang实现代码文件名&gt;
 &lt;合约测试代码文件&gt; ::= &lt;合约代码目录&gt; "/" &lt;golang测试代码文件名&gt;
@@ -1035,7 +1147,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 &lt;任意文件名&gt; ::= &lt;合法文件名&gt;|&lt;非法文件名&gt;
 &lt;非法文件名&gt; ::= [&lt;合法文件名&gt;] "autogen" [&lt;合法文件名&gt;] | &lt;任意文件名&gt; "_test"
 &lt;合法文件名&gt; ::= 排除&lt;非法文件名&gt;以后所有操作系统认可作为文件名的字符串
-</pre><p>注：规范定义中出现的空白符间隔仅为排版需要，不作为规范的一部分。</p><p>&nbsp;</p><h3><a name='header-n398' class='md-header-anchor '></a>4.4.3 白名单列表</h3><p>出于安全考虑，BCBChain智能合约限制为只允许导入行为明确且不会导致不同节点运行结果不一致的代码支撑包。这样的包包含在白名单列表中。</p><p>白名单列表中支持的代码包在智能合约中可以放心的使用。</p><p>白名单与灰名单的具体内容随智能合约SDK及配套的BCBChain插件版本升级将会有所不同，详细信息请参见智能合约SDK及配套的BCBChain插件的相关文件。</p><p>下面是第一版白名单列表：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n403" mdtype="fences" style="break-inside: unset;">//以下为可用的 golang 标识包
+</pre><p>注：规范定义中出现的空白符间隔仅为排版需要，不作为规范的一部分。</p><p>&nbsp;</p><h3><a name='header-n383' class='md-header-anchor '></a>4.4.3 白名单列表</h3><p>出于安全考虑，BCBChain智能合约限制为只允许导入行为明确且不会导致不同节点运行结果不一致的代码支撑包。这样的包包含在白名单列表中。</p><p>白名单列表中支持的代码包在智能合约中可以放心的使用。</p><p>白名单与灰名单的具体内容随智能合约SDK及配套的BCBChain插件版本升级将会有所不同，详细信息请参见智能合约SDK及配套的BCBChain插件的相关文件。</p><p>下面是第一版白名单列表：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n388" mdtype="fences" style="break-inside: unset;">//以下为可用的 golang 标识包
 bytes
 container/heap
 container/list
@@ -1086,7 +1198,7 @@ unicode/utf8
 
 //以下为 SDK 提供的标准包
 blockchain/smcsdk/sdk
-</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n406' class='md-header-anchor '></a>4.5 BRC20代币</h2><p>本指南第2.1.2节发布的智能合约“代币”是一个演示性的代币合约，不是符合BCBChain标准的BRC20代币。</p><p>BCBChain的用户可以自己编写智能合约发行符合BRC20代币规范的代币。本节定义符合BRC20代币规范的智能合约。</p><p>规范描述如下：</p><ul><li><p>合约必须明确调用智能合约SDK提供的接口<code>ITokenHelper::RegisterToken(...)</code>向BCBChain注册一个新的代币（每个智能合约能且只能注册一个代币）；</p></li><li><p>合约注册代币会自动在BCBChain上记录一条标准的代币生成收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n415" mdtype="fences" style="break-inside: unset;">import (
+</pre><p>&nbsp;</p><div style="page-break-after: always;"></div><h2><a name='header-n391' class='md-header-anchor '></a>4.5 BRC20代币</h2><p>本指南第2.1.2节发布的智能合约“代币”是一个演示性的代币合约，不是符合BCBChain标准的BRC20代币。</p><p>BCBChain的用户可以自己编写智能合约发行符合BRC20代币规范的代币。本节定义符合BRC20代币规范的智能合约。</p><p>规范描述如下：</p><ul><li><p>合约必须明确调用智能合约SDK提供的接口<code>ITokenHelper::RegisterToken(...)</code>向BCBChain注册一个新的代币（每个智能合约能且只能注册一个代币）；</p></li><li><p>合约注册代币会自动在BCBChain上记录一条标准的代币生成收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n400" mdtype="fences" style="break-inside: unset;">import (
     "blockchain/smcsdk/sdk/bn"
     "blockchain/smcsdk/sdk/types"
 )
@@ -1103,7 +1215,7 @@ type NewToken struct {
     BurnEnabled      bool        `json:"burnEnabled"`     // 代币是否支持燃烧
     GasPrice         int64       `json:"gasPrice"`        // 代币燃料价格（单位：cong）
 }
-</pre></li><li><p>合约必须实现本章定义的方法与接口。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n420' class='md-header-anchor '></a>4.5.1 Transfer</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n422" mdtype="fences">import (
+</pre></li><li><p>合约必须实现本章定义的方法与接口。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n405' class='md-header-anchor '></a>4.5.1 Transfer</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n407" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
     "blockchain/smcsdk/sdk/types"
 )
@@ -1111,7 +1223,7 @@ type NewToken struct {
 //@:public:method:gas[500]
 //@:public:interface:gas[450]
 Transfer(types.Address,bn.Number)
-</pre><p><strong>功能说明</strong></p><ul><li>执行代币转移功能。</li></ul><p><strong>实现说明</strong></p><ul><li>必须实现；</li><li>必须标记为<code>public:method</code>；</li><li>必须标记为<code>public:interface</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>允许任何人通过广播交易进行调用；</li><li>允许同组织的其它智能合约进行跨合约调用；</li><li>允许同组织的其它智能合约通过SDK提供的接口<code>IAccount::Transfer</code>直接调用（SDK底层自动进行跨合约调用）。</li></ul><p><strong>输入参数</strong></p><ul><li><p>_to<span>		</span>  types.Address<span>	</span>   代币接收方地址（可以是外部账户地址、合约账户地址、合约地址）</p><p>_value<span>	</span>bn.Number<span>			</span>转移的代币数额（单位：cong）</p><p>注：如果接收方地址是合约地址，会自动将接收到的代币转入该合约的账户地址。</p></li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币Transfer() 方法会自动在BCBChain上记录一条标准的代币转移收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n453" mdtype="fences">import (
+</pre><p><strong>功能说明</strong></p><ul><li>执行代币转移功能。</li></ul><p><strong>实现说明</strong></p><ul><li>必须实现；</li><li>必须标记为<code>public:method</code>；</li><li>必须标记为<code>public:interface</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>允许任何人通过广播交易进行调用；</li><li>允许同组织的其它智能合约进行跨合约调用；</li><li>允许同组织的其它智能合约通过SDK提供的接口<code>IAccount::Transfer</code>直接调用（SDK底层自动进行跨合约调用）。</li></ul><p><strong>输入参数</strong></p><ul><li><p>_to<span>		</span>  types.Address<span>	</span>   代币接收方地址（可以是外部账户地址、合约账户地址、合约地址）</p><p>_value<span>	</span>bn.Number<span>			</span>转移的代币数额（单位：cong）</p><p>注：如果接收方地址是合约地址，会自动将接收到的代币转入该合约的账户地址。</p></li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币Transfer() 方法会自动在BCBChain上记录一条标准的代币转移收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n438" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
     "blockchain/smcsdk/sdk/types"
 )
@@ -1123,13 +1235,13 @@ type Transfer struct {
     To         smc.Address  `json:"to"`         // 代币接收方地址
     Value      bn.Number    `json:"value"`      // 转移的代币数额（（单位：cong）
 }
-</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n455' class='md-header-anchor '></a>4.5.2 AddSupply</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n457" mdtype="fences">import (
+</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n440' class='md-header-anchor '></a>4.5.2 AddSupply</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n442" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
 )
 
 //@:public:method:gas[2400]
 AddSupply(bn.Number)
-</pre><p><strong>功能说明</strong></p><ul><li>为代币增加供应量。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>新增加的供应量（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币AddSupply() 方法会自动在BCBChain上记录一条标准的代币增发收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n480" mdtype="fences">import (
+</pre><p><strong>功能说明</strong></p><ul><li>为代币增加供应量。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>新增加的供应量（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币AddSupply() 方法会自动在BCBChain上记录一条标准的代币增发收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n465" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
     "blockchain/smcsdk/sdk/types"
 )
@@ -1140,13 +1252,13 @@ type AddSupply struct {
     Value       bn.Number     `json:"value"`       // 增发的供应量（单位：cong）
     TotalSupply bn.Number     `json:"totalSupply"` // 新的总供应量（单位：cong）
 }
-</pre></li><li><p>BRC20代币AddSupply() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n485' class='md-header-anchor '></a>4.5.3 Burn</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n487" mdtype="fences">import (
+</pre></li><li><p>BRC20代币AddSupply() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n470' class='md-header-anchor '></a>4.5.3 Burn</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n472" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
 )
 
 //@:public:method:gas[2400]
 Burn(bn.Number)
-</pre><p><strong>功能说明</strong></p><ul><li>燃烧代币的供应量。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>燃烧掉的供应量（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币Burn() 方法会自动在BCBChain上记录一条标准的代币燃烧收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n510" mdtype="fences">import (
+</pre><p><strong>功能说明</strong></p><ul><li>燃烧代币的供应量。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>bn.Number<span>	</span>燃烧掉的供应量（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币Burn() 方法会自动在BCBChain上记录一条标准的代币燃烧收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n495" mdtype="fences">import (
     "blockchain/smcsdk/sdk/bn"
     "blockchain/smcsdk/sdk/types"
 )
@@ -1157,9 +1269,9 @@ type Burn struct {
     Value       bn.Number     `json:"value"`       // 燃烧的供应量（单位：cong）
     TotalSupply bn.Number     `json:"totalSupply"` // 新的总供应量（单位：cong）
 }
-</pre></li><li><p>BRC20代币Burn() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n515' class='md-header-anchor '></a>4.5.4 SetGasPrice</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n517" mdtype="fences">//@:public:method:gas[2400]
+</pre></li><li><p>BRC20代币Burn() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h3><a name='header-n500' class='md-header-anchor '></a>4.5.4 SetGasPrice</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n502" mdtype="fences">//@:public:method:gas[2400]
 SetGasPrice(int64)
-</pre><p><strong>功能说明</strong></p><ul><li>设置燃料价格。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>int64<span>		</span>新的燃料价格（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币SetGasPrice() 方法会自动在BCBChain上记录一条标准的设置燃料价格收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n540" mdtype="fences">import (
+</pre><p><strong>功能说明</strong></p><ul><li>设置燃料价格。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_value<span>	</span>int64<span>		</span>新的燃料价格（单位：cong）。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币SetGasPrice() 方法会自动在BCBChain上记录一条标准的设置燃料价格收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n525" mdtype="fences">import (
     "blockchain/smcsdk/sdk/types"
 )
 
@@ -1168,13 +1280,13 @@ type SetGasPrice struct {
     Token    types.Address `json:"token"`    // 代币地址
     GasPrice int64         `json:"gasPrice"` // 燃料价格（单位：cong）
 }
-</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n542' class='md-header-anchor '></a>4.5.6 SetOwner</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n544" mdtype="fences">import (
+</pre></li></ul><div style="page-break-after: always;"></div><h3><a name='header-n527' class='md-header-anchor '></a>4.5.6 SetOwner</h3><p><strong>方法原型</strong></p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n529" mdtype="fences">import (
     "blockchain/smcsdk/sdk/types"
 )
 
 //@:public:method:gas[2400]
 SetOwner(types.Address)
-</pre><p><strong>功能说明</strong></p><ul><li>转移智能合约及代币的所有权。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_newOwner<span>	</span>types.Address<span>	</span>合约新的拥有者的外部账户地址。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币SetOwner() 方法会自动在BCBChain上记录一条标准的转移所有权收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n567" mdtype="fences">import (
+</pre><p><strong>功能说明</strong></p><ul><li>转移智能合约及代币的所有权。</li></ul><p><strong>实现说明</strong></p><ul><li>可选实现；</li><li>如果实现，必须标记为<code>public:method</code>。</li></ul><p><strong>调用说明</strong></p><ul><li>只有代币拥有者才能通过广播交易进行调用。</li></ul><p><strong>输入参数</strong></p><ul><li>_newOwner<span>	</span>types.Address<span>	</span>合约新的拥有者的外部账户地址。</li></ul><p><strong>输出收据</strong></p><ul><li><p>BRC20代币SetOwner() 方法会自动在BCBChain上记录一条标准的转移所有权收据，收据定义如下：</p><pre spellcheck="false" class="md-fences mock-cm md-end-block" lang="" contenteditable="false" cid="n552" mdtype="fences">import (
     "blockchain/smcsdk/sdk/types"
 )
 
@@ -1183,6 +1295,6 @@ type SetOwner struct {
     ContractAddr types.Address `json:"contractAddr"` // 智能合约地址
     NewOwner     types.Address `json:"newOwner"`     // 合约新的拥有者的外部账户地址
 }
-</pre></li><li><p>BRC20代币SetOwner() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n572' class='md-header-anchor '></a>5 开发智能合约</h1><p>准备开发环境、开发、测试及部署智能合约的详细指令参见文档《BCBChain_V2.0_Quick_Start》。</p><p># </p></div>
+</pre></li><li><p>BRC20代币SetOwner() 方法还会自动在BCBChain上记录一条标准的<code>std::transfer</code>收据。</p></li></ul><p>&nbsp;</p><div style="page-break-after: always;"></div><h1><a name='header-n557' class='md-header-anchor '></a>5 开发智能合约</h1><p>准备开发环境、开发、测试及部署智能合约的详细指令参见文档《BCBChain_V2.0_Quick_Start》。</p><p>&nbsp;</p></div>
 </body>
 </html>

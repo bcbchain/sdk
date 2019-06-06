@@ -3,30 +3,14 @@
 **V2.0.4**
 
 
-
-<div STYLE="page-break-after: always;"></div>
-
-# 修订历史
-
-| 版本&日期          | 修订内容&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
-| ------------------ | ------------------------------------------------------------ |
-| V2.0.1：2018-12-7  | 初稿。                                                       |
-| V2.0.2：2018-12-18 | 调整插件界面及功能。                                         |
-| V2.0.3：2019-1-4   | 智能合约公开的方法和接口消耗的燃料现在支持负整数。           |
-| V2.0.4：2019-5-13  | 定稿                                                         |
-
-
-
-
-
 <div STYLE="page-break-after: always;"></div>
 
 [TOC]
+
 <script src="./github/ltview.js"></script>
-
 <div STYLE="page-break-after: always;"></div>
-# 1 什么是BCBChain
 
+# 1 什么是BCBChain
 
 
 BCBChain是以Tendermint为基础开发的区块链体系，以系统安全性为依归，进行技术创新，实现物与物、人与物之间高效的价值信息传递，打造快速应用，具备高性能及高扩展性的平台。
@@ -239,9 +223,9 @@ const oneToken int64 = 1000000000
 //@:constructor
 func (mc *Mycoin) InitChain() {
   thisContract := mc.sdk.Helper().ContractHelper().ContractOfName("mycoin")
-	totalSupply := bn.N1(1000000, oneToken)
-	mc._setTotalSupply(totalSupply)
-	mc._setBalanceOf(thisContract.Owner(), totalSupply)
+  totalSupply := bn.N1(1000000, oneToken)
+  mc._setTotalSupply(totalSupply)
+  mc._setBalanceOf(thisContract.Owner().Address(), totalSupply)
 }
 
 //@:public:receipt
@@ -349,7 +333,7 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 		types.ErrInvalidParameter, "value must be positive")
 ```
 
-声明一段合约代码逻辑。函数 ```sdk.RequireAddress()```  由SDK提供用于检测输入参数``` to```是否是一个标准的账户地址，如果不满足则自动结束合约的执行，并返回响应的错误信息。函数 ```sdk.Require()```  由SDK提供，用于检测某个条件必须成立(此处是检测输入参数```value```必须大于0)，否则自动结束合约的执行，并返回响应的错误信息。
+声明一段合约代码逻辑。函数 ```sdk.RequireAddress()```  由SDK提供用于检测输入参数``` to```是否是一个标准的账户地址，如果不满足则自动结束合约的执行，并返回相应的错误信息。函数 ```sdk.Require()```  由SDK提供，用于检测某个条件必须成立(此处是检测输入参数```value```必须大于0)，否则自动结束合约的执行，并返回相应的错误信息。
 
 
 
@@ -362,7 +346,7 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 		types.ErrInsufficientBalance, "")
 ```
 
-声明一段合约代码逻辑。函数 ```mc.sdk.Message().Sender().Address()``` 由SDK提供，用于获取消息发起者的账户地址。```mc._balanceOf(sender).Sub(value)``` 用于获取发消息起者账户地址所拥有代币的余额并减去转账金额，计算出新的账户余额，函数```_balanceOf()```是由BCBChain提供的辅助工具自动生成的。函数 ```sdk.Require()```  由SDK提供，用于检测某个条件必须成立(此处是检测转账发起者的余额足够进行转账操作)，否则自动结束合约的执行，并返回响应的错误信息。
+声明一段合约代码逻辑。函数 ```mc.sdk.Message().Sender().Address()``` 由SDK提供，用于获取消息发起者的账户地址。```mc._balanceOf(sender).Sub(value)``` 用于获取消息发起者账户地址所拥有代币的余额并减去转账金额，计算出新的账户余额，函数```_balanceOf()```是由BCBChain提供的辅助工具自动生成的。函数 ```sdk.Require()```  由SDK提供，用于检测某个条件必须成立(此处是检测转账发起者的余额足够进行转账操作)，否则自动结束合约的执行，并返回相应的错误信息。
 
 
 
@@ -728,7 +712,7 @@ type Mydonation struct {
 
 	//Total donations received by donees
 	//@:public:store
-	donations map[types.Address]bn.Number   	// key=address of donee
+	donations map[types.Address]bn.Number // key=address of donee
 }
 
 const (
@@ -739,6 +723,7 @@ const (
 	errDonationExist
 	errDonationNotEnough
 )
+
 //@:public:receipt
 type receipt interface {
 	emitAddDonee(donee types.Address)
@@ -761,7 +746,7 @@ func (d *Mydonation) AddDonee(donee types.Address) {
 		errDoneeCannotBeOwner, "Donee can not be owner")
 	sdk.Require(donee != d.sdk.Message().Contract().Address(),
 		errDoneeCannotBeSmc, "Donee can not be this smart contract")
-	sdk.Require(donee != d.sdk.Message().Contract().Account(),
+	sdk.Require(donee != d.sdk.Message().Contract().Account().Address(),
 		errDoneeCannotBeSmc, "Donee can not be account of this smart contract")
 	sdk.Require(!d._chkDonations(donee),
 		errDoneeAlreadyExist, "Donee already exists")
@@ -797,7 +782,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 
 	var valTome *std.Transfer
 	token := d.sdk.Helper().GenesisHelper().Token()
-	forx.Range( d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
+	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
 		sdk.Require(receipt.Token == token.Address(),
 			types.ErrInvalidParameter, "Accept donations in genesis token only")
 		sdk.Require(valTome == nil,
@@ -805,7 +790,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 		valTome = receipt
 	})
 	sdk.Require(valTome != nil,
-		types.ErrInvalidParameter,	"Please transfer token to me first"	)
+		types.ErrInvalidParameter, "Please transfer token to me first")
 
 	balance := d._donations(donee).Add(valTome.Value)
 	d._setDonations(donee, balance)
@@ -816,7 +801,7 @@ func (d *Mydonation) Donate(donee types.Address) {
 		donee,
 		valTome.Value,
 		balance,
-		)
+	)
 }
 
 //Withdraw To transfer donations to donee
@@ -824,15 +809,15 @@ func (d *Mydonation) Donate(donee types.Address) {
 func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
 	sdk.RequireOwner()
 	sdk.RequireAddress(donee)
-	sdk.Require(value.IsGreaterThanI(0),
-		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._chkDonations(donee),
 		errDoneeNotExist, "Donee does not exist")
+	sdk.Require(value.IsGreaterThanI(0),
+		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._donations(donee).IsGE(value),
 		errDonationNotEnough, "Donation is not enough")
 
-	account := d.sdk.Helper().AccountHelper().AccountOf(d.sdk.Message().Contract().Account())
 	token := d.sdk.Helper().GenesisHelper().Token()
+	account := d.sdk.Message().Contract().Account()
 	account.TransferByToken(token.Address(), donee, value)
 	balance := d._donations(donee).Sub(value)
 	d._setDonations(donee, balance)
@@ -842,7 +827,7 @@ func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
 		donee,
 		value,
 		balance,
-		)
+	)
 }
 ```
 
@@ -879,15 +864,15 @@ BNF范式表示语法规则的方式为：
 BNF范式中常用的元字符及其表示的意义如下：
 
 ```
-在双引号中的字符(例如"word")代表着这些字符本身。而double_quote用来代表双引号本身。 
-在双引号外的字(有可能有下划线)代表着语法部分。 
-尖括号 < > 内包含的为必选项。 
-方括号 [ ] 内包含的为可选项。 
-大括号 { } 内包含的为可重复0至无数次的项。 
-圆括号 ( ) 内包含的所有项为一组，用来控制表达式的优先级。
-竖线 | 表示在其左右两边任选一项，相当于"OR"的意思。 
-::= 是“被定义为”的意思。 
-空白字符 BNF范式定义中出现的空白字符间隔仅为排版需要，不作为规范的一部分。
+1. 在双引号中的字符(例如"word")代表着这些字符本身。而double_quote用来代表双引号本身。 
+2. 在双引号外的字(有可能有下划线)代表着语法部分。 
+3. 尖括号 < > 内包含的为必选项。 
+4. 方括号 [ ] 内包含的为可选项。 
+5. 大括号 { } 内包含的为可重复0至无数次的项。 
+6. 圆括号 ( ) 内包含的所有项为一组，用来控制表达式的优先级。
+7. 竖线 | 表示在其左右两边任选一项，相当于"OR"的意思。 
+8. ::= 是“被定义为”的意思。 
+9. 空白字符 BNF范式定义中出现的空白字符间隔仅为排版需要，不作为规范的一部分。
 ```
 
 
@@ -1306,7 +1291,7 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 
 标记```public:mine```用于标识合约公开的挖矿接口。
 
-标记```public:mine```之后的有效代码必须紧跟一个针对通过标记```contract```标注的合约类的成员函数定义（挖矿函数原型必须为：```func Mine()```），这个挖矿函数将在 BCBChain 的区块达成共识后自动执行。
+标记```public:mine```之后的有效代码必须紧跟一个针对通过标记```contract```标注的合约类的成员函数定义（挖矿函数原型必须为：```func Mine() int64```），这个挖矿函数将在 BCBChain 的区块达成共识后自动执行。
 
 标记```public:mine```为可选标记，在整个合约代码中可以出现零次或一次。只有 BCBChain 的基础组织的智能合约才允许包含挖矿接口。
 
@@ -1320,7 +1305,7 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 
 ```
 //@:public:mine
-func (mc *Mycoin) Mine() {
+func (mc *Mycoin) Mine() int64 {
 	...
 }
 ```
@@ -1381,6 +1366,20 @@ func (m *MyContract) mycoin() *InterfacemycoinStub {
 func (is *InterfacemycoinStub) Transfer(to types.Address, value bn.Number) {
 	return
 }
+
+//run Transfer some receipts to destination contract
+func (is *InterfacemycoinStub) run(f func()) (*InterfacemycoinStub) {
+	...
+	f()
+	...
+	return is
+}
+
+//contract Wrap the destination contract information
+func (is *InterfacemycoinStub) contract() IContract {
+	...
+	return contract
+}
 ```
 
 下面是在合约代码中调用外部合约的示例代码：
@@ -1393,6 +1392,60 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 }
 ```
 
+跨合约调用还支持向被调用合约传递收据，以下为示例代码（从合约 contract2 中调用合约 contract1 的接口）：
+
+> 合约1，提供跨合约接口服务：
+>
+> ```
+> //@:contract:contract1
+> type C1 struct {
+>   sdk sdk.ISmartContract
+>   ...
+> }
+> 
+> //@:public:interface:gas[450]
+> func (c *C1) Register() {
+> 
+>   //I need receipt from caller
+>   transfers := dw.sdk.Message().GetTransferToMe()
+>   sdk.Require(transfers!=nil && len(transfers)==1,
+>     types.ErrInvalidParameter, "Please transfer to me first")
+> 
+>   token := transfers[0].Token
+>   value := transfers[0].Value
+> 
+>   ...
+> }
+> ```
+>
+> 合约2，跨合约调用者：
+>
+> ```
+> //@:contract:contract2
+> type C2 struct {
+>   sdk sdk.ISmartContract
+>   ...
+> }
+> 
+> //@:import:contract1
+> type mycoin interface {
+> 	Register()
+> }
+> 
+> //@:public:method:gas[450]
+> func (c *C2) Register() {
+>   ...
+>   c.contract1().run(func(){
+>     c.sdk.Message().Contract().Account.TransferByName(
+>       "bcb",
+>       c.contract1().contract().Account().Address(),
+>       bn.N(1000000000),
+>     )
+>   }).Register()
+>   ...
+> }
+> ```
+
 
 
 ## 4.4 合约规范
@@ -1402,13 +1455,13 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 综合上面对合约标记的描述，下面定义合约规范的BNF范式：
 
 ```
-<BCBChain智能合约> ::= <合约定义代码文件> {<合约实现代码文件>} {<合约测试代码文件>}
+<智能合约> ::= <合约定义代码文件> {<合约实现代码文件>} {<合约测试代码文件>}
 
 <合约定义代码文件> ::= <代码包定义> <合约定义代码>
 <合约实现代码文件> ::= <代码包定义> <合约实现代码>
 <合约测试代码文件> ::= <代码包定义> <合约测试代码>
 <代码包定义> ::= "package" <合约包名>
-<合约包名> ::= 遵循glang语法规范
+<合约包名> ::= 遵循glang语法规范，但不能为 std
 <合约定义代码> ::= "import ("
                      <合约SDK包根路径>
                      {[包别名] <合约支撑代码包路径>}
@@ -1422,7 +1475,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
                  {<合约实现代码>}
 <合约SDK包根路径> ::= double_quote "blockchain/smcsdk/sdk" double_quote
 <合约支撑代码包路径> ::= 遵循golang代码包路径规范，遵循BCBChain合约规范的白名单与灰名单规范
-<包别名> ::= 遵循golang代码规范的代码包别名
+<包别名> ::= 遵循golang代码规范的代码包别名，不允许使用 '.'
 <合约实现代码> ::= 遵循golang代码规范的合约实现代码（不需要BCBChain合约标记的代码），包括类型定义、
                  常量定义、函数定义（注：不能包含全局变量定义，不允许使用 for 关键字，不允许递归
                  调用）
@@ -1447,7 +1500,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
 <基本状态变量定义> ::= "//@:public:store"
                    	 <变量名称> ["*"] <变量类型>
 <带缓存的状态变量定义> ::= "//@:public:store:cache"
-                   	    <变量名称> <变量类型>
+                   	    <变量名称> ["*"] <变量类型>
 <变量名称> ::= <标识符>
 <变量类型> ::= <元数据类型> | <数组类型> | <映射表类型>
 
@@ -1460,8 +1513,8 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
               "func (" <合约对象定义> ") UpdateChain() {"
                 <上链代码>
               "}"
-<挖矿定义> ::= "//@:mine"
-              "func (" <合约对象定义> ") Mine() {"
+<挖矿定义> ::= "//@:public:mine"
+              "func (" <合约对象定义> ") Mine() int64 {"
                 <挖矿代码>
               "}"
 <合约对象定义> ::= <变量名称> "*" <合约类名>
@@ -1469,7 +1522,7 @@ func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
               注1：只允许访问状态变量
               注2：sdk中不允许访问Message()和Tx()
 <挖矿代码> ::= <golang函数体>
-              注1：sdk中不允许访问Tx()                   
+              注1：sdk中不允许访问Message()和Tx()
 <golang函数体> ::= 遵循golang代码规范的函数体实现代码，参见 <合约实现代码> 的定义
 
 <合约收据定义> ::= "//@:public:receipt"
@@ -1928,4 +1981,3 @@ SetOwner(types.Address)
 
 准备开发环境、开发、测试及部署智能合约的详细指令参见文档《BCBChain_V2.0_Quick_Start》。
 
-# 
