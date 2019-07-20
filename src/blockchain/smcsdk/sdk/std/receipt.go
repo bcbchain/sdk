@@ -8,8 +8,8 @@ import (
 
 // Receipt receipt information
 type Receipt struct {
-	Name         string     `json:"name"`         // 收据名称：标准名称（trnsfer，...) 非标准名称（...）
-	ContractAddr string     `json:"contractAddr"` // 合约地址
+	Name         string     `json:"name"`            // 收据名称：标准名称（trnsfer，...) 非标准名称（...）
+	ContractAddr string     `json:"contractAddress"` // 合约地址
 	Bytes        []byte     `json:"receiptBytes"`
 	Hash         types.Hash `json:"receiptHash"`
 }
@@ -61,8 +61,8 @@ type AddSupply struct {
 
 // NewToken newToken receipt information
 type NewToken struct {
-	TokenAddress     types.Address `json:"tokenAddr"`        // 代币地址
-	ContractAddress  types.Address `json:"contractAddr"`     // 代币的合约地址
+	TokenAddress     types.Address `json:"tokenAddress"`     // 代币地址
+	ContractAddress  types.Address `json:"contractAddress"`  // 代币的合约地址
 	Owner            types.Address `json:"owner"`            // 代币拥有者的外部账户地址
 	Name             string        `json:"name"`             // 代币名称
 	Symbol           string        `json:"symbol"`           // 代币符号

@@ -5,6 +5,7 @@
 package utest
 
 import (
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/bn"
 	"blockchain/smcsdk/sdk/jsoniter"
@@ -30,13 +31,6 @@ func AssertError(err types.Error, expected uint32) {
 	UTP.c.Assert(err.ErrorCode, check.Equals, expected)
 }
 
-//AssertErrors assert errors
-func AssertErrors(err types.Error, arg ...uint32) {
-	for _, item := range arg {
-		AssertError(err, item)
-	}
-}
-
 //AssertOK assert errcode is CodeOK
 func AssertOK(err types.Error) {
 	UTP.c.Assert(err.ErrorCode, check.Equals, uint32(types.CodeOK))
@@ -49,19 +43,21 @@ func AssertErrorMsg(err types.Error, msg string) {
 
 //AssertBalance assert balance
 func AssertBalance(account sdk.IAccount, tokenName string, value bn.Number) {
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+		_token := UTP.Helper().TokenHelper().TokenOfName(tokenName)
+		key := std.KeyOfAccountToken(account.Address(), _token.Address())
+		b := sdbGet(0, 0, key)
+		b = data(key, b)
 
-	_token := UTP.Helper().TokenHelper().TokenOfName(tokenName)
-	key := std.KeyOfAccountToken(account.Address(), _token.Address())
-	b := sdbGet(0, 0, key)
-	b = data(key, b)
-
-	v := std.AccountInfo{}
-	err := jsoniter.Unmarshal(b, &v)
-	if err != nil {
-		panic(err.Error())
-	}
-	UTP.c.Assert(_token.Address(), check.Equals, v.Address)
-	UTP.c.Assert(value.V.String(), check.Equals, v.Balance.V.String())
+		v := std.AccountInfo{}
+		err := jsoniter.Unmarshal(b, &v)
+		if err != nil {
+			panic(err.Error())
+		}
+		UTP.c.Assert(_token.Address(), check.Equals, v.Address)
+		UTP.c.Assert(value.V.String(), check.Equals, v.Balance.V.String())
+	})
+	//rollbackState()
 }
 
 //AssertSDB assert key's value in SDB
@@ -81,6 +77,7 @@ func AssertSDB(key string, interf interface{}) {
 
 	b := sdbGet(0, 0, fullKey)
 	b = data(fullKey, b)
+	//rollbackState()
 
 	if interf == nil {
 		UTP.c.Assert(b, check.IsNil)

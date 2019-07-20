@@ -20,4 +20,4 @@ type SetCallback func(int64, int64, map[string][]byte)
 type TransferCallBack func(sdk.ISmartContract, types.Address, types.Address, bn.Number) ([]types.KVPair, types.Error)
 
 // GetBlockCallBack call back function of get block data
-type GetBlockCallBack func(height int64) std.Block
+type GetBlockCallBack func(transID, height int64) std.Block

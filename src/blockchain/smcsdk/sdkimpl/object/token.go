@@ -36,7 +36,9 @@ const maxGasPrice = 1000000000
 func (t *Token) Address() types.Address { return t.tk.Address }
 
 // Owner get token's owner
-func (t *Token) Owner() types.Address { return t.tk.Owner }
+func (t *Token) Owner() sdk.IAccount {
+	return t.smc.Helper().AccountHelper().AccountOf(t.tk.Owner)
+}
 
 // Name get token's name
 func (t *Token) Name() string { return t.tk.Name }
@@ -63,7 +65,7 @@ func (t *Token) StdToken() *std.Token { return &t.tk }
 func (t *Token) SetOwner(newOwner types.Address) {
 
 	// update the old owner and new owner's balance
-	oldAcct := t.smc.Helper().AccountHelper().AccountOf(t.Owner())
+	oldAcct := t.smc.Helper().AccountHelper().AccountOf(t.tk.Owner)
 	oldOwnerBalance := oldAcct.Balance()
 	oldAcct.(*Account).SetBalanceOfToken(t.Address(), bn.N(0))
 
@@ -125,7 +127,7 @@ func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 
 	// create owner's account and compare the owner's balance,
 	// if owner's balance less than burn number, then return error
-	ownerAcct := t.smc.Helper().AccountHelper().AccountOf(t.Owner())
+	ownerAcct := t.smc.Helper().AccountHelper().AccountOf(t.tk.Owner)
 	updateBalance := ownerAcct.Balance().Add(updateSupply)
 	sdk.Require(updateBalance.CmpI(0) >= 0,
 		types.ErrInvalidParameter, "The owner's balance not enough to burn")
@@ -155,7 +157,7 @@ func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 			std.Transfer{
 				Token: t.Address(),
 				From:  "",
-				To:    t.Owner(),
+				To:    t.tk.Owner,
 				Value: updateSupply,
 			},
 		)
@@ -173,7 +175,7 @@ func (t *Token) SetTotalSupply(totalSupply bn.Number) {
 		t.smc.Helper().ReceiptHelper().Emit(
 			std.Transfer{
 				Token: t.Address(),
-				From:  t.Owner(),
+				From:  t.tk.Owner,
 				To:    "",
 				Value: bn.N(0).Sub(updateSupply),
 			},

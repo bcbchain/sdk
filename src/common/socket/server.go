@@ -102,7 +102,6 @@ func (svr *Server) readRequest(conn net.Conn) {
 }
 
 func (svr *Server) handleRequest(req *Request, w *bufio.Writer, mtx *sync.Mutex) {
-	defer serverRecover(w, req)
 
 	method := svr.methods[req.Method]
 	if method == nil {

@@ -108,3 +108,5 @@ func (l *tmLogger) Fatal(msg string, keyvals ...interface{}) {
 func (l *tmLogger) With(keyvals ...interface{}) Logger {
 	return &tmLogger{kitlog.With(l.srcLogger, keyvals...)}
 }
+
+func (l *tmLogger) Flush() {}

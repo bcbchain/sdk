@@ -25,9 +25,8 @@ func TestRangeMap(t *testing.T) {
 	m2["jjgjdldwer"] = 23423423234324
 	m2["oeoiruwerw"] = 3432432423
 	m2["iouoiudfs"] = 3434545345345
-	Range(m2, func(k string, v int) bool {
+	Range(m2, func(k string, v int) {
 		fmt.Printf("m2, key=%v value=%v\n", k, v)
-		return true
 	})
 
 	fmt.Println("")

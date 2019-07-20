@@ -29,21 +29,18 @@ const (
 const (
 	ErrMarshal = 500 + iota
 	ErrCallRPC
-	ErrOutOfRange
-	ErrNeedPositiveNumber
+	ErrDealFailed
 	ErrAccountLocked
 )
 
 //ErrCheckTx beginning error code of checkTx
 const (
 	ErrCheckTx = 600 + iota
-	ErrCheckInsufficientBalance
 )
 
 //ErrDeliverTx beginning error code of deliverTx
 const (
 	ErrDeliverTx = 700 + iota
-	ErrDeliverInsufficientBalance
 )
 
 const (
@@ -61,16 +58,13 @@ var bcErrors = []BcError{
 
 	{ErrMarshal, "Json marshal error"},
 	{ErrCallRPC, "Call rpc error"},
-	{ErrOutOfRange, "Out of range"},
-	{ErrNeedPositiveNumber, "Must positive number"},
+	{ErrDealFailed, "The deal failed"},
 	{ErrAccountLocked, "Account is locked"},
 
 	{ErrCheckTx, "CheckTx failed"},
-	{ErrCheckInsufficientBalance, "Insufficient balance"},
 
 	//ErrCodeNoAuthorization
 	{ErrCodeNoAuthorization, "No authorization"},
 
 	{ErrDeliverTx, "DeliverTx failed"},
-	{ErrDeliverInsufficientBalance, "Insufficient balance"},
 }

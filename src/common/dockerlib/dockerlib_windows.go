@@ -21,6 +21,7 @@ type container struct {
 type DockerLib struct {
 	logger     log.Logger
 	containers map[string]container
+	prefix     string
 }
 
 const dockerHubIP = "127.0.0.1"
@@ -148,4 +149,14 @@ func Sum256(datas ...[]byte) []byte {
 		hasher.Write(data)
 	}
 	return hasher.Sum(nil)
+}
+
+// SetPrefix set container name's prefix
+func (l *DockerLib) SetPrefix(p string) {
+	l.prefix = p
+}
+
+func (l *DockerLib) Exec(config ExecConfig, startConfig ExecStartCheck, container string) error {
+
+	return nil
 }

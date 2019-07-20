@@ -3,14 +3,15 @@ package server
 import (
 	"bufio"
 	"fmt"
-	"github.com/tendermint/abci/types"
-	cmn "github.com/tendermint/tmlibs/common"
 	"io"
 	"net"
 	"os"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/tendermint/abci/types"
+	cmn "github.com/tendermint/tmlibs/common"
 )
 
 // var maxNumberConnections = 2
@@ -26,8 +27,8 @@ type SocketServer struct {
 	conns      map[int]net.Conn
 	nextConnID int
 
-	appMtx sync.Mutex
-	app    types.Application
+	// appMtx sync.Mutex
+	app types.Application
 }
 
 func NewSocketServer(protoAddr string, app types.Application) cmn.Service {
@@ -100,7 +101,7 @@ func (s *SocketServer) rmConn(connID int) error {
 func (s *SocketServer) acceptConnectionsRoutine() {
 	var remoteIp string
 	var connID int
-	dataChan:=make(chan bool)
+	dataChan := make(chan bool)
 	for {
 		// Accept a connection
 		s.Logger.Info("Waiting for new connection...")
@@ -123,7 +124,7 @@ func (s *SocketServer) acceptConnectionsRoutine() {
 		} else {
 			if currentRemoteIp != remoteIp {
 				//拒绝连接
-				s.Logger.Error("Connection refused because client ip %v is invalid",currentRemoteIp)
+				s.Logger.Error("Connection refused because client ip %v is invalid", currentRemoteIp)
 				conn.Close()
 				continue
 			}
@@ -153,15 +154,17 @@ func (s *SocketServer) acceptConnectionsRoutine() {
 	}
 }
 
-func (s *SocketServer)checkReqTimeOutInfo(dataChan chan bool)  {
+func (s *SocketServer) checkReqTimeOutInfo(dataChan chan bool) {
 	//var timer *time.Timer
 	timer := time.NewTimer(600 * time.Second)
 	for {
 		select {
-		case <-dataChan://Timer Reset
+		case <-dataChan: //Timer Reset
 			timer.Reset(600 * time.Second)
 			s.Logger.Debug("Timer Reset")
 		case <-timer.C:
+			s.Logger.Warn("no request 600 Seconds, chain is committing suicide")
+			s.Logger.Flush()
 			s.killBcchain()
 		}
 	}
@@ -212,7 +215,7 @@ func (s *SocketServer) handleRequests(closeConn chan error, conn net.Conn, respo
 			}
 			return
 		}
-		dataChan<-true
+		dataChan <- true
 		s.handleRequest(conn, req, responses)
 	}
 }

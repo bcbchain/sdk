@@ -10,7 +10,9 @@ import (
 func NewContractFromAddress(smc sdk.ISmartContract, conAddr types.Address) sdk.IContract {
 	var contract sdk.IContract
 	contract = smc.Helper().ContractHelper().ContractOfAddress(conAddr)
-	contract.(*Contract).SetSMC(smc)
+	if contract != nil {
+		contract.(*Contract).SetSMC(smc)
+	}
 
 	return contract
 }

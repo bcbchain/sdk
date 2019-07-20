@@ -5,6 +5,7 @@
 package utest
 
 import (
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/bn"
 	"blockchain/smcsdk/sdk/std"
@@ -17,21 +18,23 @@ import (
 func SetSender(_sender types.Address) sdk.ISmartContract {
 
 	// 更新dg.SmartContract的tx
-	_tx := object.NewTx(UTP.ISmartContract, "", 500000, 0, _sender)
-	api := UTP.ISmartContract.(*sdkimpl.SmartContract)
-	api.SetTx(_tx)
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+		_tx := object.NewTx(UTP.ISmartContract, "", 500000, 0, _sender)
+		api := UTP.ISmartContract.(*sdkimpl.SmartContract)
+		api.SetTx(_tx)
 
-	senderAcct := object.NewAccount(api, _sender)
-	_msg := object.NewMessage(UTP.ISmartContract,
-		UTP.ISmartContract.Message().Contract(),
-		UTP.ISmartContract.Message().MethodID(),
-		UTP.ISmartContract.Message().Items(),
-		senderAcct.Address(),
-		nil,
-		UTP.ISmartContract.Message().Origins(),
-		UTP.ISmartContract.Message().InputReceipts(),
-	)
-	api.SetMessage(_msg)
+		senderAcct := object.NewAccount(api, _sender)
+		_msg := object.NewMessage(UTP.ISmartContract,
+			UTP.ISmartContract.Message().Contract(),
+			UTP.ISmartContract.Message().MethodID(),
+			UTP.ISmartContract.Message().Items(),
+			senderAcct.Address(),
+			senderAcct.Address(),
+			UTP.ISmartContract.Message().Origins(),
+			UTP.ISmartContract.Message().InputReceipts(),
+		)
+		api.SetMessage(_msg)
+	})
 
 	return UTP.ISmartContract
 }
@@ -39,16 +42,18 @@ func SetSender(_sender types.Address) sdk.ISmartContract {
 //ResetMsg reset message
 func ResetMsg() sdk.ISmartContract {
 
-	_message := object.NewMessage(UTP.ISmartContract,
-		UTP.Message().Contract(),
-		UTP.Message().MethodID(),
-		UTP.Message().Items(),
-		UTP.ISmartContract.Message().Sender().Address(),
-		nil,
-		UTP.Message().Origins(),
-		UTP.Message().InputReceipts())
-	api := UTP.ISmartContract.(*sdkimpl.SmartContract)
-	api.SetMessage(_message)
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+		_message := object.NewMessage(UTP.ISmartContract,
+			UTP.Message().Contract(),
+			UTP.Message().MethodID(),
+			UTP.Message().Items(),
+			UTP.Message().Sender().Address(),
+			UTP.Message().Payer().Address(),
+			UTP.Message().Origins(),
+			UTP.Message().InputReceipts())
+		api := UTP.ISmartContract.(*sdkimpl.SmartContract)
+		api.SetMessage(_message)
+	})
 
 	return UTP.ISmartContract
 }
@@ -61,12 +66,14 @@ func GetContract() sdk.IContract { return UTP.Message().Contract() }
 
 func (ut *UtPlatform) setTxSender(_sender types.Address) sdk.ISmartContract {
 
-	tx := ut.Tx()
-	acct := object.NewAccount(ut.ISmartContract, _sender)
-	o := object.NewTx(ut.ISmartContract, tx.Note(), tx.GasLimit(), tx.GasLeft(), acct.Address())
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: ut.ISmartContract}, func() {
+		tx := ut.Tx()
+		acct := object.NewAccount(ut.ISmartContract, _sender)
+		o := object.NewTx(ut.ISmartContract, tx.Note(), tx.GasLimit(), tx.GasLeft(), acct.Address())
 
-	api := ut.ISmartContract.(*sdkimpl.SmartContract)
-	api.SetTx(o)
+		api := ut.ISmartContract.(*sdkimpl.SmartContract)
+		api.SetTx(o)
+	})
 
 	return ut.ISmartContract
 }

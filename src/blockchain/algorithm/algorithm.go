@@ -59,12 +59,12 @@ func BytesToInt64(b []byte) int64 {
 	return int64(BytesToUint64(b))
 }
 
-func CalcAddressFromCdcPubKey(pubKey []byte) crypto.Address {
+func CalcAddressFromCdcPubKey(chainID string, pubKey []byte) crypto.Address {
 	crptPubKey, err := crypto.PubKeyFromBytes(pubKey)
 	if err != nil {
 		panic(err)
 	}
-	return crptPubKey.Address()
+	return crptPubKey.Address(chainID)
 }
 
 func CheckAddress(chainID string, addr string) error {
@@ -77,7 +77,7 @@ func CheckAddress(chainID string, addr string) error {
 	base58Addr := strings.Replace(addr, chainID, "", 1)
 	addrData := base58.Decode(base58Addr)
 	len := len(addrData)
-	if len == 0 {
+	if len < 4 {
 		return errors.New("Base58Addr parse error!")
 	}
 

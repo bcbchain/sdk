@@ -1511,8 +1511,9 @@ func (m *ResponseDeliverTx) GetFee() uint64 {
 
 type ResponseEndBlock struct {
 	ValidatorUpdates      []Validator      `protobuf:"bytes,1,rep,name=validator_updates,json=validatorUpdates" json:"validator_updates"`
-	ChainVersion          int64            `protobuf:"varint,2,rep,name=chain_version,json=chainVersion" json:"chainVersion,omitempty"`
-	ConsensusParamUpdates *ConsensusParams `protobuf:"bytes,3,opt,name=consensus_param_updates,json=consensusParamUpdates" json:"consensus_param_updates,omitempty"`
+	ConsensusParamUpdates *ConsensusParams `protobuf:"bytes,2,opt,name=consensus_param_updates,json=consensusParamUpdates" json:"consensus_param_updates,omitempty"`
+	RewardAmount          int64            `protobuf:"varint,3,opt,name=rewardAmount,json=rewardAmount" json:"rewardAmount,omitempty"`
+	ChainVersion          int64            `protobuf:"varint,4,opt,name=chain_version,json=chainVersion" json:"chainVersion,omitempty"`
 }
 
 func (m *ResponseEndBlock) Reset()                    { *m = ResponseEndBlock{} }
@@ -1702,8 +1703,9 @@ type Header struct {
 	ProposerAddress string       `protobuf:"bytes,12,opt,name=proposer_address,json=proposerAddress,proto3" json:"proposer_address,omitempty"`
 	RewardAddress   string       `protobuf:"bytes,13,opt,name=reward_address,json=rewardAddress,proto3" json:"reward_address,omitempty"`
 	RandomeOfBlock  []byte       `protobuf:"bytes,14,opt,name=random_of_block,json=randomOfBlock,proto3" json:"random_of_block,omitempty"`
-	Version         string       `protobuf:"bytes,15,opt,name=version,json=version,proto3" json:"version,omitempty"`
-	ChainVersion    int64        `protobuf:"varint,16,opt,name=chain_version,json=chainVersion,proto3" json:"chain_version,omitempty"`
+	LastMining      *int64       `protobuf:"varint,15,opt,name=last_mining,json=lastMining,proto3" json:"last_mining,omitempty"`
+	Version         string       `protobuf:"bytes,16,opt,name=version,json=version,proto3" json:"version,omitempty"`
+	ChainVersion    int64        `protobuf:"varint,17,opt,name=chain_version,json=chainVersion,proto3" json:"chain_version,omitempty"`
 }
 
 func (m *Header) Reset()                    { *m = Header{} }

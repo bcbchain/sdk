@@ -52,7 +52,7 @@ func (d *Mydonation) AddDonee(donee types.Address) {
 		errDoneeCannotBeOwner, "Donee can not be owner")
 	sdk.Require(donee != d.sdk.Message().Contract().Address(),
 		errDoneeCannotBeSmc, "Donee can not be this smart contract")
-	sdk.Require(donee != d.sdk.Message().Contract().Account(),
+	sdk.Require(donee != d.sdk.Message().Contract().Account().Address(),
 		errDoneeCannotBeSmc, "Donee can not be account of this smart contract")
 	sdk.Require(!d._chkDonations(donee),
 		errDoneeAlreadyExist, "Donee already exists")
@@ -88,14 +88,12 @@ func (d *Mydonation) Donate(donee types.Address) {
 
 	var valTome *std.Transfer
 	token := d.sdk.Helper().GenesisHelper().Token()
-	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) bool {
+	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
 		sdk.Require(receipt.Token == token.Address(),
 			types.ErrInvalidParameter, "Accept donations in genesis token only")
 		sdk.Require(valTome == nil,
 			types.ErrInvalidParameter, "Accept only one donation at a time")
 		valTome = receipt
-
-		return true
 	})
 	sdk.Require(valTome != nil,
 		types.ErrInvalidParameter, "Please transfer token to me first")
@@ -117,15 +115,15 @@ func (d *Mydonation) Donate(donee types.Address) {
 func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
 	sdk.RequireOwner()
 	sdk.RequireAddress(donee)
-	sdk.Require(value.IsGreaterThanI(0),
-		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._chkDonations(donee),
 		errDoneeNotExist, "Donee does not exist")
+	sdk.Require(value.IsGreaterThanI(0),
+		types.ErrInvalidParameter, "Parameter \"value\" must be greater than 0")
 	sdk.Require(d._donations(donee).IsGE(value),
 		errDonationNotEnough, "Donation is not enough")
 
-	account := d.sdk.Helper().AccountHelper().AccountOf(d.sdk.Message().Contract().Account())
 	token := d.sdk.Helper().GenesisHelper().Token()
+	account := d.sdk.Message().Contract().Account()
 	account.TransferByToken(token.Address(), donee, value)
 	balance := d._donations(donee).Sub(value)
 	d._setDonations(donee, balance)

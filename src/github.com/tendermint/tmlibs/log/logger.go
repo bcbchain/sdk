@@ -16,6 +16,8 @@ type Logger interface {
 	Fatal(msg string, keyvals ...interface{})
 
 	With(keyvals ...interface{}) Logger
+
+	Flush()
 }
 
 type Loggerf interface {
@@ -34,8 +36,6 @@ type Loggerf interface {
 	SetOutputAsync(isAsync bool)
 	SetOutputFileSize(maxFileSize int)
 	SetWithThreadID(with bool)
-
-	Flush()
 }
 
 // NewSyncWriter returns a new writer that is safe for concurrent use by

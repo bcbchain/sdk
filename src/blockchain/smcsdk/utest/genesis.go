@@ -85,6 +85,8 @@ func initGenesis(g *genesis) (smcError types.Error) {
 	}
 	setToDB(std.KeyOfTokenBaseGasPrice(), gasbyte)
 
+	Commit()
+
 	return
 }
 

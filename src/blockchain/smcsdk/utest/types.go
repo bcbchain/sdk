@@ -96,7 +96,7 @@ const genesisStr = `{
         "methods": [
           {
             "methodId": "9e922f48",
-            "prototype": "RegisterOrganization(string)",
+            "prototype": "RegisterOrganization(string)string",
             "gas": 500000
           },
           {
@@ -125,7 +125,7 @@ const genesisStr = `{
           },
           {
             "methodId": "e0da7827",
-            "prototype": "DeployContract(string,string,string,types.Hash,[]byte,string,string,int64,types.Address)",
+            "prototype": "DeployContract(string,string,string,types.Hash,[]byte,string,string,int64,types.Address)types.Address",
             "gas": 50000
           },
           {
@@ -185,7 +185,7 @@ const genesisStr = `{
         "methods": [
           {
             "methodId": "ed1d1d9a",
-            "prototype": "NewToken(string,string,bn.Number,bool,bool,int64)",
+            "prototype": "NewToken(string,string,bn.Number,bool,bool,int64)types.Address",
             "gas": 20000
           },
           {

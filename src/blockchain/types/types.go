@@ -129,10 +129,9 @@ type Receipt struct {
 // RPCInvokeCallParam 合约调用参数
 type RPCInvokeCallParam struct {
 	Sender          Address         `json:"sender"`          // 交易发送者
-	Balances        []byte          `json:"balances"`        // 交易发送者账户余额
+	Payer           Address         `json:"payer"`           // 交易发送者
 	SenderPublicKey PubKey          `json:"senderPublicKey"` // 公钥
 	To              Address         `json:"to"`              // 转账交易接收者账户
-	ToBalance       []byte          `json:"tobalance"`       // 转账交易接收者账户余额
 	Tx              Transaction     `json:"tx,omitempty"`    // 交易注释
 	GasLeft         int64           `json:"gasleft"`         // 剩余gaslimit
 	Message         Message         `json:"message"`         // 交易消息

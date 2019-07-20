@@ -130,7 +130,7 @@ func (ll *LowLevelSDB) McGet(key string, defaultValue interface{}) interface{} {
 			sdkimpl.Logger.Fatalf("[sdk][transID=%d][txID=%d] Cannot unmarshal from key=%s in mc, error=%v\nbytes=%v", ll.transID, ll.txID, key, err, result)
 			panic(err)
 		}
-		sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s from memory cache, value=%v", ll.transID, ll.txID, key, result)
+		sdkimpl.Logger.Tracef("[sdk][transID=%d][txID=%d] Get key=%s from memory cache, value=%v", ll.transID, ll.txID, key, string(result))
 		return defaultValue
 	}
 
@@ -173,7 +173,7 @@ func (ll *LowLevelSDB) McSet(key string, value interface{}) {
 	}
 
 	mc.Set(ll.txID, valueByte)
-	sdkimpl.Logger.Debug("Set Memory Cache", "transID", ll.transID, "txID", ll.txID, "key", key, "value", value)
+	sdkimpl.Logger.Trace("Set Memory Cache", "transID", ll.transID, "txID", ll.txID, "key", key, "value", string(valueByte))
 }
 
 // Commit commit all set data

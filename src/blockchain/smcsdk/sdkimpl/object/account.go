@@ -147,13 +147,19 @@ func (a *Account) transferByToken(tokenAddr types.Address, to types.Address, val
 
 		a.smc.Message().(*Message).AppendOutput(receipts)
 	} else {
+
+		contract := a.smc.Helper().ContractHelper().ContractOfAddress(to)
+		if contract != nil {
+			to = contract.Account().Address()
+		}
+
 		sdk.Require(value.IsGreaterThanI(0),
 			types.ErrInvalidParameter, "Value must greater than zero")
 
 		sdk.Require(from != to,
 			types.ErrInvalidParameter, "Cannot transfer to self")
 
-		if from != a.smc.Message().Contract().Account() {
+		if from != a.smc.Message().Contract().Account().Address() {
 			sdk.Require(tokenAddr == a.smc.Message().Contract().Token() &&
 				from == a.smc.Message().Sender().Address(),
 				types.ErrNoAuthorization, "")
@@ -164,8 +170,8 @@ func (a *Account) transferByToken(tokenAddr types.Address, to types.Address, val
 
 		toAcct := a.smc.Helper().AccountHelper().AccountOf(to).(*Account)
 
-		a.SetBalanceOfToken(tokenAddr, a.BalanceOfToken(tokenAddr).Sub(value))
 		toAcct.SetBalanceOfToken(tokenAddr, toAcct.BalanceOfToken(tokenAddr).Add(value))
+		a.SetBalanceOfToken(tokenAddr, a.BalanceOfToken(tokenAddr).Sub(value))
 
 		toAcct.AddAccountTokenKey(std.KeyOfAccountToken(toAcct.address, tokenAddr))
 
@@ -174,7 +180,7 @@ func (a *Account) transferByToken(tokenAddr types.Address, to types.Address, val
 			std.Transfer{
 				Token: tokenAddr,
 				From:  from,
-				To:    to,
+				To:    toAcct.address,
 				Value: value,
 			},
 		)

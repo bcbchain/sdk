@@ -7,6 +7,7 @@ package utest
 
 import (
 	"blockchain/algorithm"
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk"
 	"blockchain/smcsdk/sdk/bn"
 	"blockchain/smcsdk/sdk/jsoniter"
@@ -20,10 +21,11 @@ import (
 )
 
 func init() {
-	crypto.SetChainId("LOC")
+	crypto.SetChainId("test")
 }
 
 func upgradeContract(contractName, orgID string, methods, interfaces []string) sdk.IAccount {
+
 	bc := sdbGet(0, 0, std.KeyOfContractsWithName(orgID, contractName))
 	if bc == nil {
 		return nil
@@ -95,14 +97,19 @@ func upgradeContract(contractName, orgID string, methods, interfaces []string) s
 	api.Message().(*object.Message).SetContract(_contract)
 
 	UTP.setTxSender(newcontract.Owner)
+
+	Commit()
+
 	return object.NewAccount(UTP.ISmartContract, newcontract.Owner)
 }
 
 func deployContract(contractName, orgID string, methods, interfaces []string, logger log.Loggerf) sdk.IAccount {
-	sdkhelper.Init(nil, build, sdbSet, sdbGet, getBlock, &logger)
+
+	sdkhelper.Init(TransferFunc, build, sdbSet, sdbGet, getBlock, &logger) // TODO 跨合约转账
 	UTP.ISmartContract = sdkhelper.New(
 		1,
 		0,
+		UTP.g.AppStateJSON.GnsToken.Owner,
 		UTP.g.AppStateJSON.GnsToken.Owner,
 		1000,
 		1000,
@@ -112,78 +119,83 @@ func deployContract(contractName, orgID string, methods, interfaces []string, lo
 		tx,
 		nil)
 
-	bc := sdbGet(0, 0, std.KeyOfContractsWithName(orgID, contractName))
-	bc = data(std.KeyOfContractsWithName(orgID, contractName), bc)
-	if bc != nil {
-		return upgradeContract(contractName, orgID, methods, interfaces)
-	}
-
-	owner := NewAccount(UTP.g.AppStateJSON.GnsToken.Name, bn.N(1000000000))
-
-	pc := std.Contract{
-		Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "1.0", orgID),
-		Name:         contractName,
-		Account:      UTP.Helper().BlockChainHelper().CalcAccountFromName(contractName, orgID),
-		Owner:        owner.Address(),
-		Version:      "1.0",
-		CodeHash:     []byte(contractName + "Hash"),
-		EffectHeight: 1,
-		LoseHeight:   0,
-		KeyPrefix:    "/" + contractName,
-		Methods:      make([]std.Method, 0),
-		Token:        "", // TODO
-		OrgID:        orgID,
-	}
-	prefix = pc.KeyPrefix
-
-	for _, m := range methods {
-		md := std.Method{
-			MethodID:  algorithm.ConvertMethodID(algorithm.CalcMethodId(m)),
-			Gas:       200,
-			ProtoType: m,
+	var owner sdk.IAccount
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+		bc := sdbGet(0, 0, std.KeyOfContractsWithName(orgID, contractName))
+		bc = data(std.KeyOfContractsWithName(orgID, contractName), bc)
+		if bc != nil {
+			owner = upgradeContract(contractName, orgID, methods, interfaces)
+			return
 		}
-		pc.Methods = append(pc.Methods, md)
-	}
-	for _, m := range interfaces {
-		md := std.Method{
-			MethodID:  algorithm.ConvertMethodID(algorithm.CalcMethodId(m)),
-			Gas:       100,
-			ProtoType: m,
+
+		owner = NewAccount(UTP.g.AppStateJSON.GnsToken.Name, bn.N(0))
+
+		pc := std.Contract{
+			Address:      UTP.Helper().BlockChainHelper().CalcContractAddress(contractName, "1.0", orgID),
+			Name:         contractName,
+			Account:      UTP.Helper().BlockChainHelper().CalcAccountFromName(contractName, orgID),
+			Owner:        owner.Address(),
+			Version:      "1.0",
+			CodeHash:     []byte(contractName + "Hash"),
+			EffectHeight: 1,
+			LoseHeight:   0,
+			KeyPrefix:    "/" + contractName,
+			Methods:      make([]std.Method, 0),
+			Token:        "", // TODO
+			OrgID:        orgID,
 		}
-		pc.Interfaces = append(pc.Interfaces, md)
-	}
+		prefix = pc.KeyPrefix
 
-	addrs := make([]types.Address, 0)
-	addrs = append(addrs, pc.Address)
-	addrsBytes, err := jsoniter.Marshal(addrs)
-	if err != nil {
-		panic(err.Error())
-	}
-	resBytes, err := jsoniter.Marshal(pc)
-	if err != nil {
-		panic(err.Error())
-	}
-	setToDB(std.KeyOfContractsWithName(orgID, contractName), addrsBytes)
-	setToDB(std.KeyOfContract(pc.Address), resBytes)
-	setToDB(std.KeyOfAccountContracts(pc.Owner), addrsBytes)
+		for _, m := range methods {
+			md := std.Method{
+				MethodID:  algorithm.ConvertMethodID(algorithm.CalcMethodId(m)),
+				Gas:       200,
+				ProtoType: m,
+			}
+			pc.Methods = append(pc.Methods, md)
+		}
+		for _, m := range interfaces {
+			md := std.Method{
+				MethodID:  algorithm.ConvertMethodID(algorithm.CalcMethodId(m)),
+				Gas:       100,
+				ProtoType: m,
+			}
+			pc.Interfaces = append(pc.Interfaces, md)
+		}
 
-	addrList := std.ContractVersionList{
-		Name:             contractName,
-		ContractAddrList: addrs,
-		EffectHeights:    []int64{1},
-	}
-	resBytes, err = jsoniter.Marshal(addrList)
-	if err != nil {
-		panic(err.Error())
-	}
-	setToDB(std.KeyOfContractsWithName(orgID, contractName), resBytes)
+		addrs := make([]types.Address, 0)
+		addrs = append(addrs, pc.Address)
+		addrsBytes, err := jsoniter.Marshal(addrs)
+		if err != nil {
+			panic(err.Error())
+		}
+		resBytes, err := jsoniter.Marshal(pc)
+		if err != nil {
+			panic(err.Error())
+		}
+		setToDB(std.KeyOfContractsWithName(orgID, contractName), addrsBytes)
+		setToDB(std.KeyOfContract(pc.Address), resBytes)
+		setToDB(std.KeyOfAccountContracts(pc.Owner), addrsBytes)
 
-	_contract := object.NewContractFromAddress(UTP.ISmartContract, pc.Address)
-	api := UTP.ISmartContract.(*sdkimpl.SmartContract)
-	api.Message().(*object.Message).SetContract(_contract)
+		addrList := std.ContractVersionList{
+			Name:             contractName,
+			ContractAddrList: addrs,
+			EffectHeights:    []int64{1},
+		}
+		resBytes, err = jsoniter.Marshal(addrList)
+		if err != nil {
+			panic(err.Error())
+		}
+		setToDB(std.KeyOfContractsWithName(orgID, contractName), resBytes)
 
-	UTP.setTxSender(owner.Address())
+		_contract := object.NewContractFromSTD(UTP.ISmartContract, &pc)
+		api := UTP.ISmartContract.(*sdkimpl.SmartContract)
+		api.Message().(*object.Message).SetContract(_contract)
 
+		UTP.setTxSender(owner.Address())
+	})
+
+	Commit()
 	return owner
 }
 
@@ -208,5 +220,5 @@ func CalcAccountFromPubKey(pubKey types.PubKey) types.Address {
 		types.ErrInvalidParameter, "invalid pubKey")
 
 	pk := crypto.PubKeyEd25519FromBytes(pubKey)
-	return pk.Address()
+	return pk.Address(utChainID)
 }

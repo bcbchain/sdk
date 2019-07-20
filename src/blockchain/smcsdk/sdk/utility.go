@@ -31,7 +31,7 @@ func RequireOwner() {
 		sdk = iSDK.(ISmartContract)
 	}
 
-	if sdk.Message().Sender().Address() != sdk.Message().Contract().Owner() {
+	if sdk.Message().Sender().Address() != sdk.Message().Contract().Owner().Address() {
 		err := types.Error{ErrorCode: types.ErrNoAuthorization, ErrorDesc: "only contract owner just can do it"}
 		panic(err)
 	}

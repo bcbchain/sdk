@@ -679,7 +679,7 @@ func (cdc *Codec) decodeReflectBinaryStruct(bz []byte, info *TypeInfo, rv reflec
 			}
 			typWanted := typeToTyp4(field.Type, field.FieldOptions).Typ3()
 			if typ != typWanted {
-				err = errors.New(fmt.Sprintf("Expected field type %X, got %X", typWanted, typ))
+				err = errors.New(fmt.Sprintf("Expected field type(name:%s) %X, got %X", field.Name, typWanted, typ))
 				return
 			}
 

@@ -231,6 +231,10 @@ func (l *filter) Fatal(msg string, keyvals ...interface{}) {
 	l.next.Fatal(msg, keyvals...)
 }
 
+func (l *filter) Flush() {
+
+}
+
 // With implements Logger by constructing a new filter with a keyvals appended
 // to the logger.
 //

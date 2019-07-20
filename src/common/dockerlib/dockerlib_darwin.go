@@ -4,12 +4,11 @@ import (
 	cryptorand "crypto/rand"
 	"encoding/hex"
 	"errors"
+	"github.com/docker/docker/api/types/container"
 	"io"
 	"net"
 	"strconv"
 	"strings"
-
-	"github.com/docker/docker/api/types/container"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/mount"
@@ -71,6 +70,7 @@ func (l *DockerLib) Run(dockerImageName, containerName string, params *DockerRun
 		l.logger.Warn("DockerLib Run NewEnvClient Error:", "err", err)
 		return false, errors.New("DockerLib Run NewEnvClient Error:" + err.Error())
 	}
+	defer cli.Close()
 
 	if params.NeedPull {
 		// pull image，三次机会，还不成功可以手动获取
@@ -152,6 +152,7 @@ func (l *DockerLib) feedBack(ctx context.Context, cli *client.Client, containerI
 			params.FirstOutput = string(byt[:n])
 		}
 	}
+
 	return true
 }
 
@@ -255,6 +256,7 @@ func (l *DockerLib) Kill(containerName string) bool {
 		l.logger.Warn("DockerLib Kill NewEnvClient cause ERROR:", "err", err)
 		return false
 	}
+	defer cli.Close()
 
 	containerID := l.getContainerIDByName(ctx, cli, containerName)
 	if containerID == "" {
@@ -304,6 +306,7 @@ func (l *DockerLib) Status(containerName string) bool {
 		l.logger.Warn("DockerLib Status NewEnvClient cause ERROR:", "err", err)
 		return false
 	}
+	defer cli.Close()
 
 	containerID := l.getContainerIDByName(ctx, cli, containerName)
 	if containerID == "" {
@@ -334,6 +337,7 @@ func (l *DockerLib) Reset(prefix string) bool {
 		l.logger.Warn("DockerLib Reset NewEnvClient cause ERROR:", "err", err)
 		return false
 	}
+	defer cli.Close()
 
 	containerList, err := cli.ContainerList(ctx, types.ContainerListOptions{All: true})
 	if err != nil {
@@ -432,4 +436,42 @@ func TruncateID(id string) string {
 		id = id[:12]
 	}
 	return id
+}
+
+func (l *DockerLib) Exec(config ExecConfig, startConfig ExecStartCheck, container string) error {
+	ctx := context.Background()
+	cli, err := client.NewEnvClient()
+	if err != nil {
+		return err
+	}
+	defer cli.Close()
+
+	execConfig := types.ExecConfig{
+		User:         config.User,
+		Privileged:   config.Privileged,
+		Tty:          config.Tty,
+		AttachStdin:  config.AttachStdin,
+		AttachStderr: config.AttachStderr,
+		AttachStdout: config.AttachStdout,
+		Detach:       config.Detach,
+		DetachKeys:   config.DetachKeys,
+		Env:          config.Env,
+		Cmd:          config.Cmd,
+	}
+
+	container = l.prefix + container
+	res, err := cli.ContainerExecCreate(ctx, container, execConfig)
+	if err != nil {
+		return err
+	}
+	execID := res.ID
+	err = cli.ContainerExecStart(ctx, execID, types.ExecStartCheck{
+		Detach: startConfig.Detach,
+		Tty:    startConfig.Tty,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

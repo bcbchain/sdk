@@ -26,10 +26,10 @@ const oneToken int64 = 1000000000
 //InitChain init when deployed on the blockchain first time
 //@:constructor
 func (mc *Mycoin) InitChain() {
-	owner := mc.sdk.Message().Contract().Owner()
+	thisContract := mc.sdk.Helper().ContractHelper().ContractOfName("mycoin")
 	totalSupply := bn.N1(1000000, oneToken)
 	mc._setTotalSupply(totalSupply)
-	mc._setBalanceOf(owner, totalSupply)
+	mc._setBalanceOf(thisContract.Owner().Address(), totalSupply)
 }
 
 //@:public:receipt
@@ -44,20 +44,16 @@ func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
 	sdk.Require(value.IsPositive(),
 		types.ErrInvalidParameter, "value must be positive")
 
-	totalSupply := mc._totalSupply()
-	sdk.Require(totalSupply.IsPositive(),
-		types.ErrUserDefined, "Must init first")
-
 	sender := mc.sdk.Message().Sender().Address()
-	balanceOfSender := mc._balanceOf(sender).Sub(value)
-	sdk.Require(balanceOfSender.IsGEI(0),
+	newBalanceOfSender := mc._balanceOf(sender).Sub(value)
+	sdk.Require(newBalanceOfSender.IsGEI(0),
 		types.ErrInsufficientBalance, "")
 
 	receiver := to
-	balanceOfReceiver := mc._balanceOf(receiver).Add(value)
+	newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
 
-	mc._setBalanceOf(sender, balanceOfSender)
-	mc._setBalanceOf(receiver, balanceOfReceiver)
+	mc._setBalanceOf(sender, newBalanceOfSender)
+	mc._setBalanceOf(receiver, newBalanceOfReceiver)
 
 	mc.emitTransferMyCoin(
 		mc.sdk.Message().Contract().Address(),

@@ -14,6 +14,7 @@ import (
 const lengthOfChanLogInfoBuffer = 10000
 
 type logInfo struct {
+	time        string
 	level       string
 	msg         string
 	keyvals     []interface{}
@@ -241,21 +242,21 @@ func GetGID() string {
 	return string(b)
 }
 
-func (log *giLogger) genLogText(goroutineID, level, msg string, keyvals []interface{}) (logText string) {
+func (log *giLogger) genLogText(strTime, goroutineID, level, msg string, keyvals []interface{}) (logText string) {
 	var kvs []interface{}
 	var tag string
 
 	if goroutineID != "" {
 		tag = fmt.Sprintf(
 			"%v[%v][%-5v][%5s] ",
-			time.Now().UTC().Format(DATETIMEFORMAT),
+			strTime,
 			log.timeZone,
 			level,
 			goroutineID)
 	} else {
 		tag = fmt.Sprintf(
 			"%v[%v][%-5v] ",
-			time.Now().UTC().Format(DATETIMEFORMAT),
+			strTime,
 			log.timeZone,
 			level)
 	}
@@ -283,18 +284,18 @@ func (log *giLogger) genLogText(goroutineID, level, msg string, keyvals []interf
 	return
 }
 
-func (log *giLogger) genLogTextEx(goroutineID, level, fmtStr string, vals []interface{}) (logText string) {
+func (log *giLogger) genLogTextEx(strTime, goroutineID, level, fmtStr string, vals []interface{}) (logText string) {
 	if goroutineID != "" {
 		logText = fmt.Sprintf(
 			"%v[%v][%-5v][%5s] ",
-			time.Now().UTC().Format(DATETIMEFORMAT),
+			strTime,
 			log.timeZone,
 			level,
 			goroutineID)
 	} else {
 		logText = fmt.Sprintf(
 			"%v[%v][%-5v] ",
-			time.Now().UTC().Format(DATETIMEFORMAT),
+			strTime,
 			log.timeZone,
 			level)
 	}
@@ -377,9 +378,9 @@ func asyncRun(log *giLogger) {
 			logBuf := bytes.NewBuffer(nil)
 			logText := ""
 			if li := <-log.cf; li.fmt == false {
-				logText = log.genLogText(li.goroutineID, li.level, li.msg, li.keyvals)
+				logText = log.genLogText(li.time, li.goroutineID, li.level, li.msg, li.keyvals)
 			} else {
-				logText = log.genLogTextEx(li.goroutineID, li.level, li.fmtStr, li.vals)
+				logText = log.genLogTextEx(li.time, li.goroutineID, li.level, li.fmtStr, li.vals)
 			}
 			logBuf.WriteString(logText)
 			log.flush(logBuf)
@@ -395,8 +396,10 @@ func asyncRun(log *giLogger) {
 
 // Log a message at specific level.
 func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
+	strTime := time.Now().UTC().Format(DATETIMEFORMAT)
 	if log.isOutputAsync {
 		li := logInfo{
+			time:  strTime,
 			level: level,
 			fmt:   false,
 			msg:   fileLine() + msg,
@@ -411,7 +414,7 @@ func (log *giLogger) Log(level, msg string, keyvals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogText(rid, level, fileLine()+msg, keyvals)
+		logText := log.genLogText(strTime, rid, level, fileLine()+msg, keyvals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
 }
@@ -438,8 +441,10 @@ func fileLine() string {
 
 // Log a message at specific level.
 func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
+	strTime := time.Now().UTC().Format(DATETIMEFORMAT)
 	if log.isOutputAsync {
 		li := logInfo{
+			time:   strTime,
 			level:  level,
 			fmt:    true,
 			fmtStr: fileLine() + fmtStr,
@@ -454,7 +459,7 @@ func (log *giLogger) LogEx(level, fmtStr string, vals ...interface{}) {
 		if log.withThreadID {
 			rid = GetGID()
 		}
-		logText := log.genLogTextEx(rid, level, fileLine()+fmtStr, vals)
+		logText := log.genLogTextEx(strTime, rid, level, fileLine()+fmtStr, vals)
 		log.flushMutex(bytes.NewBuffer([]byte(logText)))
 	}
 }
@@ -470,9 +475,9 @@ func (log *giLogger) Flush() {
 			if len(log.cf) > 0 {
 				logText := ""
 				if li := <-log.cf; li.fmt == false {
-					logText = log.genLogText(li.goroutineID, li.level, li.msg, li.keyvals)
+					logText = log.genLogText(li.time, li.goroutineID, li.level, li.msg, li.keyvals)
 				} else {
-					logText = log.genLogTextEx(li.goroutineID, li.level, li.fmtStr, li.vals)
+					logText = log.genLogTextEx(li.time, li.goroutineID, li.level, li.fmtStr, li.vals)
 				}
 				logBuf.WriteString(logText)
 			} else {

@@ -50,7 +50,7 @@ type IMessage interface {
 // IAccount the interface for Account
 type IAccount interface {
 	Address() types.Address                                                 //账户地址
-	PubKey() types.PubKey                                                   // 账户公钥
+	PubKey() types.PubKey                                                   //账户公钥
 	Balance() bn.Number                                                     //账户当前合约注册的代币的余额（cong）
 	BalanceOfToken(token types.Address) bn.Number                           //根据地址获取代币或基础通证的余额（cong）
 	BalanceOfName(name string) bn.Number                                    //根据名称获取代币或基础通证的余额（cong）
@@ -64,12 +64,12 @@ type IAccount interface {
 // IContract the interface for Contract
 type IContract interface {
 	Address() types.Address       //合约地址
-	Account() types.Address       //合约的账户地址
-	Owner() types.Address         //合约拥有者的账户地址
+	Account() IAccount            //合约的账户对象
+	Owner() IAccount              //合约拥有者的账户对象
 	Name() string                 //合约名称
 	Version() string              //合约版本
 	CodeHash() types.Hash         //合约代码的哈希
-	EffectHeight() int64          ///合约生效的区块高度
+	EffectHeight() int64          //合约生效的区块高度
 	LoseHeight() int64            //合约失效的区块高度
 	KeyPrefix() string            //合约在状态数据库中KEY值的前缀
 	Methods() []std.Method        //合约对外提供接的方法列表
@@ -83,7 +83,7 @@ type IContract interface {
 // IToken the interface for Token
 type IToken interface {
 	Address() types.Address               //代币地址
-	Owner() types.Address                 //代币拥有者的账户地址
+	Owner() IAccount                      //代币拥有者的账户对象
 	Name() string                         //代币的名称
 	Symbol() string                       //代币的符号
 	TotalSupply() bn.Number               //代币的总供应量

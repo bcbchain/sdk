@@ -32,6 +32,7 @@ func New(
 	transID int64,
 	txID int64,
 	sender types.Address,
+	payer types.Address,
 	gasLimit int64,
 	gasLeft int64,
 	note string,
@@ -60,7 +61,7 @@ func New(
 		for _, item := range items {
 			cloneItems = append(cloneItems, item)
 		}
-		message := object.NewMessage(smc, contract, methodID, cloneItems, sender, nil, origin, receipts)
+		message := object.NewMessage(smc, contract, methodID, cloneItems, sender, payer, origin, receipts)
 		smc.SetMessage(message)
 
 		tx := object.NewTx(smc, note, gasLimit, gasLeft, sender)
@@ -84,7 +85,7 @@ func OriginNewMessage(
 		methodID,
 		nil,
 		origin.Message().Sender().Address(),
-		origin.Message().Payer(),
+		origin.Message().Payer().Address(),
 		originList,
 		receipts)
 

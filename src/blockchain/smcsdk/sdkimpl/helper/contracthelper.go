@@ -67,7 +67,12 @@ func (ch *ContractHelper) ContractOfToken(tokenAddr types.Address) sdk.IContract
 		}
 	}
 
-	return ch.contractOfAddress(addr)
+	c := ch.contractOfAddress(addr)
+	if c.LoseHeight() != 0 && c.LoseHeight() < ch.smc.Block().Height() {
+		return nil
+	}
+
+	return c
 }
 
 // ContractOfName get contract object with name
@@ -80,7 +85,12 @@ func (ch *ContractHelper) ContractOfName(name string) sdk.IContract {
 	for i := len(versionList.ContractAddrList) - 1; i >= 0; i-- {
 		// return effective contract
 		if ch.smc.Block().Height() >= versionList.EffectHeights[i] {
-			return ch.contractOfAddress(versionList.ContractAddrList[i])
+			contract := ch.contractOfAddress(versionList.ContractAddrList[i])
+			if contract.LoseHeight() != 0 && contract.LoseHeight() < ch.smc.Block().Height() {
+				return nil
+			}
+
+			return contract
 		}
 	}
 
@@ -129,9 +139,6 @@ func (ch *ContractHelper) contractOfAddress(address types.Address) sdk.IContract
 	}
 
 	contract := object.NewContractFromSTD(ch.smc, stdContract.(*std.Contract))
-	if contract.LoseHeight() != 0 && contract.LoseHeight() <= ch.smc.Block().Height() {
-		return nil
-	}
 
 	return contract
 }

@@ -91,9 +91,8 @@ func (m *Message) GetTransferToMe() (transferReceipts []*std.Transfer) {
 	for _, v := range m.inputReceipts {
 		transferReceipt := m.parseToTransfer(v.Value)
 		if transferReceipt != nil &&
-			transferReceipt.To == m.smc.Message().Contract().Account() {
+			transferReceipt.To == m.smc.Message().Contract().Account().Address() {
 			transferReceipts = append(transferReceipts, transferReceipt)
-			break
 		}
 	}
 

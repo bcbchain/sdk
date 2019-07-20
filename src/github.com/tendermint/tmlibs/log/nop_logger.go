@@ -18,3 +18,4 @@ func (nopLogger) Fatal(string, ...interface{}) {}
 func (l *nopLogger) With(...interface{}) Logger {
 	return l
 }
+func (nopLogger) Flush() {}

@@ -238,7 +238,7 @@ func (acct *Account) PubKey() (pubKey crypto.PubKey) {
 }
 
 func (acct *Account) Address(chainId string) (address string) {
-	return acct.PrivateKey.PubKey().AddressByChainID(chainId)
+	return acct.PrivateKey.PubKey().Address(chainId)
 }
 
 func (acct *Account) Sign(data []byte) (sigInfo *sig.Ed25519Sig, err error) {

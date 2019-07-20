@@ -110,7 +110,7 @@ func Range(args ...interface{}) {
 		checkFunc(args[2])
 
 		fromType := reflect.TypeOf(args[0]).Kind().String()
-		toType := reflect.TypeOf(args[0]).Kind().String()
+		toType := reflect.TypeOf(args[1]).Kind().String()
 
 		if strings.ContainsAny(fromType, "int") && strings.ContainsAny(toType, "int") {
 			rangeOfStartEnd(args[0], args[1], args[2])
@@ -132,6 +132,7 @@ func rangeMap(mapObj, f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn := funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 2 {
 		panic("Func must be two in parameters")
 	}
@@ -181,9 +182,13 @@ func rangeMap(mapObj, f interface{}) {
 		in[0] = k
 		in[1] = mapObjValue.MapIndex(k)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 	}
 }
@@ -197,6 +202,7 @@ func rangeSlice(sliceObj, f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn := funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 2 {
 		panic("Func must be two in parameters")
 	}
@@ -226,9 +232,13 @@ func rangeSlice(sliceObj, f interface{}) {
 		in[0] = reflect.ValueOf(index)
 		in[1] = sliceObjValue.Index(index)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 
 		index++
@@ -239,6 +249,7 @@ func rangeOfCount(loopCount, f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn := funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 1 {
 		panic("Func must be one in parameters")
 	}
@@ -265,9 +276,13 @@ func rangeOfCount(loopCount, f interface{}) {
 		in := make([]reflect.Value, 1)
 		in[0] = reflect.ValueOf(index)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 
 		index++
@@ -279,6 +294,7 @@ func rangeOfStartEnd(start, end, f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn := funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 1 {
 		panic("Func must be one in parameters")
 	}
@@ -293,22 +309,26 @@ func rangeOfStartEnd(start, end, f interface{}) {
 	if startI > endI {
 		panic("start cannot greater than end")
 	}
-	if endI-startI > maxLoopCount {
+	if endI-startI+1 > maxLoopCount {
 		panic("loop count cannot greater than " + fmt.Sprintf("%d", maxLoopCount))
 	}
 
 	// loop
 	index := startI
 	var retVal []reflect.Value
-	for index < endI {
+	for index <= endI {
 		fValue := reflect.ValueOf(f)
 
 		in := make([]reflect.Value, 1)
 		in[0] = reflect.ValueOf(index)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 
 		index++
@@ -320,6 +340,7 @@ func rangeOfBreak(f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn := funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 1 {
 		panic("Func must be one in parameters")
 	}
@@ -337,9 +358,13 @@ func rangeOfBreak(f interface{}) {
 		in := make([]reflect.Value, 1)
 		in[0] = reflect.ValueOf(index)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 
 		index++
@@ -361,6 +386,7 @@ func rangeOfBool(fc, f interface{}) {
 	// check operation function
 	funcType := reflect.TypeOf(f)
 	numIn = funcType.NumIn()
+	numOut := funcType.NumOut()
 	if numIn != 1 {
 		panic("Func must be one in parameters")
 	}
@@ -384,9 +410,13 @@ func rangeOfBool(fc, f interface{}) {
 		in := make([]reflect.Value, 1)
 		in[0] = reflect.ValueOf(index)
 
-		retVal = fValue.Call(in)
-		if retVal[0].Bool() == Break {
-			return
+		if numOut == 1 {
+			retVal = fValue.Call(in)
+			if retVal[0].Bool() == Break {
+				return
+			}
+		} else {
+			fValue.Call(in)
 		}
 
 		index++
@@ -404,12 +434,14 @@ func checkFunc(f interface{}) {
 	funcType := reflect.TypeOf(f)
 	numOut := funcType.NumOut()
 
-	if numOut != 1 {
-		panic("Func must have one return value")
+	if numOut > 1 {
+		panic("Func must have one or zero return value")
 	}
 
-	if funcType.Out(0).Kind() != reflect.Bool {
-		panic("Func's return value must be a bool")
+	if numOut == 1 {
+		if funcType.Out(0).Kind() != reflect.Bool {
+			panic("Func's return value must be a bool")
+		}
 	}
 }
 

@@ -35,7 +35,7 @@ func (bh *BlockChainHelper) CalcAccountFromPubKey(pubKey types.PubKey) types.Add
 		types.ErrInvalidParameter, "invalid pubKey")
 
 	pk := crypto.PubKeyEd25519FromBytes(pubKey)
-	return pk.AddressByChainID(bh.smc.Helper().GenesisHelper().ChainID())
+	return pk.Address(bh.smc.Helper().GenesisHelper().ChainID())
 }
 
 // CalcAccountFromName calculate account address from name
@@ -96,7 +96,8 @@ func (bh *BlockChainHelper) GetBlock(height int64) sdk.IBlock {
 		return nil
 	}
 
-	v := sdkimpl.GetBlockFunc(height)
+	transID := bh.smc.(*sdkimpl.SmartContract).LlState().TransID()
+	v := sdkimpl.GetBlockFunc(transID, height)
 
 	block := object.NewBlock(
 		bh.smc,
@@ -147,7 +148,7 @@ func (bh *BlockChainHelper) CheckAddress(addr types.Address) error {
 // GetCurrentBlock get current block data
 func GetCurrentBlock(smc sdk.ISmartContract) sdk.IBlock {
 	// get current block if height is 0
-	v := sdkimpl.GetBlockFunc(0)
+	v := sdkimpl.GetBlockFunc(smc.(*sdkimpl.SmartContract).LlState().TransID(), 0)
 
 	block := object.NewBlock(
 		smc,

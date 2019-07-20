@@ -1,6 +1,7 @@
 package mycoin
 
 import (
+	"blockchain/smcsdk/common/gls"
 	"blockchain/smcsdk/sdk/bn"
 	"blockchain/smcsdk/utest"
 	"gopkg.in/check.v1"
@@ -17,14 +18,16 @@ var _ = check.Suite(&MySuite{})
 func (mysuit *MySuite) TestMycoin_Transfer(c *check.C) {
 	utest.Init(orgID)
 	contractOwner := utest.DeployContract(c, contractName, orgID, contractMethods, nil)
-	test := NewTestObject(contractOwner)
+	gls.Mgr.SetValues(gls.Values{gls.SDKKey: utest.UTP.ISmartContract}, func() {
+		test := NewTestObject(contractOwner)
 
-	acct := utest.NewAccount(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1000000000))
-	if acct == nil {
-		panic("初始化账户失败")
-	}
+		acct := utest.NewAccount(test.obj.sdk.Helper().GenesisHelper().Token().Name(), bn.N(1000000000))
+		if acct == nil {
+			panic("初始化账户失败")
+		}
 
-	test.run().InitChain()
+		test.run().InitChain()
 
-	test.run().setSender(contractOwner).Transfer(acct.Address(), bn.N(1000000000))
+		test.run().setSender(contractOwner).Transfer(acct.Address(), bn.N(1000000000))
+	})
 }

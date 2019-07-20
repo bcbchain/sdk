@@ -5,6 +5,11 @@ import (
 	"blockchain/smcsdk/sdkimpl/llfunction"
 	"common/mc"
 	"github.com/tendermint/tmlibs/log"
+	"sync"
+)
+
+var (
+	syncOnce sync.Once
 )
 
 // SmartContract smart contract information
@@ -74,12 +79,14 @@ func Init(
 	getBlockFunc llfunction.GetBlockCallBack,
 	loggerF *log.Loggerf) {
 
-	GetBlockFunc = getBlockFunc
-	TransferFunc = transferFunc
-	BuildFunc = buildFunc
+	syncOnce.Do(func() {
+		GetBlockFunc = getBlockFunc
+		TransferFunc = transferFunc
+		BuildFunc = buildFunc
 
-	Logger = *loggerF
-	McInst = mc.NewMcInstance()
+		Logger = *loggerF
+		McInst = mc.NewMcInstance()
+	})
 }
 
 // Block get block object
