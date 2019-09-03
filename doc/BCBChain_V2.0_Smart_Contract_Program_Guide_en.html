@@ -1,0 +1,1688 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>BCBChain_V2.0_Smart_Contract_Program_Guide_en</title></head>
+<body><h1>BCBChain V2.0 Smart Contract Program Guide</h1>
+<p><strong>V2.0.4</strong></p>
+<div style="page-break-after: always;"></div>
+<div>[TOC]</div>
+<script src="./github/ltview.js"></script>
+<div style="page-break-after: always;"></div>
+<h1>1 <strong>What is BCB</strong></h1>
+<p>BCBChain is a blockchain system based on Tendermint. It is a scalable platform with high stability, based on system security, technological innovation, fast and easy to use, and efficient data transmissions between object to object, and human to object.</p>
+<p>For more details, please view 《BCBChain_V1.0_Program_Reference》.</p>
+<div style="page-break-after: always;"></div>
+<h1>2 <strong>Smart Contract Overview</strong></h1>
+<p>Since V2.0, BCBChain supports independent development and deployment of smart contracts, developed using golang.</p>
+<p>&nbsp;</p>
+<h2>2.1 <strong>Simple smart contract</strong></h2>
+<h3>2.1.1 <strong>Storage</strong></h3>
+<p>Let us first take a look at the simplest form of a smart contract</p>
+<pre><code>package mystorage
+
+import (
+	&quot;blockchain/smcsdk/sdk&quot;
+)
+
+//MyStorage a demo contract
+//@:contract:mystorage
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type MyStorage struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store
+	storedData uint64
+}
+
+//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (ms *MyStorage) InitChain() {
+}
+
+//Set set a data to the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Set(data uint64) {
+	ms._setStoredData(data)
+}
+
+//Get get the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Get() uint64 {
+	return ms._storedData()
+}
+</code></pre>
+<p>BBCBChain&#39;s smart contract is a combination of code (functions of the contract) and data (data types in the contract) and a set of tags (metadata of the contract), and is located at a specific address of the BCBChain.</p>
+<p>Code line:</p>
+<p><code>package mystorage</code></p>
+<p>Declare the name of the smart contract code package, this can be set by the developer, so long it conforms to golang standards.</p>
+<p>Code segment:</p>
+<pre><code>import (
+	&quot;blockchain/smcsdk/sdk&quot;
+)
+</code></pre>
+<p>Declaration of the library to import, it is a smart contract SDK released by BCBChain. When creating the smart contract, you will need to configure the sdk path in GOPATH.</p>
+<p>Code segment:</p>
+<pre><code>//MyStorage a demo contract
+//@:contract:mystorage
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type MyStorage struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store
+	storedData uint64
+}
+</code></pre>
+<p>Declare the metadata and status of the smart contract.</p>
+<ul>
+<li><p>Comment line <em><code>//MyStorage a demo contract</code></em> A comment defining the smart contract below.</p>
+</li>
+<li><p>Markup<code>//@:contract:mystorage</code> Declares the struct <code>MyStorage</code> that will be defined below represents a smart contract, and also declares the name of the smart contract as mystorage. This is the contract name to be sent to the BCBChain main chain during deployment. As an organization may develop multiple different smart contracts, the names of each smart contract will need to be unique, so the authors have to plan around this restriction.</p>
+</li>
+<li><p>Markup   <code>//@:version:1.0</code> Declares the code version of the smart contract. </p>
+</li>
+<li><p>Markup  <code>//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer</code>  Identifies the organization to which the smart contract belongs. The organization name in this example is: example.</p>
+</li>
+<li><p>Markup <code>//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c</code> </p>
+<p>Author’s public key. The code line <code>type MyStorage struct {</code>  declares the opening of the smart contract data structure, its members and its data type. The code line  <code>sdk sdk.ISmartContract</code>   indicates that the data structure is a BCBChain Smart Contract SDK and will automatically possess the smart contract access context provided by the SDK (variable names must be defined as sdk).</p>
+</li>
+<li><p>Markup  <code>//@:public:store</code>  indicates that the next line of code will declare a data type.</p>
+</li>
+<li><p>Code line  <code>storedData uint64</code>  Declares a state data variable of type<code>uint64</code> with the name <code>storedData</code>. You can view it as a member in the state database, and access or mutate its values by calling the database management functions, as well as access its KEY value (<code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mystorage/storedData</code>) externally.
+The helper tools provided by BCBChain will automatically encapsulate the state variables and generate access functions<code>_storeData() uint64</code>, <code>_setStoreData(uint64)</code>、<code>_chkStoreData() bool</code>和<code>_delStoreData() bool</code>.</p>
+</li>
+<li><p>Code line  <code>}</code>  marks the end of this data structure’s declaration.</p>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (ms *MyStorage) InitChain() {
+}
+</code></pre>
+<p>Declares the initialization code for the smart contract when it first joins the chain (executed only on the first time,another initialization code <code>UpdateChain</code>will be executed when the contract is
+upgraded, this does not need to be defined in this contract).</p>
+<ul>
+<li>Markup <code>//@:constructor</code> indicates that the function  <code>InitChain()</code> defined below is an initialization function that is to be used once, when a smart contract is first deployed to BCBChain in order to complete the initialization of the smart contract on the blockchain. A part of the initialization, for example, includes the initialization of certain values in the global state variables.</li>
+<li>Code line  <code>func (ms *MyStorage) InitChain() {</code>  A function prototype that declares the initialization of a smart contract. The function name must be <code>InitChain</code>, which has no input parameters.</li>
+<li>The code line  <code>}</code>  completes the function.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>//Set set a data to the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Set(data uint64) {
+	ms._setStoredData(data)
+}
+</code></pre>
+<p>Declares the code for the smart contract</p>
+<ul>
+<li>Markup  <code>//@:public:method:gas[100]</code>  declares that the function  <code>Set()</code>  defined below is a public function of a smart contract, which can be called by BCBChain transaction broadcast, whereby the call information and result will be recorded in the blockchain. In doing so, the calling function will consume 100 gas.</li>
+<li>Code line  <code>func (ms *MyStorage) Set(data uint64) {</code>  Declares a function for a smart contract. The line<code>ms._setStoredData(data)</code> is the implementation code for the function, which means that the input parameters are saved to the state variable <code>storedData</code>.</li>
+<li>The code line   <code>}</code>  completes the smart contract function.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>//Get get the stored data
+//@:public:method:gas[100]
+func (ms *MyStorage) Get() uint64 {
+	return ms._storedData()
+}
+</code></pre>
+<p>Declares the code for the smart contract</p>
+<ul>
+<li>Markup  <code>//@:public:method:gas[100]</code> declares that the function   <code>Get()</code>  defined below is a public function of a smart contract, which can be called by BCBChain transaction broadcast, whereby the call information and result will be recorded in the blockchain. In doing so, the calling function will consume 100 gas.</li>
+<li>Code line  <code>func (ms *MyStorage) Get() uint64 {</code>  Declare a function prototype for a smart contract. The code line  <code>return ms._storedData()</code>   is the implementation code for the function, indicating that the value of the state variable <code>storedData</code>will be read and returned to the caller.</li>
+<li>The code line  <code>}</code>  completes the smart contract function.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>There aren&#39;t many things that can be done with this contract: it allows anyone to store a single number in the contract, and that number can be accessed by anyone in the world, and there is no viable way to prevent you from publishing this number. Of course, anyone can call the Set() function again, passing in different values, overwriting your number, but this number will still be stored in the history of the blockchain. Later, we will see how to impose access restrictions to ensure that only you can change this number.</p>
+<p>&nbsp;</p>
+<p>Note:</p>
+<ul>
+<li>All identifiers (contract name, function name, and variable name) of the smart contract code can only use the ASCII character set.</li>
+<li>Smart contract codes require storage in the form of ASCII or UTF-8 encoding.</li>
+
+</ul>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>2.1.2 <strong>Token</strong></h3>
+<p>The following contract implements one of the simplest encryption tokens. Here, the token can indeed be produced out of nothing, but only the owner of the contract can do it, and anyone can transfer the currency to others without registering the username and password - all that is required is a BCBChain-compliant encrypted key pair.</p>
+<pre><code>package mycoin
+
+import (
+	&quot;blockchain/smcsdk/sdk&quot;
+	&quot;blockchain/smcsdk/sdk/bn&quot;
+	&quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+//Mycoin a demo contract for digital coin
+//@:contract:mycoin
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Mycoin struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store:cache
+	totalSupply bn.Number
+
+	//@:public:store
+	balanceOf map[types.Address]bn.Number
+}
+
+const oneToken int64 = 1000000000
+
+//InitChain init when deployed on the blockchain first time
+//@:constructor
+func (mc *Mycoin) InitChain() {
+  thisContract := mc.sdk.Helper().ContractHelper().ContractOfName(&quot;mycoin&quot;)
+  totalSupply := bn.N1(1000000, oneToken)
+  mc._setTotalSupply(totalSupply)
+  mc._setBalanceOf(thisContract.Owner().Address(), totalSupply)
+}
+
+//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+
+//Transfer transfer coins from sender to another
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	sdk.Require(value.IsPositive(),
+		types.ErrInvalidParameter, &quot;value must be positive&quot;)
+
+	sender := mc.sdk.Message().Sender().Address()
+	newBalanceOfSender := mc._balanceOf(sender).Sub(value)
+	sdk.Require(newBalanceOfSender.IsGEI(0),
+		types.ErrInsufficientBalance, &quot;&quot;)
+
+	receiver := to
+	newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
+
+	mc._setBalanceOf(sender, newBalanceOfSender)
+	mc._setBalanceOf(receiver, newBalanceOfReceiver)
+
+	mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		receiver,
+		value)
+}
+</code></pre>
+<p>This contract introduces some new concepts, which will be explained one-by-one in detail below</p>
+<p>Code segment:</p>
+<pre><code>	//@:public:store:cache
+	totalSupply bn.Number
+</code></pre>
+<p>Declare state data for smart contracts.</p>
+<ul>
+<li>Markup  <code>//@:public:store:cache</code> means that the next line of code will declare a state data that will be cached in memory.</li>
+<li>Code line  <code>totalSupply bn.Number</code> declares a state variable of type <code>bn.Number</code>. The variable name is <code>totalSupply</code>. The<code>bn.Number</code> type represents a signed large number. The addition, subtraction,
+multiplication, and division operations do not need to consider the overflow problem. The KEY value of this variable in the database is <code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/totalSupply</code>. The helper tool provided by BCBChain will automatically encapsulate the variable and generate access functions <code>_totalSupply() bn.Number</code>,<code>_setTotalSupply(bn.Number)</code>, <code>_chkTotalSupply() bool</code> and<code>_delTotalSupply()</code>, which will also be generated due to the influence of the tag <code>cache</code>. A function to clear the memory cache <code>_clrTotalSupply()</code>.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>	//@:public:store
+	balanceOf map[types.Address]bn.Number
+</code></pre>
+<p>A public state variable is also declared, but it is a more complex data type. This type maps the address to a large number and is used to store the balance corresponding to the account address that owns the token. The KEY value of this variable from the external access state database is <code>/orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer/mycoin/balanceOf/address</code>, where <code>address</code> is the actual account address to be queried. The helper tool provided by BCBChain will automatically encapsulate and generate access functions for this variable<code>_balanceOf(types.Address) bn.Number</code>,<code>_setBalanceOf(types.Address, bn.Number)</code>,<code>_chkBalanceOf(types.Address) bool</code>and <code>_delBalanceOf(types.Address)</code>.</p>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+</code></pre>
+<p>Declares the receipt of the smart contract transaction, which be stored in the BCBChain chain for later access.</p>
+<ul>
+<li>Markup  <code>//@:public:receipt</code>  declares the next line of code as the receipt interface.</li>
+<li>Code line  <code>type receipt interface {</code> 
+declares the start of the receipt type, with the type name as <code>receipt</code>.</li>
+<li>Code line <code>emitTransferMyCoin(token, from, to types.Address, value bn.Number)</code>declares a so-called receipt (receipt) that will be emitted on the last line of the Transfer function. The user
+interface (including the server application) can listen for the receipt being sent on the BCBChain chain at no cost. Once it is sent, the receipt <code>listener</code> will will be notified to facilitate tracking of the transaction.</li>
+<li>Code line <code>}</code> marks the end of the interface definition.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>//Transfer transfer coins from sender to another
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+    .
+    .
+    .
+}
+</code></pre>
+<p>Declares the code for the smart contract</p>
+<ul>
+<li>Markup  <code>//@:public:interface:gas[450]</code>  declares that the function<code>Transfer()</code> defined below is a public interface of a smart contract, which can be called between multiple smart contracts, and its use and results will be written into the BCBChain chain. The smart contracts from the same organization can call each other on the BCBChain. The public interface provided by BCBChain-based organization’s smart contracts can be called by any smart contract.</li>
+
+</ul>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>  sdk.RequireAddress(to)
+  sdk.Require(value.IsPositive(),
+		types.ErrInvalidParameter, &quot;value must be positive&quot;)
+</code></pre>
+<p>Declares a part of the code logic in the contract. The function <code>sdk.RequireAddress()</code>  is provided by the
+SDK to validate if input parameter <code>to</code>is an account address. If not, it will terminate the contract excecution and return an error message in the response. The function<code>sdk.Require()</code> is provided by the SDK to detect that a certain condition must be met (in this case, the input parameter <code>value</code>must be greater than 0), otherwise, it will terminate the contract excecution and return an error message in the response.</p>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>  sender := mc.sdk.Message().Sender().Address()
+  newBalanceOfSender := mc._balanceOf(sender).Sub(value)
+  sdk.Require(newBalanceOfSender.IsGEI(0),
+		types.ErrInsufficientBalance, &quot;&quot;)
+</code></pre>
+<p>Declares a part of the code logic in the contract. The function <code>mc.sdk.Message().Sender().Address()</code> is
+provided by the SDK to retrieve the account address of the sender <code>mc._balanceOf(sender).Sub(value)</code> is
+used to obtain the balance of the tokens in the sender&#39;s account address after subtracting the transfer amount. The function <code>_balanceOf()</code>is automatically generated by a support tool in BCBChain. The function <code>sdk.Require()</code> is provided by the SDK to detect that a certain condition must be met (in this
+case, the balance of the sender is must be sufficient for the transfer), otherwise, it will terminate the contract excecution and return an error message in the response.</p>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>  receiver := to
+  newBalanceOfReceiver := mc._balanceOf(receiver).Add(value)
+</code></pre>
+<p>Declares a part of the code logic in the contract. <code>mc._balanceOf(receiver).Add(value)</code>  calculates the new account balance of the transfer recipient’s account address.</p>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>  mc._setBalanceOf(sender, newBalanceOfSender)
+  mc._setBalanceOf(receiver, newBalanceOfReceiver)
+</code></pre>
+<p>Declares a part of the code logic in the contract. Used to write the calculated new account balance to the state database, the function<code>_setBalanceOf()</code>is automatically generated by the supporting tool provided by BCBChain</p>
+<p>&nbsp;</p>
+<p>Code segment:</p>
+<pre><code>  mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		receiver,
+		value)
+</code></pre>
+<p>Declares a part of the code logic in the contract. It is to be used for updating the receipt of the current transfer transaction into the blockchain. The function <code>emitTransferMyCoin()</code> is automatically generated by the support tool provided by BCBChain.</p>
+<p>&nbsp;</p>
+<p>This contract provides two functions. The function <code>InitChain()</code> is automatically called once by the BCBChain chain after contract creation to initialize the contract. The function for actual use
+by the user or other contract, and for completing the contract, is <code>Transfer()</code>. This function can be used by
+anyone to send tokens to others (provided, of course, that the sender owns these tokens). Remember, if you use a contract to send tokens to an address, you will not see any relevant information when you view the address on the BCBChain chain browser. This is because the detailed information of the transfer and changes in balances is only stored in the data store of this contract (requires special means to query from the state database). By using receipts, you can easily create a “blockchain browser” for your new token to track transactions and balances.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h2>2.2 <strong>Blockchain foundation</strong></h2>
+<p>Programmers should not find the concept of blockchain difficult to understand, because most of the complex algorithms and protocols (hash, elliptic curve cryptography, peer-to-peer networking (P2P), etc.) are only used to fulfill special-case functionality and promise. Smart contract development programmers only need to accept these existing features and functions, and not care about the implementation of the underlying technology.</p>
+<h3>2.2.1 <strong>Transaction</strong></h3>
+<p>A blockchain is a globally shared transactional database, which means that everyone can join the network to read the records in the database. If you want to change something in the database, you must create a transaction that is accepted by everyone else (also known as a transaction in the blockchain world). The word “transaction” means that for whatever that you want to do (assuming you want to change two values at the same time), it either occurs all at once, or not at all. In addition, when your transaction is saved to the
+database, it cannot be modified.</p>
+<p>For example, imagine a table listing the balances of all accounts in an digital currency. If you send a request to transfer from one account to another, the transactional nature of the database ensures that if the amount is deducted from one account, it is always added to another account. If for some reason it is not possible to add an amount to the target account, the source account will not change.</p>
+<p>In addition, the transaction is always signed by the sender (creator). This makes it very easy to add access protection mechanisms for specific modifications to the database. In the case of digital tokens, a simple check ensures that only the person holding the account key can transfer money from it.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>2.2.2 <strong>States</strong></h3>
+<p>BCBChain studied open source blockchain solutions such as Ethereum, Fabric, Tendermint, and Cosmos, and draws on some of their excellent ideas.</p>
+<p>BCBChain is essentially a transaction-based state machine. In computer science, a state machine is a calculation model that contains a set of states, a start state, a set of input symbols (alphabet), and
+a A conversion function that maps the input symbol from current state to the next state (transition function). </p>
+<p>In BCBChain, the state set is expressed by the state database. The initial state is called the genesis state. The input symbol set is the transaction (transaction, tx for short) in the blockchain field. The state transition function is the Smart contract.</p>
+<p><img src='./p/statemachine.png' alt='' referrerPolicy='no-referrer' /></p>
+<p>According to the state machine of BCBChain, we start with the genesis state. This is almost similar to a blank slate, and there is no state of any transaction in the network. When the transaction is executed, the Genesis status will be transformed into the final state. At any time, this final state represents the current state of BCBChain.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>2.2.3 <strong>Blocks</strong></h3>
+<p>The state of BCBChain is composed of thousands of transactions. These transactions are &quot;grouped&quot; into blocks. A block contains a series of transactions, each block is linked to its previous block, and each block causes the state machine to reach a new state.</p>
+<p><img src='./p/blockchain.png' alt='' referrerPolicy='no-referrer' /></p>
+<p>For the state transition to happen, the transaction must be valid (ie, to promote the non-repudiation characteristics of the blockchain technique). For a transaction to be considered valid, it must go through a verification process. Each transaction must be signed by the sender using its own private key, and the BCBChain&#39;s smart contract must be verified to meet certain conditions. Only then can the validation be
+successful.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>2.2.4 <strong>Message Calls</strong></h3>
+<p>Smart contracts can communicate with each other via message calls.</p>
+<p>Each transaction can contain multiple top-level message calls that are executed in sequence. The receipt generated from the previous message call can be used as input for the next top-level message call for some logical processing.</p>
+<p>Each top-level message called, will in turn generate more message calls across multiple contracts.</p>
+<p>The number of message call layers is limited to 8. In order to prevent infinite loops, each layer of message calls are prohibited from forming a loop.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>2.2.3 <strong>Receipt</strong></h3>
+<p>On top of transaction result, message calls can also return the log data of the transaction execution process. Here, we call it the receipt, which is stored on the block and very easy to retrieve.</p>
+<div style="page-break-after: always;"></div>
+<h1>3 <strong>Examples of Smart Contract Implementation</strong></h1>
+<h2>3.1 <strong>Voting</strong></h2>
+<p>The following contract is quite complex and it implements a commissioned voting contract. Of course, the main problems with electronic voting is how to assign voting rights to the right people and how to prevent them from being manipulated. We will not resolve all the problems here, but at least we will show how to conduct a proxy vote that is automatic and completely transparent at the same time.</p>
+<p>Our idea is to create a contract for each (vote) vote, with an abbreviation for each option. Then, as the creator of the contract - the chairman, each independent address will be given the right to vote.</p>
+<p>Address owners can choose to vote on their own, or delegate to someone they trust to vote.</p>
+<p>At the end of the voting period, <code>WinningProposal()</code>will return the proposal that receives the most votes.</p>
+<p>This contract implementation uses two files, as follows:</p>
+<p><code>myballot_types.go</code></p>
+<pre><code>package myballot
+
+import (
+	&quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Voter this declares a new complex type which will
+//       be used for variables later.
+//       it will represent a single voter.
+type Voter struct {
+	weight   uint          // weight is accumulated by delegation
+	voted    bool          // if true, that person already voted
+	delegate types.Address // person delegated to
+	vote     uint          // index of the voted proposal
+}
+
+//Proposal this is a type for a single proposal.
+type Proposal struct {
+	name      string // short name (up to 32 bytes)
+	voteCount uint   // number of accumulated votes
+}
+</code></pre>
+<p><code>myballot.go</code></p>
+<pre><code>package myballot
+
+import (
+	&quot;blockchain/smcsdk/sdk&quot;
+	&quot;blockchain/smcsdk/sdk/forx&quot;
+	&quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+//Ballot a demo smart contract for voting with delegation.
+//@:contract:myballot
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Ballot struct {
+	sdk sdk.ISmartContract
+
+	//chairperson this declares a state variable that stores a chairperson&#39;s 
+	//            address for the contract
+	//@:public:store:cache
+	chairperson string
+
+	//voters this declares a state variable that stores a &#39;Voter&#39; struct for
+	//       each possible address
+	//@:public:store
+	voters map[types.Address]Voter
+
+	//proposals a dynamically-sized array of &#39;Proposal&#39; structs
+	//@:public:store:cache
+	proposals []Proposal
+}
+
+//InitChain init when deployed on the blockChain first time
+//@:constructor
+func (ballot *Ballot) InitChain() {
+}
+
+//Init create a new (voting) vote for each proposal in &#39;proposal Names&#39;
+//@:public:method:gas[500]
+func (ballot *Ballot) Init(proposalNames []string) {
+	sender := ballot.sdk.Message().Sender().Address()
+
+	// Only cntract&#39;s owner can perform init
+	sdk.RequireOwner()
+
+	proposals := ballot._proposals()
+	sdk.Require(len(proposals) &lt;= 0,
+		types.ErrUserDefined, &quot;Already inited&quot;)
+
+	chairperson := sender
+	ballot._setChairperson(chairperson)
+
+	voter := ballot._voters(chairperson)
+	voter.weight = 1
+	ballot._setVoters(chairperson, voter)
+
+	// For each of the provided proposal names,
+	// create a new &#39;Proposal&#39; object and add it to the end of the array
+	forx.Range(proposalNames, func(i int, pName string) {
+		proposals = append(proposals,
+			Proposal{
+				name:      pName,
+				voteCount: 0,
+			})
+	})
+	ballot._setProposals(proposals)
+}
+
+//GiveRightToVote give `voter` the right to vote on this ballot.
+//                may only be called by &#39;chairperson&#39;.
+//@:public:method:gas[500]
+func (ballot *Ballot) GiveRightToVote(voterAddr types.Address) {
+	sender := ballot.sdk.Message().Sender().Address()
+	chairperson := ballot._chairperson()
+	sdk.Require(sender == chairperson,
+		types.ErrNoAuthorization, &quot;Only chairperson can give right to vote.&quot;)
+
+	voter := ballot._voters(voterAddr)
+	sdk.Require(voter.voted == false,
+		types.ErrUserDefined, &quot;The voter already voted.&quot;)
+	sdk.Require(voter.weight == 0,
+		types.ErrUserDefined, &quot;The voter&#39;s weight must be zero.&quot;)
+
+	voter.weight = 1
+	ballot._setVoters(voterAddr, voter)
+}
+
+//Delegate Delegate your vote to the voter &#39;to&#39;
+//@:public:method:gas[1500]
+func (ballot *Ballot) Delegate(to types.Address) {
+	sender := ballot.sdk.Message().Sender().Address()
+	sendVoter := ballot._voters(sender)
+	
+	sdk.Require(sendVoter.voted == false,
+		types.ErrUserDefined, &quot;You already voted.&quot;)
+	sdk.Require(to != sender,
+		types.ErrUserDefined, &quot;Self-delegation is disallowed.&quot;)
+
+  // Forward the delegation as long as &#39;to&#39; also delegated.
+  // In general, such loops are very dangerous, because if they run too 
+  // long, they might need more gas than is available in a block.
+  // In this case, the delegation will not be executed, but in other 
+  // situations, such loops might cause a contract to get &quot;stuck&quot; completely.
+	toVoter := ballot._voters(to)
+	forx.Range( func() bool {
+	              return toVoter.delegate != &quot;&quot;
+	            },
+	            func(i int) {
+							  to = toVoter.delegate
+							  toVoter = ballot._voters(to)
+					
+							  // We found a loop in the delegation, not allowed.
+							  sdk.Require(to != sender,
+								  types.ErrUserDefined, &quot;Found loop in delegation.&quot;)
+						  })
+
+	sendVoter.voted = true
+	sendVoter.delegate = to
+	delegate := toVoter
+	if delegate.voted {
+    // If the delegate already voted,
+    // directly add to the number of votes
+		proposals := ballot._proposals()
+		proposals[int(delegate.vote)].voteCount += sendVoter.weight
+		ballot._setProposals(proposals)
+	} else {
+    // If the delegate did not vote yet,
+    // add to her weight.
+		delegate.weight += sendVoter.weight
+		ballot._setVoters(to, delegate)
+	}
+	return
+}
+
+//Vote give your vote (including votes delegated to you)
+//     to proposal `proposals[proposal].name`.
+//@:public:method:gas[500]
+func (ballot *Ballot) Vote(proposal uint) {
+	sender := ballot.sdk.Message().Sender().Address()
+	sendVoter := ballot._voters(sender)
+	
+	sdk.Require(sendVoter.voted == false,
+		types.ErrUserDefined, &quot;You already voted.&quot;)
+
+	proposals := ballot._proposals()
+	sdk.Require(proposal &lt; uint(len(proposals)),
+		types.ErrUserDefined, &quot;Proposal is out of index.&quot;)
+
+	sendVoter.voted = true
+	sendVoter.vote = proposal
+	proposals[int(proposal)].voteCount += sendVoter.weight
+	ballot._setProposals(proposals)
+}
+
+//WinningProposal computes the winning proposal taking all
+//                previous votes into account.
+//@:public:method:gas[500]
+func (ballot *Ballot) WinningProposal() (winningProposal uint) {
+	var winningVoteCount uint
+	
+	proposals := ballot._proposals()
+	forx.Range(proposals, func(i int, proposal Proposal) {
+		if proposal.voteCount &gt; winningVoteCount {
+			winningVoteCount = proposal.voteCount
+			winningProposal = uint(i)
+		}
+	})
+	return
+}
+
+//WinnerName calls winningProposal() function to get the index
+//           of the winner contained in the proposals array and then
+//           returns the name of the winner
+//@:public:method:gas[500]
+func (ballot *Ballot) WinnerName() (winnerName string) {
+	proposals := ballot._proposals()
+	if len(proposals) &gt; 0 {
+		winnerName = proposals[ballot.WinningProposal()].name
+	}
+	return
+}
+</code></pre>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h2>3.2 <strong>Charity Donations</strong></h2>
+<p>The following contract implements a simple charitable donation function. The contract code are as follows:</p>
+<pre><code>package mydonation
+
+import (
+	&quot;blockchain/smcsdk/sdk&quot;
+	&quot;blockchain/smcsdk/sdk/bn&quot;
+	&quot;blockchain/smcsdk/sdk/forx&quot;
+	&quot;blockchain/smcsdk/sdk/std&quot;
+	&quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+//Mydonation This is struct of contract
+//@:contract:mydonation
+//@:version:1.0
+//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+type Mydonation struct {
+	sdk sdk.ISmartContract
+
+	//Total donations received by donees
+	//@:public:store
+	donations map[types.Address]bn.Number // key=address of donee
+}
+
+const (
+	errDoneeCannotBeOwner = 55000 + iota
+	errDoneeCannotBeSmc
+	errDoneeAlreadyExist
+	errDoneeNotExist
+	errDonationExist
+	errDonationNotEnough
+)
+
+//@:public:receipt
+type receipt interface {
+	emitAddDonee(donee types.Address)
+	emitDelDonee(donee types.Address)
+	emitDonate(from, donee types.Address, value, balance bn.Number)
+	emitTransferDonation(donee types.Address, value, balance bn.Number)
+}
+
+//InitChain Constructor of this Mydonation
+//@:constructor
+func (d *Mydonation) InitChain() {
+}
+
+//AddDonee Add a new donee
+//@:public:method:gas[500]
+func (d *Mydonation) AddDonee(donee types.Address) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(donee != d.sdk.Message().Sender().Address(),
+		errDoneeCannotBeOwner, &quot;Donee can not be owner&quot;)
+	sdk.Require(donee != d.sdk.Message().Contract().Address(),
+		errDoneeCannotBeSmc, &quot;Donee can not be this smart contract&quot;)
+	sdk.Require(donee != d.sdk.Message().Contract().Account().Address(),
+		errDoneeCannotBeSmc, &quot;Donee can not be account of this smart contract&quot;)
+	sdk.Require(!d._chkDonations(donee),
+		errDoneeAlreadyExist, &quot;Donee already exists&quot;)
+
+	d._setDonations(donee, bn.N(0))
+
+	//emit receipt
+	d.emitAddDonee(donee)
+}
+
+//Donate delete a donee
+//@:public:method:gas[500]
+func (d *Mydonation) DelDonee(donee types.Address) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, &quot;Donee does not exist&quot;)
+	sdk.Require(d._donations(donee).IsEqualI(0),
+		errDonationExist, &quot;Donation exists&quot;)
+
+	d._delDonations(donee)
+
+	//emit receipt
+	d.emitDelDonee(donee)
+}
+
+//Donate Charitable donors donate money to smart contract
+//@:public:method:gas[500]
+func (d *Mydonation) Donate(donee types.Address) {
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, &quot;Donee does not exist&quot;)
+
+	var valTome *std.Transfer
+	token := d.sdk.Helper().GenesisHelper().Token()
+	forx.Range(d.sdk.Message().GetTransferToMe(), func(i int, receipt *std.Transfer) {
+		sdk.Require(receipt.Token == token.Address(),
+			types.ErrInvalidParameter, &quot;Accept donations in genesis token only&quot;)
+		sdk.Require(valTome == nil,
+			types.ErrInvalidParameter, &quot;Accept only one donation at a time&quot;)
+		valTome = receipt
+	})
+	sdk.Require(valTome != nil,
+		types.ErrInvalidParameter, &quot;Please transfer token to me first&quot;)
+
+	balance := d._donations(donee).Add(valTome.Value)
+	d._setDonations(donee, balance)
+
+	//emit receipt
+	d.emitDonate(
+		d.sdk.Message().Sender().Address(),
+		donee,
+		valTome.Value,
+		balance,
+	)
+}
+
+//Withdraw To transfer donations to donee
+//@:public:method:gas[500]
+func (d *Mydonation) Transfer(donee types.Address, value bn.Number) {
+	sdk.RequireOwner()
+	sdk.RequireAddress(donee)
+	sdk.Require(d._chkDonations(donee),
+		errDoneeNotExist, &quot;Donee does not exist&quot;)
+	sdk.Require(value.IsGreaterThanI(0),
+		types.ErrInvalidParameter, &quot;Parameter \&quot;value\&quot; must be greater than 0&quot;)
+	sdk.Require(d._donations(donee).IsGE(value),
+		errDonationNotEnough, &quot;Donation is not enough&quot;)
+
+	token := d.sdk.Helper().GenesisHelper().Token()
+	account := d.sdk.Message().Contract().Account()
+	account.TransferByToken(token.Address(), donee, value)
+	balance := d._donations(donee).Sub(value)
+	d._setDonations(donee, balance)
+
+	//emit receipt
+	d.emitTransferDonation(
+		donee,
+		value,
+		balance,
+	)
+}
+</code></pre>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h1>4 <strong>Deeper Understanding of Smart Contracts</strong></h1>
+<h2>4.1 <strong>Organization</strong></h2>
+<p>The smart contracts developed for the BCBChain backbone are organized according to the organization&#39;s architecture, and all smart contracts developed for the same organization will be integrated into a contract process for users to call.</p>
+<p>In a smart contract, you can call the interface that is implemented by other smart contracts. Through the interface in the called smart contract, you can call another smart contract interface. BCBChain supports up to 8 levels of such nested cross-contract calls, but they are not allowed to form a loop.</p>
+<p>BCBChain has set up a base organization, and the smart contracts developed for this base organization will be integrated into the contract process of all organizations for users to call. The organization is mainly set up to provide some cross-contract calls that can be executed by any organization at any time, such as the basic validators for the BCBChain main chain and the token template contract.</p>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h2>4.2 <strong>BNF Paradigm</strong></h2>
+<p>This section describes the contract specifications using the BNF paradigm.</p>
+<p>The English abbreviation for the Backus paradigm is BNF, a formal grammatical representation of the American name Backus and the Danish name Naur, used to describe a formal system of grammar. A
+typical meta language. Also known as the Backus-Naur form. Not only does it strictly represent grammatical rules, but the described grammar is context-independent. It has the characteristics of simple syntax, clear
+definition, and easy parsing and compilation.</p>
+<p>The way the BNF paradigm represents grammar rules is:</p>
+<ul>
+<li>Nonterminals are enclosed in angle brackets.</li>
+<li>The left part of each rule is a non-terminal character, and the right part is a symbol string consisting of non-terminal symbols and terminators. The middle is usually separated by ::=.</li>
+<li>Rules with the same left part can share one left part, with the right parts separated by a vertical line &quot;|&quot;.</li>
+
+</ul>
+<p>The metacharacters commonly used in the BNF paradigm and their meanings are as follows:</p>
+<pre><code>1. Characters in double quotes (such as &quot;word&quot;) represent the characters themselves.  
+   Double_quote is used to represent double quotes themselves.
+2. Words outside the double quotes (possibly underlined) represent the grammar part.
+3. The angle brackets &lt; &gt; are mandatory.
+4. The square brackets [ ] contain optional items.
+5. The braces { } contain items that can be repeated from 0 to innumerable.
+6. A set of all the items contained in parentheses ( ) is used to control the priority of
+   the expression.
+7. Vertical line | means that you can choose one of the left and right sides, which is
+   equivalent to &quot;OR&quot;.
+8. ::= means &quot;defined as&quot;.
+9. Blank Characters The blank character spacing that appears in the BNF paradigm
+   definition is only required for typesetting and is not part of the specification.
+</code></pre>
+<p>&nbsp;</p>
+<h2>4.3 <strong>Contract Markups</strong></h2>
+<p>The BCBChain smart contract code uses the notation to describe the contract&#39;s metadata in the contract code&#39;s comments.</p>
+<p>Below is a detailed syntax description of the various tags used by the BCBChain Smart Contract.</p>
+<h3>4.3.1 contract</h3>
+<p>The markup <code>contract</code> is used to identify the contract name, which must be unique within the  organization. Please ask the developer of the smart contract to design the contract names accordingly.</p>
+<p>The markup <code>contract</code>is mandatory, but can only appear once in the entire contract code.</p>
+<p>The BNF paradigm for <code>contract</code> markup is defined as follows:</p>
+<pre><code>&lt;contract markup syntax&gt; ::= &quot;//@:contract:&quot; &lt;contract name&gt;
+&lt;contract name&gt; ::= &lt;letter&gt; | &lt;contract name&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | 
+                          &lt;decimal number&gt; | 
+                          &lt;alphanumeric string&gt; &lt;letter&gt; | 
+                          &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;let&gt; ::= &quot;_&quot; | &quot;-&quot; | &quot;.&quot; | &lt;lowercase&gt; | &lt;uppercase&gt;
+&lt;lowercase letter&gt; ::= &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot; | &quot;g&quot; | &quot;h&quot; | &quot;i&quot; | &quot;j&quot; |
+                       &quot;k&quot; | &quot;l&quot; | &quot;m&quot; | &quot;n&quot; | &quot;o&quot; | &quot;p&quot; | &quot;q&quot; | &quot;r&quot; | &quot;s&quot; | &quot;t&quot; |
+                       &quot;u&quot; | &quot;v&quot; | &quot;w&quot; | &quot;x&quot; | &quot;y&quot; | &quot;z&quot;
+&lt;Capital letter&gt; ::= &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot; | &quot;H&quot; | &quot;I&quot; | &quot;J&quot; |
+                     &quot;K&quot; | &quot;L&quot; | &quot;M&quot; | &quot;N&quot; | &quot;O&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; |
+                     &quot;U&quot; | &quot;V&quot; | &quot;W&quot; | &quot;X&quot; | &quot;Y&quot; | &quot;Z&quot;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+</code></pre>
+<p>The code after the <code>contract</code>markup must be strictly followed by a contract class definition containing the <code>sdk.ISmartContract</code> member. This contract class follows the context of the smart contract. Each time there is a message call to a smart contract, an instance of the contract class will be automatically created, and its smart contract method will be called. The methods that it provide for the outside to call, must be a member function of its class. The first letter of the class name must be capitalized.</p>
+<p>Example below：</p>
+<pre><code>//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+
+	//@:public:store:cache
+	totalSupply bn.Number
+
+	//@:public:store
+	balanceOf map[types.Address]bn.Number
+}
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.2 version</h3>
+<p>The markup<code>version</code>is used to identify the version of the contract and can only appear once in the entire contract code.</p>
+<p><code>version</code>is mandatory, but can only appear once in the entire contract code.</p>
+<p>The BNF paradigm for <code>version</code>is defined as follows:</p>
+<pre><code>&lt;version markup syntax&gt; ::= &quot;//@:version:&quot; &lt;contract version&gt;
+&lt;Contract version&gt; ::= &lt;decimal number&gt; |
+          	&lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt; |
+          	&lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt; |
+          	&lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt; &quot;.&quot; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:version:1.0
+</code></pre>
+<p>Note: The BCBChain chain does not require specific rules for smart contract versions, ie the contract version can be either a one-segment (eg 1, 2, 3) or a two-segment (1.0, 1.1, 1.2), three-segment (1.0. 1, 1.0.2, 1.0.3), four-segment (1.0.1.102, 1.0.1.103), but different versions of the same smart contract need to maintain the consistency of the number of version format segments.</p>
+<p>&nbsp;</p>
+<h3>4.3.3 organization</h3>
+<p>The markup<code>organization</code>is used to identify the ID of the organization to which the contract belongs.</p>
+<p><code>organization</code>is mandatory, but can only appear once in the entire contract code.</p>
+<p>The BNF paradigm for <code>organization</code>is defined as follows:</p>
+<pre><code>&lt;organization markup syntax&gt; ::= &quot;//@:organization:&quot; &lt;organization ID&gt;
+&lt;Organization ID&gt; ::= &lt;prefix code&gt; &lt;Base58 string&gt;
+&lt;prefix code&gt; ::= &quot;org&quot;
+&lt;Base58 string&gt; ::= &lt;Base58 character&gt; | &lt;Base58 string&gt; &lt;Base58 character&gt;
+&lt;Base58 characters&gt; ::= &lt;decimal numbers&gt; | &lt;uppercase letters&gt; | &lt;lowercase letters&gt;
+&lt;decimal number&gt; ::= &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+&lt;Capital Letters&gt; ::= &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot; | &quot;H&quot; | &quot;J&quot; | &quot;K&quot; | 
+                      &quot;L&quot; | &quot;M&quot; | &quot;N&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; | &quot;U&quot; | &quot;V&quot; | 
+                      &quot;W&quot; | &quot;X&quot; | &quot;Y&quot; | &quot;Z&quot;
+&lt;lowercase letter&gt; ::= &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot; | &quot;g&quot; | &quot;h&quot; | &quot;i&quot; | &quot;j&quot; |
+                       &quot;k&quot; | &quot;m&quot; | &quot;n&quot; | &quot;o&quot; | &quot;p&quot; | &quot;q&quot; | &quot;r&quot; | &quot;s&quot; | &quot;t&quot; | &quot;u&quot; |
+                       &quot;v&quot; | &quot;w&quot; | &quot;x&quot; | &quot;y&quot; | &quot;z&quot;
+</code></pre>
+<p>An example is as follows:</p>
+<pre><code>//@:organization:orgBtjfCSPCAJ84uQWcpNr74NLMWYm5SXzer
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.4 author</h3>
+<p>The markup<code>author</code>is used to identify the account public key of the contract author.</p>
+<p><code>author</code>is a mandatory markup, but can only appear once in the entire contract code.</p>
+<p>The BNF paradigm for<code>author</code>is defined as follows:</p>
+<pre><code>&lt;author markup syntax&gt; ::= &quot;//@:author:&quot; &lt;account public key&gt;
+&lt;account public key&gt; ::= &lt;hex string&gt;
+&lt;hexadecimal string&gt; ::= &lt;hexadecimal number&gt; | &lt;hexadecimal string&gt; &lt;hexadecimal number&gt;
+&lt;hexadecimal number&gt; ::= &quot;0&quot; | 1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot; |
+              	         &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; |
+              	         &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:author:b37e7627431feb18123b81bcf1f41ffd37efdb90513d48ff2c7f8a0c27a9d06c
+</code></pre>
+<p>Note: The hexadecimal public key string length
+must be equal to 64.</p>
+<p>&nbsp;</p>
+<h3>4.3.5 constructor</h3>
+<p>The markup <code>constructor</code>is used to identify the chain&#39;s <em>initialization</em> function.</p>
+<p>The valid code that follows the <code>constructor</code> must be a no-argument function called <code>InitChain</code>or <code>UpdateChain</code> , which will automatically make the only call when the first created (<code>InitChain</code>) or upgrade
+(<code>UpdateChain</code>) of the contract on the BCBChain chain, in order to complete its initialization work in the block, such as initializing the initial values of some global state data.</p>
+<p><code>constructor</code>is optional, but can only appear up to two times in the entire contract code, once for the <code>InitChain</code>function, and once for the <code>UpdateChain</code>function.</p>
+<p>The BNF paradigm for<code>constructor</code> is defined as follows:</p>
+<pre><code>&lt;author markup syntax&gt; ::= &quot;//@:constructor&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:constructor
+func (mc *Mycoin) InitChain() {
+	...
+}
+
+//@:constructor
+func (mc *Mycoin) UpdateChain() {
+	...
+}
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.6 public:store</h3>
+<p>The markup <code>public:store</code> is used to identify a state variable, which must be a valid member variable
+of the contract class (one with the <code>contract</code> markup).</p>
+<p>The valid code that follows<code>public:store</code> must be the definition of a member variable.</p>
+<p><code>public:store</code>is an optional markup that can appear multiple times in the contract class definition, each time identifying a different state variable.</p>
+<p>The BNF paradigm for <code>public:store</code>is defined as follows:</p>
+<pre><code>&lt;public:store markup syntax&gt; ::= &quot;//@:public:store&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+	...
+	//@:public:store
+	balanceOf map[types.Address]bn.Number
+}
+</code></pre>
+<p>The state variable with the <code>public:store</code> markup cannot be directly accessed in the contract code. According to the BCBChain contract specification, the SDK matching tool provided by BCBChain automatically generates a read/write function for the state variable. Example below:</p>
+<pre><code>//Read the function of balanceOf
+func (mc *Mycoin) _balanceOf(k types.Address) bn.Number {
+	return *mc.sdk.Helper().StateHelper().GetEx(
+	    fmt.Sprintf(&quot;/balanceOf/%v&quot;, k), &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
+}
+
+//A function that detects whether balanceOf exists
+func (mc *Mycoin) _chkBalanceOf(k types.Address) bool {
+	return mc.sdk.Helper().StateHelper().Check(fmt.Sprintf(&quot;/balanceOf/%v&quot;, k))
+}
+
+//Configures the function of balanceOf
+func (mc *Mycoin) _setBalanceOf(k types.Address, v bn.Number) {
+	mc.sdk.Helper().StateHelper().Set(fmt.Sprintf(&quot;/balanceOf/%v&quot;, k), &amp;v)
+}
+
+//Function to remove the key value of balanceOf from the state database
+func (mc *Mycoin) _delBalanceOf(k types.Address) {
+	mc.sdk.Helper().StateHelper().Delete(fmt.Sprintf(&quot;/balanceOf/%v&quot;, k))
+} 
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.7 public:store:cache</h3>
+<p>The markup <code>public:store:cache</code>is used to identify a state variable that can be cached in memory, which must be a valid member variable of the contract class (one with the <code>contract</code> markup).</p>
+<p>The valid code that follows<code>public:store:cache</code> must be the definition of a member variable.</p>
+<p><code>public:store:cache</code> is an optional markup that can appear multiple times in the contract class definition, each time identifying a state variable.</p>
+<p>The BNF paradigm for <code>public:store:cache</code>is defined as follows:</p>
+<pre><code>&lt;public:store:cache markup syntax&gt; ::= &quot;//@:public:store:cache&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:contract:mycoin
+type Mycoin struct {
+	sdk sdk.ISmartContract
+	...
+	//@:public:store:cache
+	totalSupply bn.Number
+}
+</code></pre>
+<p>The cacheable state variable cannot be directly accessed in the contract code. According to the BCBChain contract specification, the SDK matching tool provided by BCBChain automatically generates a read/write function for the state variable. Example below:</p>
+<pre><code>//Read the function of the state variable totalSupply
+func (mc *Mycoin) _totalSupply() bn.Number {
+	return *mc.sdk.Helper().StateHelper().McGetEx(
+	    &quot;/totalSupply&quot;, &amp;bn.Number{V: big.NewInt(0)}).(*bn.Number)
+}
+
+//A function that detects whether totalSupply exists
+func (mc *Mycoin) _chkTotalSupply() bool {
+	return mc.sdk.Helper().StateHelper().McCheck(&quot;/totalSupply&quot;)
+}
+
+//Sets the function of totalSupply
+func (mc *Mycoin) _setTotalSupply(v bn.Number) {
+	mc.sdk.Helper().StateHelper().McSet(&quot;/totalSupply&quot;, &amp;v)
+}
+
+//Clears the function of totalSupply
+func (mc *Mycoin) _clrTotalSupply() {
+	mc.sdk.Helper().StateHelper().McClear(&quot;/totalSupply&quot;)
+}
+
+//Remove totalSupply from the state database
+func (m *Mycoin) _delTotalSupply() {
+	m.sdk.Helper().StateHelper().McDelete(&quot;/totalSupply&quot;)
+} 
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.8 public:receipt</h3>
+<p>The markup<code>public:receipt</code>
+is used to identify the definition of all receipts in the contract.</p>
+<p>The valid code following <code>public:receipt</code> must be an interface definition called <code>receipt</code>.</p>
+<p><code>public:receipt</code>is optional and can only appear at most once in the entire contract
+code.</p>
+<p>The BNF paradigm for <code>public:receipt</code>is defined as follows:</p>
+<pre><code>&lt;public:receipt markup syntax&gt; ::= &quot;//@:public:receipt&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:public:receipt
+type receipt interface {
+	emitTransferMyCoin(token, from, to types.Address, value bn.Number)
+}
+</code></pre>
+<p>Every method that sends a <code>receipt</code>must start with the word “<code>emit</code>”, as defined in the <em>Receipt</em> interface. The first word after the word “<code>emit</code>” is converted to lowercase and must be the name of the receipt struct, which can be used to retrieve from the BCBChain chain. Based on BCBChain contract specification, the SDK supporting tool provided by BCBChain will automatically generate the implementation code for the sending receipt function. Example below:</p>
+<pre><code>//The following functions are automatically generated by the BCBChain tool.
+func (mc *Mycoin) emitTransferMyCoin(token, from, to types.Address, value bn.Number) {
+	type transferMyCoin struct {
+		Token types.Address `json:&quot;token&quot;`
+		From types.Address `json:&quot;from&quot;`
+		To types.Address `json:&quot;to&quot;`
+		Value bn.Number `json:&quot;value&quot;`
+	}
+	mc.sdk.Helper().ReceiptHelper().Emit(
+	    transferMycoin{
+		    Token:   token,
+		    From:    from,
+		    To:      to,
+		    Value:   value,
+	    })
+}
+
+//The following is a sample code for sending a receipt, located in the implementation of the Transfer function.
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+
+	//Business logic code that implements the transfer
+	...
+
+	//Send a transfer receipt
+	mc.emitTransferMyCoin(
+		mc.sdk.Message().Contract().Address(),
+		sender,
+		to,
+		value)
+}
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.9 public:method</h3>
+<p>The markup<code>public:method</code> is used to identify a public method of the contract.</p>
+<p>The valid code following <code>public:method</code> must be a member function definition of the contract class (one with the <code>contract</code>markup) The function name must start with an uppercase letter, and it can be executed
+from BCBChain transaction broadcasts.</p>
+<p><code>public:method</code>is optional and can appear zero, one or more times throughout the contract code.</p>
+<p>The BNF paradigm for <code>public:method</code> is defined as follows:</p>
+<pre><code>&lt;public:method markup syntax&gt; ::= &quot;//@:public:method:gas[&quot; &lt;gas quantity&gt; &quot;]&quot;
+&lt;number of gas&gt; ::= [&quot;-&quot;] &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>A positive integer number indicates that the gas cost consumed by the method call is paid by the original sender of the transaction;</li>
+<li>A gas quantity of 0 means no payment is required;</li>
+<li>A negative integer number indicates that the gas cost consumed by the method call is paid by the current smart contract account.</li>
+
+</ul>
+<p>Example below</p>
+<pre><code>//@:public:method:gas[500]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.10 public:interface</h3>
+<p>The markup<code>public:interface</code> is used to identify the public interface of the contract.</p>
+<p>The valid code following <code>public:interface</code> must be a member function definition for the contract class (one with the <code>contract</code> markup). The function name must start with an uppercase letter, and can be
+cross-called from other contracts.</p>
+<p><code>public:interface</code> is optional and can appear zero, one or more times throughout the contract code.</p>
+<p>The BNF paradigm for<code>public:interface</code> is defined as follows:</p>
+<pre><code>&lt;public:interface markup syntax&gt; ::= &quot;//@:public:interface:gas[&quot; &lt;gas quantity&gt; &quot;]&quot;
+&lt;number of gas&gt; ::= &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>The amount of gas must be greater than or equal to zero.</li>
+
+</ul>
+<p>Markups <code>public:interface</code>and <code>public:method</code>can be used simultaneously on same member function of the contract class. The example above can be written as belows:</p>
+<pre><code>//@:public:method:gas[500]
+//@:public:interface:gas[450]
+func (mc *Mycoin) Transfer(to types.Address, value bn.Number) {
+	...
+}
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.3.11 public:mine</h3>
+<p>The markup <code>public:mine</code> is used to identify the mining interface exposed by the contract.</p>
+<p>The valid code following <code>public:mine</code>must be a member function definition for the contract
+class (one with the <code>contract</code> markup).
+The mining function prototype must be:<code>func Mine() int64</code>, and it will automatically execute after BCBChain block reaches a consensus.</p>
+<p><code>public:mine</code> is optional and can appear zero or one time throughout the contract code. Only the smart contract of the underlying organization of BCBChain is allowed to use this mining interface.</p>
+<p>The BNF paradigm for <code>public:mine</code> is defined as follows:</p>
+<pre><code>&lt;public:interface tag syntax&gt; ::= &quot;//@:public:mine&quot;
+</code></pre>
+<p>Example below:</p>
+<pre><code>//@:public:mine
+func (mc *Mycoin) Mine() int64 {
+	...
+}
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>The mining function  <code>Mine()</code> can only be used with the markup<code>public:mine</code>.</li>
+
+</ul>
+<p>&nbsp;</p>
+<h3>4.3.12 import</h3>
+<p>The markup <code>import</code> is used to import an interface prototype for an external contract, making it easy to call external contracts from the current contract.</p>
+<p><code>import</code>is optional, and can appear multiple times in the entire contract code. Each time you import a cross-contract call interface of an external contract, the external contract can only be imported once.</p>
+<p>The BNF paradigm for <code>import</code> is defined as follows:</p>
+<pre><code>&lt;import tag syntax&gt; ::= &quot;//@:import:&quot; &lt;contract name&gt;
+&lt;contract name&gt; ::= &lt;letter&gt; | &lt;contract name&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | &lt;decimal number&gt; | &lt;alphanumeric string&gt; &lt;letter&gt; | &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;let&gt; ::= &quot;_&quot; | &quot;-&quot; | &quot;.&quot; | &lt;lowercase&gt; | &lt;uppercase&gt;
+&lt;lowercase letter&gt; ::= &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot; | &quot;g&quot; | &quot;h&quot; | &quot;i&quot; | &quot;j&quot; |
+                       &quot;k&quot; | &quot;l&quot; | &quot;m&quot; | &quot;n&quot; | &quot;o&quot; | &quot;p&quot; | &quot;q&quot; | &quot;r&quot; | &quot;s&quot; | &quot;t&quot; |
+                       &quot;u&quot; | &quot;v&quot; | &quot;w&quot; | &quot;x&quot; | &quot;y&quot; | &quot;z&quot;
+&lt;Capital letter&gt; ::= &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot; | &quot;H&quot; | &quot;I&quot; | &quot;J&quot; | 
+                     &quot;K&quot; | &quot;L&quot; | &quot;M&quot; | &quot;N&quot; | &quot;O&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; |
+                     &quot;U&quot; | &quot;V&quot; | &quot;W&quot; | &quot;X&quot; | &quot;Y&quot; | &quot;Z&quot;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+</code></pre>
+<p>Using the previous <code>mycoin</code>token contract as an example, if you need to call the contract from other contracts, you need to write the following code:</p>
+<pre><code>//This code is in the contract mycontract
+
+//@:import:mycoin
+type mycoin interface {
+	Transfer(to types.Address, value bn.Number)
+}
+</code></pre>
+<p>The interface name of the external contract is customizable, so long it follows the golang syntax specification.</p>
+<p>The interface of the external contract cannot be directly accessed from the contract. According to the BCBChain contract specification, the SDK supporting tool provided by BCBChain will automatically
+generate an implementation function to access the external contract interface. The generated code example is as follows:</p>
+<pre><code>// This code is automatically generated by the SDK supporting tools
+
+//mycoin This is method of MyContract 
+func (m *MyContract) mycoin() *InterfacemycoinStub {
+	return &amp;InterfacemycoinStub{}
+}
+
+//Transfer This is a method of InterfacemycoinStub
+func (is *InterfacemycoinStub) Transfer(to types.Address, value bn.Number) {
+	return
+}
+
+//run Transfer some receipts to destination contract
+func (is *InterfacemycoinStub) run(f func()) (*InterfacemycoinStub) {
+	...
+	f()
+	...
+	return is
+}
+
+//contract Wrap the destination contract information
+func (is *InterfacemycoinStub) contract() IContract {
+	...
+	return contract
+}
+</code></pre>
+<p>Below is a sample code that calls an external contract in the contract code:</p>
+<pre><code>//This code is in the contract mycontract
+
+func (m *MyContract)TransferTest(to types.Address, value bn.Number) {
+	m.mycoin().Transfer(to, value)
+}
+</code></pre>
+<p>cross-contract calling support transmit receipts to conntract that it&#39;s called, example code in below(from contract2 to call contract1&#39;s interface):</p>
+<blockquote><p>contract1, supply cross-contract interface service:</p>
+<pre><code>//@:contract:contract1
+type C1 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:public:interface:gas[450]
+func (c *C1) Register() {
+
+//I need receipt from caller
+transfers := dw.sdk.Message().GetTransferToMe()
+sdk.Require(transfers!=nil &amp;&amp; len(transfers)==1,
+types.ErrInvalidParameter, &quot;Please transfer to me first&quot;)
+
+token := transfers[0].Token
+value := transfers[0].Value
+
+...
+}
+</code></pre>
+<p>contract2, cross-contract invoker:</p>
+<pre><code>//@:contract:contract2
+type C2 struct {
+sdk sdk.ISmartContract
+...
+}
+
+//@:import:contract1
+type mycoin interface {
+	Register()
+}
+
+//@:public:method:gas[450]
+func (c *C2) Register() {
+...
+c.contract1().run(func(){
+c.sdk.Message().Contract().Account.TransferByName(
+&quot;bcb&quot;,
+c.contract1().contract().Account().Address(),
+bn.N(1000000000),
+)
+}).Register()
+...
+}
+</code></pre>
+</blockquote>
+<p>&nbsp;</p>
+<h2>4.4 <strong>Contract Specification</strong></h2>
+<h3>4.4.1 <strong>BNF Paradigm Definition</strong></h3>
+<p>Combining the above description of the contract mark, the following defines the BNF paradigm of the contract specification:</p>
+<pre><code>&lt;BCBChain Smart Contract&gt; ::= &lt;Contract Definition Code File&gt; {&lt;Contract Implementation Code File&gt;} {&lt;Contract Test Code File&gt;}
+
+&lt;Contract Definition Code File&gt; ::= &lt;Code Package Definition&gt; &lt;Contract Definition Code&gt;
+&lt;contract implementation code file&gt; ::= &lt;code package definition&gt; &lt;contract implementation code&gt;
+&lt;Contract Test Code File&gt; ::= &lt;Code Package Definition&gt; &lt;Contract Test Code&gt;
+&lt;code package definition&gt; ::= &quot;package&quot; &lt;contract package name&gt;
+&lt;contract package name&gt; ::= follows the glang syntax specification
+&lt;contract definition code&gt; ::= &quot;import (&quot;
+                 	&lt;Contract SDK root path&gt;
+                 	{[package alias] &lt;contract support code package path&gt;}
+             	&quot;)&quot;
+ &lt;contract class definition&gt;
+             	[&lt;Contracting chain initialization function definition&gt;]
+             	[&lt;mining definition&gt;]
+             	[&lt;Contract Receipt Definition&gt;]
+             	{&lt;Cross-contract call interface definition&gt;}
+             	{&lt;Contract public function definition&gt;}
+             	{&lt;contract implementation code&gt;}
+&lt;contract SDK root path&gt; ::= double_quote &quot;blockchain/smcsdk/sdk&quot; double_quote
+&lt;Contract Support Code Package Path&gt; ::= Follow the golang code package path specification, follow the whitelist and graylist specifications of the BCBChain contract specification
+&lt;package alias&gt; ::= Code package alias that follows the golang code specification, cannot use &#39;.&#39;
+&lt;contract implementation code&gt; ::= Contract implementation code that follows the golang code specification (code that does not require BCBChain contract tags), including type definitions,
+             	Constant definition, function definition (Note: can not contain global variable definition, do not allow the use of the for keyword, does not allow recursion
+             	transfer)
+&lt;contract test code&gt; ::= Test code that follows the golang unit test specification
+
+&lt;contract class definition&gt; ::= &quot;//@:contract:&quot; &lt;contract name&gt;
+           	&quot;//@:version:&quot; &lt;contract version&gt;
+           	&quot;//@:organization:&quot; &lt;organization ID&gt;
+           	&quot;//@:author:&quot; &lt;account public key&gt;
+           	&quot;type&quot; &lt;contract class name&gt; &quot; struct {&quot;
+           	&quot; sdk sdk.ISmartContract&quot;
+               	{&lt;state variable definition&gt;}
+   {&lt;golang variable definition&gt;}
+           	&quot;}&quot;
+&lt;contract name&gt; ::= See &lt;contract mark: contract&gt;
+&lt;contract version&gt; ::= See &lt;contract mark: version&gt;
+&lt;Organization ID&gt; ::= See &lt;Contract Mark: organization&gt;
+&lt;account public key&gt; ::= See &lt;contract mark: author&gt;
+&lt;contract class name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+&lt;golang variable definition&gt; ::= Standard variable definition code that follows the golang code specification
+&lt;state variable definition&gt; ::= &lt;basic state variable definition&gt; | &lt;state variable definition with cache&gt;
+&lt;Basic state variable definition&gt; ::= &quot;//@:public:store&quot;
+                    	&lt;variable name&gt; [&quot;*&quot;] &lt;variable type&gt;
+&lt;state variable definition with cache&gt; ::= &quot;//@:public:store:cache&quot;
+                       	&lt;variable name&gt; [&quot;*&quot;] &lt;variable type&gt;
+&lt;variable name&gt; ::= &lt;identifier&gt;
+&lt;variable type&gt; ::= &lt;metadata type&gt; | &lt;array type&gt; | &lt;map table type&gt;
+
+&lt;Contracting chain initialization function definition&gt; ::= &lt;deployment function&gt; | &lt;upgrade function&gt;
+&lt;deployment function&gt; ::= &quot;//@:constructor&quot;
+          	&quot;func (&quot; &lt;contract object definition&gt; &quot;) InitChain() {&quot;
+            	&lt;winding code&gt;
+          	&quot;}&quot;
+&lt;upgrade function&gt; ::= &quot;//@:constructor&quot;
+          	&quot;func (&quot; &lt;contract object definition&gt; &quot;) UpdateChain() {&quot;
+            	&lt;winding code&gt;
+          	&quot;}&quot;
+&lt; Mining definition&gt; ::= &quot;//@:public:mine&quot;
+          	&quot;func (&quot; &lt;contract object definition&gt; &quot;) Mine() {&quot;
+            	&lt;mining code&gt;
+          	&quot;}&quot;
+&lt;contract object definition&gt; ::= &lt;variable name&gt; &quot;*&quot; &lt;contract class name&gt;
+&lt;winding code&gt; ::= &lt;golang function body&gt;
+          	Note 1: Only access to state variables is allowed
+          	Note 2: Access to Message() and Tx() is not allowed in sdk
+&lt;mining code&gt; ::= &lt;golang function body&gt;
+          	Note 1: Access to Message() and Tx() is not allowed in sdk
+&lt;golang function body&gt; ::= Following the implementation of the body of the golang code specification, see the definition of &lt;contract implementation code&gt;
+
+&lt;Contract Receipt Definition&gt; ::= &quot;//@:public:receipt&quot;
+             	&quot;type receipt interface {&quot;
+                 	&lt;receipt function name&gt; &lt;function entry parameter definition&gt;
+             	&quot;}&quot;
+&lt;receipt function name&gt; ::= &quot;emit&quot; &lt;identifier at the beginning of uppercase letters&gt;
+&lt;function entry parameter definition&gt; ::= &quot;(&quot; &lt;parameter table&gt; &quot;)&quot;
+&lt;Parameter Table&gt; ::= &lt;Parameter Definition&gt; | &lt;Parameter Table&gt; &quot;,&quot; &lt;Parameter Definition&gt;
+&lt;parameter definition&gt; ::= &lt;variable name&gt; [&quot;*&quot;] &lt;variable type&gt;
+
+&lt;Cross-contract call interface definition&gt; ::= &quot;//@:import:&quot; &lt;contract name&gt;
+                  	&quot;type &quot;&lt;interface class name&gt;&quot; interface {&quot;
+                         	&lt;interface function name&gt; &lt;function entry parameter definition&gt; &lt;function return definition&gt;
+                  	&quot;}&quot;
+&lt;interface class name&gt; ::= &lt;identifier at the beginning of uppercase letters&gt;
+&lt;interface function name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+&lt;function return definition&gt; ::= &lt;empty&gt; | [&quot;*&quot;] &lt;variable type&gt; | &quot;(&quot; &lt;return table&gt; &quot;)&quot;
+&lt;empty&gt; ::= blank
+&lt;back to table&gt; ::= &lt;return definition&gt; | &lt;return table&gt; &quot;,&quot; &lt;return definition&gt;
+&lt;return definition&gt; ::= [&lt;variable name&gt;] [&quot;*&quot;] &lt;variable type&gt;
+
+&lt;Contract public function definition&gt; ::=[&lt;contract public method tag&gt;]
+               	[&lt;Contract Public Interface Tag&gt;]
+            	&quot;func (&quot; &lt;contract object definition&gt; &quot;)&quot; &lt;public function name&gt; &lt;function entry parameter definition&gt; &lt;function return definition&gt; &quot;{&quot;
+                 	&lt;golang function body&gt;
+            	&quot;}&quot;
+&lt;Contract public method tag&gt; ::= &quot;//@:public:method:gas[ &quot;&lt;gas quantity&gt; &quot;]&quot;
+&lt;Contract public interface tag&gt; ::= &quot;//@:public:interface:gas[ &quot;&lt;gas quantity&gt; &quot;]&quot;
+&lt;number of gas&gt; ::= See &lt;contract mark: public:method&gt;
+&lt;public function name&gt; ::= &lt;identifier at the beginning of uppercase letter&gt;
+
+&lt;identifier&gt; ::= &lt;letter&gt; | &lt;identifier&gt; &lt;alphanumeric string&gt;
+&lt;identifier at the beginning of uppercase letters&gt; ::= &lt;capital letter&gt; | &lt;identifier at the beginning of uppercase letter&gt; &lt;alphanumeric string&gt;
+&lt;alphanumeric string&gt; ::= &lt;letter&gt; | &lt;decimal number&gt; | &lt;alphanumeric string&gt; &lt;letter&gt; | &lt;alphanumeric string&gt; &lt;decimal number&gt;
+&lt;letter&gt; ::= &quot;_&quot; | &lt;lowercase&gt; | &lt;uppercase letter&gt;
+&lt;lowercase letter&gt; ::= &quot;a&quot; | &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;f&quot; | &quot;g&quot; | &quot;h&quot; | &quot;i&quot; | &quot;j&quot; | &quot;k&quot; | &quot;l&quot; |
+          	&quot;m&quot; | &quot;n&quot; | &quot;o&quot; | &quot;p&quot; | &quot;q&quot; | &quot;r&quot; | &quot;s&quot; | &quot;t&quot; | &quot;u&quot; | &quot;v&quot; | &quot;w&quot; | &quot;x&quot; |
+          	&quot;y&quot; | &quot;z&quot;
+&lt;Capital letter&gt; ::= &quot;A&quot; | &quot;B&quot; | &quot;C&quot; | &quot;D&quot; | &quot;E&quot; | &quot;F&quot; | &quot;G&quot; | &quot;H&quot; | &quot;I&quot; | &quot;J&quot; | &quot;K&quot; | &quot;L&quot; |
+          	&quot;M&quot; | &quot;N&quot; | &quot;O&quot; | &quot;P&quot; | &quot;Q&quot; | &quot;R&quot; | &quot;S&quot; | &quot;T&quot; | &quot;U&quot; | &quot;V&quot; | &quot;W&quot; | &quot;X&quot; |
+          	&quot;Y&quot; | &quot;Z&quot;
+&lt;decimal number&gt; ::= &quot;0&quot; | &quot;1&quot; | &quot;2&quot; | &quot;3&quot; | &quot;4&quot; | &quot;5&quot; | &quot;6&quot; | &quot;7&quot; | 8 | &quot;9&quot;
+&lt;decimal number&gt; ::= &lt;decimal number&gt; | &lt;decimal number&gt; &lt;decimal number&gt;
+
+&lt;metadata type&gt; := &lt;golang built-in type&gt; | &lt;SDK built-in type&gt; | &lt;custom data structure&gt;
+&lt;golang built-in type&gt; ::= &quot;int&quot; | &quot;int8&quot; | &quot;int16&quot; | &quot;int32&quot; | &quot;int64&quot; |
+                	&quot;uint&quot; | &quot;uint8&quot; | &quot;uint16&quot; | &quot;uint32&quot; | &quot;uint64&quot; |
+                	&quot;bool&quot; | &quot;string&quot; | &quot;byte&quot;
+&lt;SDK built-in type&gt; ::= &lt;Address&gt; | &lt;HexBytes&gt; | &lt;Hash&gt; | &lt;PubKey&gt; | &lt;Number&gt;
+&lt;Address&gt; ::= &quot;types.Address&quot;
+&lt;HexBytes&gt; ::= &quot;types.HexBytes&quot;
+&lt;Hash&gt; ::= &quot;types.Hash&quot;
+&lt;PubKey&gt; ::= &quot;types.PubKey&quot;
+&lt;Number&gt; ::= &quot;bn.Number&quot;
+&lt;custom data structure&gt; ::= &quot;type&quot; &lt;identifier&gt; &quot; struct {&quot;
+                  	{&lt;variable name&gt; [&quot;*&quot;] &lt;variable type&gt;}
+              	&quot;}&quot;
+&lt;array type&gt; ::= &lt;array dimension definition&gt; [&lt;array dimension definition&gt;] &lt;metadata type&gt;
+&lt;array dimension definition&gt; ::= &quot;[&quot; [&lt;decimal number&gt;] &quot;]&quot;
+&lt;map table type&gt; ::= &lt;map table type 1&gt; | &lt;map table type 2&gt;
+&lt;map table type 1&gt; ::= &lt;map table definition&gt; [&lt;map table definition&gt;] &lt;metadata type&gt;
+&lt;map table type 2&gt; ::= &lt;map table definition&gt; [&lt;map table definition&gt;] &lt;array type&gt;
+&lt;map table definition&gt; ::= &quot;map[&quot; &lt;metadata type&gt; &quot;]&quot;
+
+</code></pre>
+<p>&nbsp;</p>
+<h3>4.4.2 <strong>Package Specification</strong></h3>
+<p>The BNF paradigm for defining the contract package structure is as follows:</p>
+<pre><code>&lt;Smart Contract Package Structure&gt; ::= &lt;Contract Definition Code File&gt; {&lt;Contract Implementation Code File&gt;} {&lt;Contract Test Code File&gt;}
+&lt;Contract Definition Code File&gt; ::= &lt;Contract Code Directory&gt; &quot;/&quot; &lt;golang Implementation Code File Name&gt;
+&lt;contract implementation code file&gt; ::= &lt;contract code directory&gt; &quot;/&quot; &lt;golang implementation code file name&gt;
+&lt;Contract Test Code File&gt; ::= &lt;Contract Code Directory&gt; &quot;/&quot; &lt;golang test code file name&gt;
+&lt;contract code directory&gt; ::= &lt;GOPATH&gt; &quot;/&quot; &lt;contract root directory&gt; &quot;/&quot; &lt;contract name&gt; &quot;/v&quot; &lt;contract version&gt; &quot;/&quot; &lt;contract name&gt;
+&lt;GOPATH&gt; ::= golang standard environment variable GOPATH points to the directory
+&lt;contract root directory&gt; ::= &quot;src/contract/&quot; &lt;organization ID&gt; &quot;/code&quot;
+&lt;Organization ID&gt; ::= See &lt;Contract Mark: organization&gt;
+&lt;golang implementation code file name&gt; ::= &lt;legal file name&gt; &quot;.go&quot;
+&lt;golang test code file name&gt; ::= &lt;legal file name&gt; &quot;_test.go&quot;
+&lt;arbitrary file name&gt; ::= &lt;legal file name&gt;|&lt;illegal file name&gt;
+&lt;Illegal file name&gt; ::= [&lt;legal file name&gt;] &quot;autogen&quot; [&lt;legal file name&gt;] | &lt;arbitrary file name&gt; &quot;_test&quot;
+&lt;legal file name&gt; ::= Exclude &lt;illegal file name&gt; after all operating systems recognize the string as the file name
+</code></pre>
+<p>Note: The white space interval that appears in the specification definition is only required for typesetting and is not part of the specification.</p>
+<p>&nbsp;</p>
+<h3>4.4.3 <strong>Whitelist</strong></h3>
+<p>For security reasons, the BCBChain Smart Contract is limited to allow only packages that follow explicit import behavior and do not produce inconsistent results for different nodes. Such packages are included in the whitelist.</p>
+<p>The code packages supported in the whitelist are safe to use in smart contracts.</p>
+<p>The specific contents of the whitelist and graylist will be different with the upgrade of the smart contract SDK and the matching BCBChain plugin version. For details, please refer to the related documents of the smart contract SDK and the matching BCBChain plugin.</p>
+<p>Below is the first version of the whitelist:</p>
+<pre><code>//The following are available golang ID packages
+bytes
+container/heap
+container/list
+container/ring
+crypto
+crypto/aes
+crypto/cipher
+crypto/des
+crypto/hmac
+crypto/md5
+crypto/rc4
+crypto/sha1
+crypto/sha256
+crypto/sha512
+encoding
+encoding/ascii85
+encoding/asn1
+encoding/base32
+encoding/base64
+encoding/binary
+encoding/csv
+encoding/gob
+encoding/hex
+encoding/json
+encoding/pem
+encoding/xml
+errors
+fmt
+hash
+hash/adler32
+hash/crc32
+hash/crc64
+hash/fnv
+index/suffixarray
+math
+math/big
+math/bits
+math/cmplx
+reflect
+regexp
+regexp/syntax
+sort
+strconv
+strings
+unicode
+unicode/utf16
+unicode/utf8
+
+//Below is standard package for the SDK
+blockchain/smcsdk/sdk
+</code></pre>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h2>4.5 <strong>BRC20Token</strong></h2>
+<p>The smart contract “Token” issued in Section 2.1.2 of this guide is a sample token contract, not a BRC20 token that complies with the BCBChain standard.</p>
+<p>Users of BCBChain can write their own smart contracts to issue tokens that comply with the BRC20 token specification. This section defines smart contracts that comply with the BRC20 token specification.</p>
+<p>The specification is described as follows:</p>
+<ul>
+<li><p>The contract must explicitly call the interface provided by the Smart Contract SDK <code>ITokenHelper::RegisterToken(...)</code> to register a new token with BCBChain (each smart contract can only register one token);</p>
+</li>
+<li><p>The contract registration token will automatically record a standard token generation receipt on BCBChain. The receipt is defined as follows:</p>
+</li>
+<li><pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::newToken
+type NewToken struct {
+    TokenAddress     types.Address `json:&quot;tokenAddr&quot;`     // Token Address
+    ContractAddress  types.Address `json:&quot;contractAddr&quot;`  // Coin Contract Address
+    Owner            types.Address `json:&quot;owner&quot;`         // Token Owner’s external
+                                                          // account address
+    Name             string      `json:&quot;name&quot;`            // Token Name
+    Symbol           string      `json:&quot;symbol&quot;`          // Token Symbol
+    TotalSupply      bn.Number   `json:&quot;totalSupply&quot;`     // Total Token Supply
+                                                          // (Unit: Cong)
+    AddSupplyEnabled bool        `json:&quot;addSupplyEnabled&quot;`// Whether additional 
+                                                          // issuance is supported
+    BurnEnabled      bool        `json:&quot;burnEnabled&quot;`     // Whether burn is enabled
+  GasPrice         int64       `json:&quot;gasPrice&quot;`        // Gas Price (Unit: Cong)
+}
+</code></pre>
+</li>
+<li><p>The contract must implement the methods and interfaces defined in this section</p>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>4.5.1 Transfer</h3>
+<p><strong>Method Prototype</strong></p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+//@:public:method:gas[500]
+//@:public:interface:gas[450]
+Transfer(types.Address,bn.Number)
+</code></pre>
+<p><strong>Function Description</strong></p>
+<ul>
+<li>Execute the token transfer</li>
+
+</ul>
+<p><strong>Implementation note</strong></p>
+<ul>
+<li>Must be implemented</li>
+<li>Must be marked with markup <code>public:method</code>；</li>
+<li>Must be marked with markup <code>public:interface</code></li>
+
+</ul>
+<p><strong>Usage</strong></p>
+<ul>
+<li>Allows calls from transaction broadcasts;</li>
+<li>Allows cross-contract calls with other smart contracts of the organization;</li>
+<li>Allows other smart contracts with the organization to be called directly via the interface provided by the SDK,<code>IAccount::Transfer</code> (the underlying SDK automatically performs cross-contract
+calls).</li>
+
+</ul>
+<p><strong>Input Parameters</strong></p>
+<ul>
+<li>_to		  types.Address 	Token recipient address (can be external account address, contract account address, contract address)</li>
+
+</ul>
+<p>  _value	bn.Number			Token transfer amount (Unit: Cong)</p>
+<p>  Note: If the recipient address is a contract address, the received token will be automatically transferred to the account address of the contract.</p>
+<p><strong>Receipt Output</strong></p>
+<ul>
+<li><p>The BRC20 Token Transfer() method automatically records a standard token transfer receipt on BCBChain. The receipt is defined as follows：</p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::transfer
+type Transfer struct {
+    Token      smc.Address  `json:&quot;token&quot;` //Token address
+    From       smc.Address  `json:&quot;from&quot;`  //From address
+    To         smc.Address  `json:&quot;to&quot;`    //Token recipient address
+    Value      bn.Number    `json:&quot;value&quot;` //The amount of token transferred(unit: 
+                                           //cong)
+}
+</code></pre>
+</li>
+
+</ul>
+<div style="page-break-after: always;"></div>
+<h3>4.5.2 AddSupply</h3>
+<p><strong>Method Prototype</strong></p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+)
+
+//@:public:method:gas[2400]
+AddSupply(bn.Number)
+</code></pre>
+<p><strong>Function Description</strong></p>
+<ul>
+<li>Increase supply of tokens</li>
+
+</ul>
+<p><strong>Implementation Note</strong></p>
+<ul>
+<li>Optional</li>
+<li>If implemented, requires markup <code>public:method</code>.</li>
+
+</ul>
+<p><strong>Usage</strong></p>
+<ul>
+<li>Only token owners can make calls through transaction broadcasts</li>
+
+</ul>
+<p><strong>Input Parameters</strong></p>
+<ul>
+<li>_value	bn.Number	Newly added supply (Unit: Cong).</li>
+
+</ul>
+<p><strong>Receipt Output</strong></p>
+<ul>
+<li><p>The BRC20 Token <em>AddSupply()</em> method automatically records a standard token extension receipt on BCBChain. The receipt is defined as follows:</p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::addSupply
+type AddSupply struct {
+    Token       types.Address `json:&quot;token&quot;`       //Token address
+    Value       bn.Number     `json:&quot;value&quot;`       //Additional supply (Unit: Cong)
+    TotalSupply bn.Number     `json:&quot;totalSupply&quot;` // New total supply (Unit: Cong)
+}
+</code></pre>
+</li>
+<li><p>The BRC20 Token AddSupply() method also automatically records a standard <code>std::transfer</code>receipt on BCBChain</p>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>4.5.3 Burn</h3>
+<p><strong>Method Prototype</strong></p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+)
+
+//@:public:method:gas[2400]
+Burn(bn.Number)
+</code></pre>
+<p><strong>Function Description</strong></p>
+<ul>
+<li>Burns the amount supplied</li>
+
+</ul>
+<p><strong>Implementation Note</strong></p>
+<ul>
+<li>Optional</li>
+<li>If implemented, requires markup<code>public:method</code>.</li>
+
+</ul>
+<p><strong>Usage</strong></p>
+<ul>
+<li>Only token owners can make calls through transaction broadcasts</li>
+
+</ul>
+<p><strong>Input Parameters</strong></p>
+<ul>
+<li>_value	bn.Number	Burn the amount supplied (Unit: Cong)</li>
+
+</ul>
+<p><strong>Receipt Output</strong></p>
+<ul>
+<li><p>The BRC20 Token () method automatically records a standard token burning receipt on BCBChain. The receipt is defined as follows:</p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/bn&quot;
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::burn
+type Burn struct {
+    Token       types.Address `json:&quot;token&quot;`       //Token address
+    Value       bn.Number     `json:&quot;value&quot;`       //Amount to be burnt (Unit: Cong)
+    TotalSupply bn.Number     `json:&quot;totalSupply&quot;` //New total amount (Unit: Cong)
+}
+</code></pre>
+</li>
+<li><p>The BRC20 Token Burn() method also automatically records a standard
+<code>std::transfer</code> receipt on BCBChain.</p>
+</li>
+
+</ul>
+<p>&nbsp;</p>
+<div style="page-break-after: always;"></div>
+<h3>4.5.4 SetGasPrice</h3>
+<p><strong>Method Prototype</strong></p>
+<pre><code>//@:public:method:gas[2400]
+SetGasPrice(int64)
+</code></pre>
+<p><strong>Function Description</strong></p>
+<ul>
+<li>Sets the price for Gas</li>
+
+</ul>
+<p><strong>Implementation Note</strong></p>
+<ul>
+<li>Optional</li>
+<li>If implemented, requires markup <code>public:method</code>.</li>
+
+</ul>
+<p><strong>Usage</strong></p>
+<ul>
+<li>Only token owners can make calls through transaction broadcasts</li>
+
+</ul>
+<p><strong>Input Parameters</strong></p>
+<ul>
+<li>_value	int64		New gas price (Unit: Cong)</li>
+
+</ul>
+<p><strong>Receipt Output</strong></p>
+<ul>
+<li><p>The BRC20 Token SetGasPrice() method automatically records a standard set gas price receipt on BCBChain. The receipt is defined as follows:</p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::setGasPrice
+type SetGasPrice struct {
+    Token    types.Address `json:&quot;token&quot;`    //Token address
+    GasPrice int64         `json:&quot;gasPrice&quot;` //Gas Price (Unit: Cong)
+}
+</code></pre>
+</li>
+
+</ul>
+<div style="page-break-after: always;"></div>
+<h3>4.5.6 SetOwner</h3>
+<p><strong>Method Prototype</strong></p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+//@:public:method:gas[2400]
+SetOwner(types.Address)
+</code></pre>
+<p><strong>Function Description</strong></p>
+<ul>
+<li>Transfer ownership of smart contracts and tokens.</li>
+
+</ul>
+<p><strong>Implementation Note</strong></p>
+<ul>
+<li>Optional</li>
+<li>If implemented, requires markup <code>public:method</code>.</li>
+
+</ul>
+<p><strong>Usage</strong></p>
+<ul>
+<li>Only token owners can make calls through transaction broadcasts</li>
+
+</ul>
+<p><strong>Input Parameters</strong></p>
+<ul>
+<li>_newOwner	types.Address	Address of the new owner of the contract</li>
+
+</ul>
+<p><strong>Receipt Output</strong></p>
+<ul>
+<li><p>The BRC20 Token SetOwner() method automatically records a standard transfer ownership receipt on BCBChain. The receipt is defined as follows:</p>
+<pre><code>import (
+    &quot;blockchain/smcsdk/sdk/types&quot;
+)
+
+// Name of receipt: std::setOwner
+type SetOwner struct {
+    ContractAddr types.Address `json:&quot;contractAddr&quot;` //Address of the smart contract
+    NewOwner     types.Address `json:&quot;newOwner&quot;`     //The external account address
+                                                     //of the new owner
+}
+</code></pre>
+</li>
+<li><p>The BRC20 Token SetOwner() method also automatically records a standard
+<code>std::transfer</code> receipt on BCBChain.</p>
+</li>
+
+</ul>
+<div style="page-break-after: always;"></div>
+<h1>5 <strong>Developing Smart Contracts</strong></h1>
+<p>Detailed instructions for preparing the development environment, developing, testing, and deploying smart contracts can be found in the document BCBChain_V2.0_Quick_Start.</p>
+</body>
+</html>
