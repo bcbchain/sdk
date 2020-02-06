@@ -10,6 +10,5 @@ func NewLowLevelSDB(smc sdk.ISmartContract, transID, txID int64) sdkimpl.ILowLev
 	o := LowLevelSDB{cache: make(map[string][]byte)}
 	o.Init(transID, txID)
 	o.SetSMC(smc)
-
 	return &o
 }

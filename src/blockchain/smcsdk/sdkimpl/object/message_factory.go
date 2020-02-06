@@ -12,7 +12,6 @@ func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string,
 	if _payer != "" {
 		payerAcct = NewAccount(smc, _payer)
 	}
-
 	var gasPrice int64
 	token := smc.Helper().TokenHelper().TokenOfContract(contract.Address())
 	if token != nil {
@@ -20,7 +19,6 @@ func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string,
 	} else {
 		gasPrice = smc.Helper().TokenHelper().BaseGasPrice()
 	}
-
 	o := &Message{
 		contract:       contract,
 		methodID:       methodID,
@@ -33,6 +31,5 @@ func NewMessage(smc sdk.ISmartContract, contract sdk.IContract, methodID string,
 		outputReceipts: make([]types.KVPair, 0),
 	}
 	o.SetSMC(smc)
-
 	return o
 }

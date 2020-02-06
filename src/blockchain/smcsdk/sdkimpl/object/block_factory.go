@@ -35,14 +35,11 @@ func NewBlock(smc sdk.ISmartContract,
 		},
 	}
 	block.SetSMC(smc)
-
 	return block
 }
-
 // NewBlockFromSTD factory method for create block with standard block data
 func NewBlockFromSTD(smc sdk.ISmartContract, stdBlock *std.Block) sdk.IBlock {
 	block := &Block{bk: *stdBlock}
 	block.SetSMC(smc)
-
 	return block
 }

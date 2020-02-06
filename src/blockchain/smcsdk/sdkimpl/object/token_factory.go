@@ -33,11 +33,9 @@ func NewToken(
 	}
 	return &o
 }
-
 // NewTokenFromSTD factory method for create token from std
 func NewTokenFromSTD(smc sdk.ISmartContract, stdToken *std.Token) sdk.IToken {
 	token := &Token{tk: *stdToken}
 	token.SetSMC(smc)
-
 	return token
 }

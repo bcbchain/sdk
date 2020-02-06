@@ -6,16 +6,15 @@ import (
 )
 
 // NewTx factory method for create tx with all tx's property
-func NewTx(smc sdk.ISmartContract, note string, gasLimit int64, gasLeft int64, sender types.Address) sdk.ITx {
+func NewTx(smc sdk.ISmartContract, note string, gasLimit int64, gasLeft int64, txHash []byte, sender types.Address) sdk.ITx {
 	signer := NewAccount(smc, sender)
-
 	o := &Tx{
 		note:     note,
 		gasLimit: gasLimit,
 		gasLeft:  gasLeft,
+		txHash:   txHash,
 		signer:   signer,
 	}
 	o.SetSMC(smc)
-
 	return o
 }

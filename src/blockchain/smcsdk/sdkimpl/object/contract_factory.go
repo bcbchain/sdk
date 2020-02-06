@@ -13,18 +13,14 @@ func NewContractFromAddress(smc sdk.ISmartContract, conAddr types.Address) sdk.I
 	if contract != nil {
 		contract.(*Contract).SetSMC(smc)
 	}
-
 	return contract
 }
-
 // NewContractFromSTD factory method for create contract with address
 func NewContractFromSTD(smc sdk.ISmartContract, stdContract *std.Contract) sdk.IContract {
 	contract := &Contract{ct: *stdContract}
 	contract.SetSMC(smc)
-
 	return contract
 }
-
 // NewContract factory method for create contract with all property
 func NewContract(smc sdk.ISmartContract,
 	orgID string,
@@ -34,7 +30,6 @@ func NewContract(smc sdk.ISmartContract,
 	effectHeight, loseHeight int64,
 	methods, interfaces []std.Method,
 	token types.Address) sdk.IContract {
-
 	contract := &Contract{
 		ct: std.Contract{
 			Address:      smc.Helper().BlockChainHelper().CalcContractAddress(name, version, orgID),
@@ -53,6 +48,5 @@ func NewContract(smc sdk.ISmartContract,
 		},
 	}
 	contract.SetSMC(smc)
-
 	return contract
 }

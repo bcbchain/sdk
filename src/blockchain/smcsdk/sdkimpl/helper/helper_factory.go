@@ -15,8 +15,9 @@ func NewHelper(smc sdk.ISmartContract) sdk.IHelper {
 		stateHelper:      NewStateHelper(smc),
 		tokenHelper:      NewTokenHelper(smc),
 		buildHelper:      NewBuildHelper(smc),
+		ibcHelper:        NewIBCHelper(smc),
+		ibcStubHelper:    NewIBCStubHelper(smc),
 	}
 	o.SetSMC(smc)
-
 	return &o
 }
