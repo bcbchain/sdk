@@ -1,9 +1,9 @@
 package common
 
 import (
-	"github.com/AeReach/bclib/tendermint/go-amino"
-	"github.com/AeReach/bclib/tendermint/go-crypto"
-	"github.com/AeReach/bclib/tendermint/tmlibs/merkle"
+	"github.com/bcbchain/bclib/tendermint/go-amino"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/tmlibs/merkle"
 	"golang.org/x/crypto/ripemd160"
 	"reflect"
 )

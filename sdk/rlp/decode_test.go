@@ -17,7 +17,7 @@
 package rlp
 
 import (
-	"github.com/AeReach/sdk/sdk/bn"
+	"github.com/bcbchain/sdk/sdk/bn"
 	"bytes"
 	"encoding/hex"
 	"errors"

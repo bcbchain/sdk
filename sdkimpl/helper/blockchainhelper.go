@@ -1,11 +1,11 @@
 package helper
 
 import (
-	"github.com/AeReach/sdk/sdk"
-	"github.com/AeReach/sdk/sdk/std"
-	"github.com/AeReach/sdk/sdk/types"
-	"github.com/AeReach/sdk/sdkimpl"
-	"github.com/AeReach/sdk/sdkimpl/object"
+	"github.com/bcbchain/sdk/sdk"
+	"github.com/bcbchain/sdk/sdk/std"
+	"github.com/bcbchain/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdkimpl"
+	"github.com/bcbchain/sdk/sdkimpl/object"
 	"bytes"
 	"errors"
 	"regexp"
@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/btcsuite/btcutil/base58"
-	"github.com/AeReach/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
 	"golang.org/x/crypto/ripemd160"
 	"golang.org/x/crypto/sha3"
 )

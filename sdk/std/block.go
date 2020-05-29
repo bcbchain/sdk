@@ -1,7 +1,7 @@
 package std
 
 import (
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/types"
 )
 
 // Block block detail information

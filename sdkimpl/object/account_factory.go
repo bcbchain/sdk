@@ -1,8 +1,8 @@
 package object
 
 import (
-	"github.com/AeReach/sdk/sdk"
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk"
+	"github.com/bcbchain/sdk/sdk/types"
 )
 
 // NewAccount factory method for create Account with address

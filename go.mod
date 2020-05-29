@@ -1,9 +1,9 @@
-module github.com/AeReach/sdk
+module github.com/bcbchain/sdk
 
 go 1.14
 
 require (
-	github.com/AeReach/bclib v0.0.3
+	github.com/bcbchain/bclib v0.0.3
 	github.com/btcsuite/btcutil v1.0.2
 	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
 	github.com/json-iterator/go v1.1.9

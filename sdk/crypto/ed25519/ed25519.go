@@ -1,7 +1,7 @@
 package ed25519
 
 import (
-	"github.com/AeReach/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
 )
 
 // VerifySign verify signature

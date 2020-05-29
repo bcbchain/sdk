@@ -1,8 +1,8 @@
 package helper
 
 import (
-	"github.com/AeReach/sdk/sdk"
-	"github.com/AeReach/sdk/sdkimpl"
+	"github.com/bcbchain/sdk/sdk"
+	"github.com/bcbchain/sdk/sdkimpl"
 )
 
 // Helper helper detail information

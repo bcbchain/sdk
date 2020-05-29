@@ -1,7 +1,7 @@
 package ibc
 
 import (
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/types"
 )
 
 const (

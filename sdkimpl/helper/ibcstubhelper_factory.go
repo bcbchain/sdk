@@ -1,6 +1,6 @@
 package helper
 
-import "github.com/AeReach/sdk/sdk"
+import "github.com/bcbchain/sdk/sdk"
 
 // NewIBCStubHelper factory method to create IBCStubHelper
 func NewIBCStubHelper(smc sdk.ISmartContract) sdk.IIBCStubHelper {

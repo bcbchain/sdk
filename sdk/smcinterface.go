@@ -1,10 +1,10 @@
 package sdk
 
 import (
-	"github.com/AeReach/sdk/sdk/bn"
-	"github.com/AeReach/sdk/sdk/ibc"
-	"github.com/AeReach/sdk/sdk/std"
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/bn"
+	"github.com/bcbchain/sdk/sdk/ibc"
+	"github.com/bcbchain/sdk/sdk/std"
+	"github.com/bcbchain/sdk/sdk/types"
 )
 
 // IBlock the interface for block

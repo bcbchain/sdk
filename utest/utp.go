@@ -4,9 +4,9 @@
 package utest
 
 import (
-	"github.com/AeReach/sdk/sdk"
-	"github.com/AeReach/sdk/sdk/types"
-	"github.com/AeReach/sdk/sdkimpl"
+	"github.com/bcbchain/sdk/sdk"
+	"github.com/bcbchain/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdkimpl"
 	"gopkg.in/check.v1"
 )
 

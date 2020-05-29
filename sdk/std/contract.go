@@ -1,10 +1,10 @@
 package std
 
 import (
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/types"
 	"fmt"
 
-	"github.com/AeReach/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
 )
 
 const (

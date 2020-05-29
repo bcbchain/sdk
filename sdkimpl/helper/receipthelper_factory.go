@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"github.com/AeReach/sdk/sdk"
+	"github.com/bcbchain/sdk/sdk"
 )
 
 // NewReceiptHelper factory method to create IReceiptHelper

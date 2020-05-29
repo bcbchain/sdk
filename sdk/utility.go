@@ -1,8 +1,8 @@
 package sdk
 
 import (
-	"github.com/AeReach/sdk/common/gls"
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/common/gls"
+	"github.com/bcbchain/sdk/sdk/types"
 	"strings"
 )
 

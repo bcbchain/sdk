@@ -1,6 +1,6 @@
 package std
 
-import "github.com/AeReach/sdk/sdk/types"
+import "github.com/bcbchain/sdk/sdk/types"
 
 type Message struct {
 	SmcAddress types.Address `json:"smcAddress"`

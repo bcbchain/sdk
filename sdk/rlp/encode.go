@@ -17,7 +17,7 @@
 package rlp
 
 import (
-	"github.com/AeReach/sdk/sdk/bn"
+	"github.com/bcbchain/sdk/sdk/bn"
 	"fmt"
 	"io"
 	"math/big"

@@ -3,7 +3,7 @@ package bn
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/AeReach/sdk/sdk/jsoniter"
+	"github.com/bcbchain/sdk/sdk/jsoniter"
 	"testing"
 )
 

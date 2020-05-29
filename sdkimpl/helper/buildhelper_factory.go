@@ -1,6 +1,6 @@
 package helper
 
-import "github.com/AeReach/sdk/sdk"
+import "github.com/bcbchain/sdk/sdk"
 
 // NewBuildHelper factory method to create IBuildHelper object
 func NewBuildHelper(smc sdk.ISmartContract) sdk.IBuildHelper {

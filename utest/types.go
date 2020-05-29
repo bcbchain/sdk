@@ -1,11 +1,11 @@
 package utest
 
 import (
-	"github.com/AeReach/sdk/sdk/std"
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/std"
+	"github.com/bcbchain/sdk/sdk/types"
 	"time"
 
-	"github.com/AeReach/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
 )
 
 const genesisStr = `{

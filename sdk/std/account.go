@@ -1,8 +1,8 @@
 package std
 
 import (
-	"github.com/AeReach/sdk/sdk/bn"
-	"github.com/AeReach/sdk/sdk/types"
+	"github.com/bcbchain/sdk/sdk/bn"
+	"github.com/bcbchain/sdk/sdk/types"
 	"fmt"
 )
 

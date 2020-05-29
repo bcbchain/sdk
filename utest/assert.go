@@ -7,12 +7,12 @@ package utest
 import (
 	"errors"
 	"fmt"
-	bcbgls "github.com/AeReach/sdk/common/gls"
-	"github.com/AeReach/sdk/sdk"
-	"github.com/AeReach/sdk/sdk/bn"
-	"github.com/AeReach/sdk/sdk/jsoniter"
-	"github.com/AeReach/sdk/sdk/std"
-	"github.com/AeReach/sdk/sdk/types"
+	bcbgls "github.com/bcbchain/sdk/common/gls"
+	"github.com/bcbchain/sdk/sdk"
+	"github.com/bcbchain/sdk/sdk/bn"
+	"github.com/bcbchain/sdk/sdk/jsoniter"
+	"github.com/bcbchain/sdk/sdk/std"
+	"github.com/bcbchain/sdk/sdk/types"
 )
 
 // Assert assert true
