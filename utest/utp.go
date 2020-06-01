@@ -45,7 +45,7 @@ func Init(orgID string) types.Error {
 func DeployContract(c *check.C, contractName, orgID string, methods, interfaces []string) sdk.IAccount {
 	logger := InitLog(contractName)
 	UTP.c = c
-	UTP.c.SetSkipLevel(3)
+	//UTP.c.SetSkipLevel(3)
 
 	return deployContract(contractName, orgID, methods, interfaces, logger)
 }

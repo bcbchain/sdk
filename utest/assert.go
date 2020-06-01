@@ -13,6 +13,7 @@ import (
 	"github.com/bcbchain/sdk/sdk/jsoniter"
 	"github.com/bcbchain/sdk/sdk/std"
 	"github.com/bcbchain/sdk/sdk/types"
+	"gopkg.in/check.v1"
 )
 
 // Assert assert true

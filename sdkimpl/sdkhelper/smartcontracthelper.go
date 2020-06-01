@@ -45,7 +45,7 @@ func New(
 
 	smc := new(sdkimpl.SmartContract)
 
-	gls.Mgr.SetValues(gls.Values{gls.SDKKey: smc}, func() {
+	bcbgls.Mgr.SetValues(bcbgls.Values{bcbgls.SDKKey: smc}, func() {
 		llState := llstate.NewLowLevelSDB(smc, transID, txID)
 		smc.SetLlState(llState)
 

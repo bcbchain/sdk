@@ -42,7 +42,7 @@ func SetSender(_sender types.Address) sdk.ISmartContract {
 //ResetMsg reset message
 func ResetMsg() sdk.ISmartContract {
 
-	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+	bcbgls.Mgr.SetValues(bcbgls.Values{bcbgls.SDKKey: UTP.ISmartContract}, func() {
 		_message := object.NewMessage(UTP.ISmartContract,
 			UTP.Message().Contract(),
 			UTP.Message().MethodID(),
@@ -66,7 +66,7 @@ func GetContract() sdk.IContract { return UTP.Message().Contract() }
 
 func (ut *UtPlatform) setTxSender(_sender types.Address) sdk.ISmartContract {
 
-	gls.Mgr.SetValues(gls.Values{gls.SDKKey: ut.ISmartContract}, func() {
+	bcbgls.Mgr.SetValues(bcbgls.Values{bcbgls.SDKKey: ut.ISmartContract}, func() {
 		tx := ut.Tx()
 		acct := object.NewAccount(ut.ISmartContract, _sender)
 		o := object.NewTx(ut.ISmartContract, tx.Note(), tx.GasLimit(), tx.GasLeft(), tx.TxHash(), acct.Address())

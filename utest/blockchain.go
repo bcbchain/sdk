@@ -7,6 +7,8 @@ package utest
 
 import (
 	"github.com/bcbchain/bclib/algorithm"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
+	"github.com/bcbchain/bclib/tendermint/tmlibs/log"
 	"github.com/bcbchain/sdk/common/gls"
 	"github.com/bcbchain/sdk/sdk"
 	"github.com/bcbchain/sdk/sdk/bn"
@@ -16,7 +18,6 @@ import (
 	"github.com/bcbchain/sdk/sdkimpl"
 	"github.com/bcbchain/sdk/sdkimpl/object"
 	"github.com/bcbchain/sdk/sdkimpl/sdkhelper"
-	"github.com/bcbchain/bclib/tendermint/tmlibs/log"
 )
 
 func init() {

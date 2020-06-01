@@ -5,6 +5,7 @@ package utest
 
 import (
 	"crypto/rand"
+	"github.com/bcbchain/bclib/tendermint/go-crypto"
 	"github.com/bcbchain/sdk/common/gls"
 	"github.com/bcbchain/sdk/sdk"
 	"github.com/bcbchain/sdk/sdk/bn"
@@ -43,7 +44,7 @@ func CalcAddressFromPubKey(_pubKey []byte) types.Address {
 // NewAccount generate a new account object with a given token and balance
 func NewAccount(tokenName string, balance bn.Number) sdk.IAccount {
 	var acct sdk.IAccount
-	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+	bcbgls.Mgr.SetValues(bcbgls.Values{bcbgls.SDKKey: UTP.ISmartContract}, func() {
 		addr := CalcAddressFromPubKey(newRandPubKey())
 		UTP.accountList = append(UTP.accountList, addr)
 
@@ -104,7 +105,7 @@ func Transfer(sender sdk.IAccount, addr string, args ...interface{}) (err types.
 func TransferEx(sender sdk.IAccount, addr string, args ...interface{}) (err types.Error) {
 	defer FuncRecover(&err)
 
-	gls.Mgr.SetValues(gls.Values{gls.SDKKey: UTP.ISmartContract}, func() {
+	bcbgls.Mgr.SetValues(bcbgls.Values{bcbgls.SDKKey: UTP.ISmartContract}, func() {
 		if len(args) == 1 {
 			temps := make([]interface{}, 0)
 			temps = append(temps, UTP.g.AppStateJSON.GnsToken.Name)
