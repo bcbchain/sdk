@@ -3,6 +3,6 @@ all: dist
 .PHONY: all
 
 dist:
-	@sh -c "'$(CURDIR)/dist.sh'"
+	@sh -c "'$(CURDIR)/scripts/dist.sh'"
 
 .PHONY: dist
