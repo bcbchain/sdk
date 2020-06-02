@@ -12,13 +12,25 @@ if [ -z "$VERSION" ];then
 fi
 
 VERSION="v$VERSION"
-SRC_DIRS="common sdk sdkimpl utest"
-DIST_DIR="build/dist"
+project_path=$(pwd)
+project_name="${project_path##*/}"
+echo "==> Building $project_name $VERSION..."
 
-rm -rf "$DIST_DIR"
-mkdir -p "$DIST_DIR"
+cd scripts
 
-echo "===> disting sdk..."
-tar -zcf "$DIST_DIR/sdk_$VERSION.tar.gz" $SRC_DIRS
+if [[ -f "download.sh" ]];then
+  source download.sh
+fi
+
+if [[ -f "build.sh" ]];then
+  source build.sh
+fi
+
+if [[ -f "pkg.sh" ]];then
+  source pkg.sh
+fi
+
+echo
+echo "======> BUILD SUCCESS!"
 
 exit 0
