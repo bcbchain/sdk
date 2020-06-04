@@ -1,3 +1,6 @@
+.idea
 scripts
 build
 version
+doc
+plugin

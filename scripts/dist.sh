@@ -4,7 +4,7 @@ set -e
 VERSION=$1
 # Get the version from the environment, or try to figure it out.
 if [ -z "$VERSION" ]; then
-	VERSION=$(awk -F\" '/version =/ { print $2; exit }' < version.go)
+	VERSION=$(awk -F\" '/version =/ { print $2; exit }' < version/version.go)
 fi
 if [ -z "$VERSION" ];then
   echo "Please specify a version."
